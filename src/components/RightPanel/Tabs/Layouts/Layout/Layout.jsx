@@ -20,6 +20,10 @@ function Layout(props) {
     }
 
     function setCurrent(e){
+        if(e.ctrlKey) {
+            props.layoutManager.select(index);
+            return;
+        }
         props.layoutManager.setCurrentLayout(index);
         e.stopPropagation();
 
@@ -56,11 +60,12 @@ function Layout(props) {
     function deleteLayoutHandler(e){
         props.layoutManager.deleteLayout(index);
         e.stopPropagation();
-
     }
+
+
     return (
             <React.Fragment>
-                <div onClick={setCurrent} key={index} className='right-panel__layout-block layout-block'>
+                <div onClick={setCurrent} key={index} style={layout.selected ? {backgroundColor: 'darkred'} : {backgroundColor:'black'}} className='right-panel__layout-block layout-block'>
                     <div className='layout-block__left-menu'>
                         <div onClick={upHandler} className="layout-block__left-menu-item"><img src="/img/up.svg" alt="" /></div>
                         <div onClick={hideLayoutHandler} className="layout-block__left-menu-item">

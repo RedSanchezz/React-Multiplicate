@@ -70,7 +70,7 @@
     position: absolute;
     height: 0;
     overflow: hidden;
-    transition: height 1s;
+    transition: height 0.5s;
     width: 100px;
     &.active {
         height: 100px;

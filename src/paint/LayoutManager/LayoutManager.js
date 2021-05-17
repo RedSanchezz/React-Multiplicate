@@ -11,7 +11,6 @@ export default class LayoutManager{
         this._ctx = state.canvas.context;
 
         this._init();
-        //колбэк для управления слоями из оболочки
     }
     _init(){
         let state = store.getState();
@@ -176,6 +175,7 @@ export default class LayoutManager{
         if(layoutList.length<=1){
             currentLayout.clear();
             this.update();
+            store.dispatch(changeLayoutList(layoutList));
             return;
         }
 
@@ -183,10 +183,13 @@ export default class LayoutManager{
             return !indexArray.includes(index);
         });
 
+        store.dispatch(changeLayoutList(layoutList));
+
         if(layoutList.length==0){
             console.log("Нулевая длинна");
-            this.addLayout();
-            this.setCurrentLayout(0);
+            this.addLayout();            
+            this.update();
+            return;
         }
         else{
             //если индекс больше допустимого
@@ -200,7 +203,6 @@ export default class LayoutManager{
                 console.log("Норм");
             }
         }
-        console.log(layoutList);
         this.update();
     }
     
@@ -228,8 +230,25 @@ export default class LayoutManager{
         this.update();
     }
     
-    combine(index1, index2){
+    combine(indexArray){
+        let state = store.getState();
+        let layoutList = state.layouts.layoutList;
+        let currentLayoutIndex = state.layouts.currentLayoutIndex;
 
+        let minIndex = Math.min(...indexArray);
+        let minElem = layoutList[minIndex];
+
+        for(let i=1; i<indexArray.length; i++){
+            const elem = layoutList[indexArray[i]];
+            console.log(i);
+            minElem.getContext().drawImage(elem.getCanvas(), 0, 0);
+        }
+        minElem.saveInHistory();
+        console.log(indexArray.slice(1));
+        store.dispatch(changeLayoutList(layoutList));
+
+        this.deleteLayouts(indexArray.slice(1))
+        
     }
 
     isHidden(index){
@@ -253,8 +272,9 @@ export default class LayoutManager{
     select(id){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
-
+        
         layoutList[id].select();
+        store.dispatch(changeLayoutList(layoutList))
         this.update();
     }
 
@@ -264,6 +284,8 @@ export default class LayoutManager{
         layoutList.forEach((layout) => {
             if(layout.selected) layout.select();
         });
+        store.dispatch(changeLayoutList(layoutList))
+
         this.update();
     }
     render(){

@@ -63,9 +63,12 @@ function BrushPanel(props) {
 
         //Вышли из меню - включаем таймаут
         function mouseLeave(){
-            timeOutId= setTimeout(() => {
-                brushMenu.current.classList.remove('active');
-            }, 500);
+            brushMenu.current.classList.add('fastRemove');
+            brushMenu.current.classList.remove('active');
+            //без таймаута браузер может добавлять и убирать класы за "1 круг"
+            setTimeout(() => {
+                brushMenu.current.classList.remove('fastRemove');
+            }, 0);
         }
     }
     function deleteColorHandler(){
