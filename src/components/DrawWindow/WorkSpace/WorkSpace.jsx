@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react'
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ToolManager from '../../paint/ToolManager/ToolManager';
-import { changeCanvasSize } from '../../redux/actionCreators/canvasActionCreator';
-import Canvas from './Canvas/Canvas'
+
 import './WorkSpace.scss'
-import setToolManager from './../../redux/actionCreators/canvasActionCreator';
-import { addLayoutManager } from './../../redux/actionCreators/layoutActionCreator';
-import LayoutManager from './../../paint/LayoutManager/LayoutManager';
-import HideCurrentElementWarning from '../RightPanel/Tabs/Layouts/Layout/HideCurrentElementWarning';
+import setToolManager, { changeCanvasSize } from './../../../redux/actionCreators/canvasActionCreator';
+import { addLayoutManager } from './../../../redux/actionCreators/layoutActionCreator';
+import ToolManager from './../../../paint/ToolManager/ToolManager';
+import LayoutManager from './../../../paint/LayoutManager/LayoutManager';
+import Canvas from './Canvas/Canvas';
+import { connect } from 'react-redux';
+
 
 
 

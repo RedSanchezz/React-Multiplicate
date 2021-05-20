@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setCanvas } from '../../../redux/actionCreators/canvasActionCreator';
+import { setCanvas } from '../../../../redux/actionCreators/canvasActionCreator';
 import './Canvas.scss'
-import ToolManager from './../../../paint/ToolManager/ToolManager';
 function Canvas(props) {
 
     let canvas = React.createRef();

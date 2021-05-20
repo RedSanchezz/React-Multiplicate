@@ -1,10 +1,13 @@
 
 import React, { useEffect, useState } from 'react'
 import './Tabs.scss';
-import Layouts from './Layouts/Layouts';
-export default function Tabs() {
+import Layouts from '../Layouts/Layouts';
+import Frames from '../Frames/Frames';
+
+
+export default function Tabs(props) {
     let [tabsNumber, setTabsActive] = useState(0);
-    let [content, setContent] = useState(<Layouts></Layouts>);
+    let setContent = props.setContent;
 
     useEffect(() => {
         switch(tabsNumber){
@@ -13,12 +16,11 @@ export default function Tabs() {
                 break;
             }
             case 1: {
-                setContent('');
+                setContent('history');
                 break;
-
             }
             case 2: {
-                setContent('');
+                setContent(<Frames></Frames>);
                 break;
             }
         }
@@ -26,14 +28,12 @@ export default function Tabs() {
 
 
     return (
-        <div>
+        <>  
             <div className='right-panel__tabs'>
                 <button onClick={()=>{setTabsActive(0)}} className={tabsNumber===0 ? 'right-panel__tabs-button active' : 'right-panel__tabs-button'}>Слои</button>
                 <button onClick={()=>{setTabsActive(1)}} className={tabsNumber===1 ? 'right-panel__tabs-button active' : 'right-panel__tabs-button'}>История</button>
                 <button onClick={()=>{setTabsActive(2)}} className={tabsNumber===2 ? 'right-panel__tabs-button active' : 'right-panel__tabs-button'}>Избранное</button>
             </div>
-            {content}
-
-        </div>
+        </>
     )
 }

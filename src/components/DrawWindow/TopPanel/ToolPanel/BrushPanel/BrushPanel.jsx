@@ -1,25 +1,28 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveBrush } from '../../../../redux/actionCreators/brushActionCreators';
-import ColorHelper from '../../../../utils/ColorHelper';
+import { saveBrush } from '../../../../../redux/actionCreators/brushActionCreators';
+import ColorHelper from '../../../../../utils/ColorHelper';
 import './BrushPanel.scss';
-import { changeSavedBrushes } from './../../../../redux/actionCreators/brushActionCreators';
+import { changeSavedBrushes } from '../../../../../redux/actionCreators/brushActionCreators';
 
 
 function BrushPanel(props) {
 
     let brushMenu = useRef();
     let colorIndex =null;
+
     function brushSizeHandler(e){
         let tool = props.toolManager.getTool();
         tool.setSize(e.target.value);
     }
+
     function brushColorHandler(e){
         let tool = props.toolManager.getTool();
         tool.setColor(e.target.value);
     }
+
     function brushAlphaHandler(e){
         let tool = props.toolManager.getTool();
         tool.setAlpha(e.target.value);
@@ -28,6 +31,7 @@ function BrushPanel(props) {
     function saveBrushHandler(e){
         props.saveBrush({color: props.brushColor, alpha: props.brushAlpha, size: props.brushSize})
     }
+
     function changeBrushHandler(index){
         let brushSetting = props.savedBrushes[index];
         let tool = props.toolManager.getTool();
@@ -39,7 +43,6 @@ function BrushPanel(props) {
 
 
     function contextMenuColorHandler(e, index){
-
         colorIndex=index;
         brushMenu.current.classList.add('active');
         let domRect = e.target.getBoundingClientRect();
@@ -71,6 +74,7 @@ function BrushPanel(props) {
             }, 0);
         }
     }
+
     function deleteColorHandler(){
         props.savedBrushes.splice(colorIndex, 1);
         props.changeSavedBrushes(props.savedBrushes);
@@ -81,6 +85,7 @@ function BrushPanel(props) {
             brushMenu.current.classList.remove('fastRemove');
         }, 0);
     }
+
     function changeColorHandler(){
         props.savedBrushes[colorIndex].size=props.brushSize;
         props.savedBrushes[colorIndex].color=props.brushColor;
@@ -96,7 +101,6 @@ function BrushPanel(props) {
         }, 0);
     }
 
-    
     return (
         <div className="brush-panel">
                 <div className="brush-panel__block size-block">
@@ -157,6 +161,7 @@ function mapStateToProps(state){
         toolManager: state.canvas.toolManager
     }
 }
+
 function mapDispatchToProps(dispatch){
     return {
         saveBrush: bindActionCreators(saveBrush, dispatch),

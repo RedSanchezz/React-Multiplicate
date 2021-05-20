@@ -20,17 +20,19 @@ function LeftPanel(props) {
     return (
         <div className='left-panel'>
             <div onClick={clickToolOneHandler} 
-                className={activeTool==0 ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
+                className={activeTool===0 ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src="./img/brush.svg" alt=""/>
             </div>
+
             <div onClick={clickToolTwoHandler} 
-                className={activeTool==1 ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
+                className={activeTool===1 ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src="./img/eraser.svg" alt=""/>
             </div>
 
             <div  className='left-panel__tool-item '>
                 <img src="./img/brush.svg" alt=""/>
             </div>
+            
             <div  className='left-panel__tool-item'>
                 <img src="./img/eraser.svg" alt=""/>
             </div>

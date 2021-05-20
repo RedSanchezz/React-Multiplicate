@@ -3,7 +3,7 @@ import store from "../../redux/store";
 import Layout from "./Layout";
 
 //Класс для управления слоями
-export default class LayoutManager{
+export default  class  LayoutManager{
     constructor(){
         let state = store.getState();
         //true canvas 
@@ -59,9 +59,7 @@ export default class LayoutManager{
 
         layoutList.splice(state.layouts.currentLayoutIndex+1, 0, layout);
         store.dispatch(changeCurrentLayout(layout, state.layouts.currentLayoutIndex+1));
-
         store.dispatch(changeLayoutList(layoutList));
-
     }
 
     copyLayout(index){
@@ -140,7 +138,6 @@ export default class LayoutManager{
     }
 
     deleteLayout(index){
-        console.log('delete layout index ' + index);
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayout = state.layouts.currentLayout;
@@ -288,14 +285,10 @@ export default class LayoutManager{
 
         this.update();
     }
+
     render(){
         let state = store.getState();
         store.dispatch(changeCurrentLayout(state.layouts.currentLayout, state.layouts.currentLayoutIndex));
     }
 }
 
-/*
-    show: true,
-    canvas: canvas,
-    ctx:ctx
-*/

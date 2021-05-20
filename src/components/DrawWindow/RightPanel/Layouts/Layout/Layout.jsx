@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import  ReactDOM  from 'react-dom';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeCurrentLayout } from '../../../../../redux/actionCreators/layoutActionCreator';
+import './Layout.scss'
+import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
 
 
 function Layout(props) {
 
+    let contextMenu = useRef();
     let layout = props.value;
     let canvas = layout.getCanvas();
 
@@ -26,7 +31,6 @@ function Layout(props) {
         }
         props.layoutManager.setCurrentLayout(index);
         e.stopPropagation();
-
     }
 
     
@@ -46,15 +50,13 @@ function Layout(props) {
         props.layoutManager.update();
         props.layoutManager.render();
         e.stopPropagation();
-
-
     }
+
     function historyNextHandler(e){
         layout.next();
         props.layoutManager.update();
         props.layoutManager.render();
         e.stopPropagation();
-
     }
 
     function deleteLayoutHandler(e){
@@ -63,9 +65,57 @@ function Layout(props) {
     }
 
 
-    return (
-            <React.Fragment>
-                <div onClick={setCurrent} key={index} style={layout.selected ? {backgroundColor: 'darkred'} : {backgroundColor:'black'}} className='right-panel__layout-block layout-block'>
+
+    function contextMenuHandler(e){
+        if(layout.selected){
+            contextMenu.current.classList.add('active');
+            contextMenu.current.style.top = e.pageY-10+'px';
+            contextMenu.current.style.left = e.pageX-20+'px';
+        }
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    function deleteSelectedHandler(e){
+        let indexArray =[];
+
+        props.layoutList.map((value, index) => {
+            if(value.selected) indexArray.push(index);
+            return value;
+        })
+        props.layoutManager.deleteLayouts(indexArray);
+    }
+
+    function combineSelectedHandler(e){
+        let indexArray =[];
+        props.layoutList.map((value, index) => {
+            if(value.selected) indexArray.push(index);
+        })
+        props.layoutManager.combine(indexArray);
+    }
+
+    function contextMenuMouseLeaveHandler(){
+        contextMenu.current.classList.remove('active');
+    }
+
+    function unselectAllHandler(){
+        props.layoutManager.unSelectAll();
+    }
+
+    function addToMultiplicate(){
+        MultiplicateManager.addFrame(layout, 100);
+    }
+
+    let menu = 
+    <div ref={contextMenu} onContextMenu={(e)=>{e.stopPropagation(); e.preventDefault()}} onMouseLeave = {contextMenuMouseLeaveHandler} className='right-panel__context-menu'>
+        <div onClick={deleteSelectedHandler} className="right-panel__context-menu-item">Удалить выбранные</div>
+        <div onClick = {combineSelectedHandler} className="right-panel__context-menu-item">Обьеденить</div>
+        <div onClick = {unselectAllHandler} className="right-panel__context-menu-item">Отменить выделение</div>
+    </div>;
+
+    return (<React.Fragment>
+                {ReactDOM.createPortal(menu, document.getElementById('root'))}
+                <div onContextMenu={contextMenuHandler} onClick={setCurrent} key={index} style={layout.selected ? {backgroundColor: 'darkred'} : {backgroundColor:'black'}} className='right-panel__layout-block layout-block'>
                     <div className='layout-block__left-menu'>
                         <div onClick={upHandler} className="layout-block__left-menu-item"><img src="/img/up.svg" alt="" /></div>
                         <div onClick={hideLayoutHandler} className="layout-block__left-menu-item">
@@ -77,12 +127,13 @@ function Layout(props) {
                     <div className='layout-block__bottom-menu'>
                         <div className="layout-block__bottom-menu-item history">History</div>
                         <div onClick={historyBackHandler} className="layout-block__bottom-menu-item back"><img src="/img/up.svg" alt="" style={{transform: 'rotateZ(-90deg)'}} /></div>
+                        <div onClick={addToMultiplicate} className="layout-block__bottom-menu-item favorites">Для мульта</div>
                         <div onClick={historyNextHandler} className="layout-block__bottom-menu-item next"><img src="/img/up.svg" alt="" style={{transform: 'rotateZ(90deg)'}} /></div>
                     </div>
                     {canvasJsx}
                 </div>
-            </React.Fragment>
-            )
+            </React.Fragment>)
+
 
     function getCanvas(canvas){   
         return (<canvas 

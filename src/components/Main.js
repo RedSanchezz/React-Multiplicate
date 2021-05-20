@@ -1,27 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import './Main.scss';
-import TopPanel from './TopPanel/TopPanel';
-import LeftPanel from './LeftPanel/LeftPanel';
-import RightPanel from './RightPanel/RightPanel';
-import WorkSpace from './WorkSpace/WorkSpace';
+import DrawWindow from './DrawWindow/DrawWindow';
+import { WindowContext } from './WindowContext';
+import MultiplicateWindow from './MultiplicateWindow/MultiplicateWindow';
+
 
 
 function Main (props){
-
-    function handleClick(e){
-        props.changeTest(props.test+1);
-    }
+    const [state, setState] = useState('draw');
 
     return (
-        <div className='main'>
-            <TopPanel></TopPanel>
-            <LeftPanel></LeftPanel>
-            <RightPanel></RightPanel>
-            <WorkSpace></WorkSpace>
-        </div>  
+        <WindowContext.Provider value={{
+                window: state,
+                changeWindow: setState
+            }}>
+            <div className='main'>
+                {state==='draw' ? <DrawWindow></DrawWindow> : <MultiplicateWindow></MultiplicateWindow>}
+            </div>
+        </WindowContext.Provider>
     )
 }
 
