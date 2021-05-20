@@ -1,4 +1,6 @@
 
+import { setCurrentTool } from "../../redux/actionCreators/canvasActionCreator";
+import store from "../../redux/store";
 import SketchBrush from "./Brush/SketchBrush";
 import Eraser from "./Eraser/Eraser";
 
@@ -6,38 +8,36 @@ import Eraser from "./Eraser/Eraser";
 //класс для выбора инструмента рисования
 
 export default class ToolManager{
-    constructor(canvas, ctx, canvasBlock){
-        this._canvas = canvas;
-        this._ctx = ctx;
-        this._currentTool = null;
-        this._canvasBlock= canvasBlock;
-    }
-    setTool(tool){
-        if(this._currentTool) this._currentTool.destroy();
+
+    static setTool(tool){
+        let state = store.getState();
+        let currentTool = state.canvas.currentTool;
+        if(currentTool) currentTool.destroy();
         switch(tool){
             case "SCETCH_BRUSH":{ 
-                let brush = new SketchBrush(this._canvas, this._ctx, this._canvasBlock);
+                let brush = new SketchBrush();
                 brush.create();
-                this._currentTool=brush;
+                store.dispatch(setCurrentTool(brush));
                 break;
             }
             case "ERASER":{ 
-                let brush = new Eraser(this._canvas, this._ctx, this._canvasBlock);
+                let brush = new Eraser();
                 brush.create();
-                this._currentTool=brush;
+                store.dispatch(setCurrentTool(brush));
                 break;
             }
             
             default: {
-                let brush = new SketchBrush(this._canvas, this._ctx, this._canvasBlock);
+                let brush = new SketchBrush();
                 brush.create();
-                this._currentTool=brush;
+                store.dispatch(setCurrentTool(brush));
                 break;
             }
         }
     }
-    getTool(){
-        return this._currentTool;
+
+    static getTool(){
+        return store.getState().canvas.currentTool;
     }
 }
 

@@ -6,6 +6,7 @@ import { saveBrush } from '../../../../../redux/actionCreators/brushActionCreato
 import ColorHelper from '../../../../../utils/ColorHelper';
 import './BrushPanel.scss';
 import { changeSavedBrushes } from '../../../../../redux/actionCreators/brushActionCreators';
+import ToolManager from '../../../../../paint/ToolManager/ToolManager';
 
 
 function BrushPanel(props) {
@@ -14,17 +15,17 @@ function BrushPanel(props) {
     let colorIndex =null;
 
     function brushSizeHandler(e){
-        let tool = props.toolManager.getTool();
+        let tool = ToolManager.getTool();
         tool.setSize(e.target.value);
     }
 
     function brushColorHandler(e){
-        let tool = props.toolManager.getTool();
+        let tool = ToolManager.getTool();
         tool.setColor(e.target.value);
     }
 
     function brushAlphaHandler(e){
-        let tool = props.toolManager.getTool();
+        let tool = ToolManager.getTool();
         tool.setAlpha(e.target.value);
     }
 
@@ -34,8 +35,7 @@ function BrushPanel(props) {
 
     function changeBrushHandler(index){
         let brushSetting = props.savedBrushes[index];
-        let tool = props.toolManager.getTool();
-        console.log(brushSetting);
+        let tool = ToolManager.getTool();
         tool.setColor(brushSetting.color);
         tool.setSize(brushSetting.size);
         tool.setAlpha(brushSetting.alpha);
@@ -157,8 +157,7 @@ function mapStateToProps(state){
         brushSize: state.brush.size,
         brushColor: state.brush.color,
         brushAlpha: state.brush.alpha,
-        savedBrushes: state.brush.savedBrushes,
-        toolManager: state.canvas.toolManager
+        savedBrushes: state.brush.savedBrushes
     }
 }
 

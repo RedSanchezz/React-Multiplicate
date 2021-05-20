@@ -3,9 +3,8 @@ import LayoutManager from "../../LayoutManager/LayoutManager";
 import Brush from "../Brush/Brush";
 
 export default class Eraser extends Brush{
-    constructor(canvas, ctx, canvasBlock){
-        super(canvas, ctx);
-        this._canvasBlock = canvasBlock;
+    constructor(){
+        super();
     }
     create(){
         var ppts = [];
@@ -15,7 +14,6 @@ export default class Eraser extends Brush{
 
         let state = store.getState();
 
-        
         tmp_canvas.style.zIndex=100;
 
         tmp_canvas.height= state.canvas.size.height;
@@ -27,9 +25,7 @@ export default class Eraser extends Brush{
         tmp_canvas.classList.add("tmp_canvas");
         
         const tmpCtx=tmp_canvas.getContext("2d");
-        this._canvasBlock.prepend(tmp_canvas);
-
-
+        state.canvas.canvasBlock.prepend(tmp_canvas);
 
         this._listenerManager.addListener(tmp_canvas, "mousedown",(e) =>{
 

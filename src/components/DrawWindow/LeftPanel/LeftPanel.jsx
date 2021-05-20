@@ -1,19 +1,20 @@
 
 import React, { useState }  from 'react'
 import { connect } from 'react-redux';
+import ToolManager from '../../../paint/ToolManager/ToolManager';
 import './LeftPanel.scss';
-function LeftPanel(props) {
+function LeftPanel() {
 
     let [activeTool, setActiveTool] = useState(0);
 
     function clickToolOneHandler(){
-        props.toolManager.setTool('SCETCH_BRUSH');
+        ToolManager.setTool('SCETCH_BRUSH');
         console.log(activeTool);
         setActiveTool(0);
     }
 
     function clickToolTwoHandler(){
-        props.toolManager.setTool('ERASER');
+        ToolManager.setTool('ERASER');
         setActiveTool(1);
     }
 
@@ -40,11 +41,6 @@ function LeftPanel(props) {
     )
 }
 
-function mapStateToProps(state){
-    return {
-        toolManager: state.canvas.toolManager,
-    }
-}
 
-export default  connect(mapStateToProps)(LeftPanel);
+export default  connect()(LeftPanel);
 

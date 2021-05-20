@@ -1,8 +1,9 @@
-import { CHANGE_CANVAS_SIZE, SET_CANVAS, SET_TOOL_MANAGER } from './../actionTypes';
+import { CHANGE_CANVAS_SIZE, SET_CANVAS, SET_CURRENT_TOOL, SET_TOOL_MANAGER, SET_CANVAS_BLOCK } from './../actionTypes';
 
 
 let initState = {
     canvas: null,
+    canvasBlock:null,
     context: null,
     size:{
         width: '100px',
@@ -12,7 +13,7 @@ let initState = {
         top: '1px',
         left: '1px'
     },
-    toolManager: null
+    currentTool: null,
 }
 
 export default function canvasReducer(state = initState, action) {
@@ -34,12 +35,20 @@ export default function canvasReducer(state = initState, action) {
                 context: action.payload.context
             }
         }
-        case SET_TOOL_MANAGER: {
+
+        case SET_CURRENT_TOOL: {
             return {
                 ...state,
-                toolManager: action.payload
+                currentTool : action.payload
             }
         }
+        case SET_CANVAS_BLOCK: {
+            return {
+                ...state,
+                canvasBlock: action.payload
+            }
+        }
+
         default: {
             return state;
         }

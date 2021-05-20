@@ -1,4 +1,4 @@
-import { CHANGE_CANVAS_SIZE, SET_CANVAS, SET_TOOL_MANAGER } from "../actionTypes";
+import { CHANGE_CANVAS_SIZE, SET_CANVAS, SET_CANVAS_BLOCK, SET_CURRENT_TOOL } from "../actionTypes";
 
 export  function changeCanvasSize(width, height) {
     return {
@@ -19,9 +19,16 @@ export function setCanvas(canvas, context) {
 };
 
 
-export default function setToolManager(toolManager) {
+export function setCurrentTool(currentTool) {
     return {
-        type: SET_TOOL_MANAGER,
-        payload: toolManager
+        type: SET_CURRENT_TOOL,
+        payload: currentTool
+    }
+};
+
+export function setCanvasBlock(canvasBlock){
+    return {
+        type: SET_CANVAS_BLOCK,
+        payload: canvasBlock
     }
 };

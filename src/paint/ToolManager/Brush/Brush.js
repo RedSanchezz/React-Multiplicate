@@ -7,8 +7,8 @@ import { changeBrushSetting } from './../../../redux/actionCreators/brushActionC
 //Базовый класс для кисти
 export default class Brush extends Tool {
 
-    constructor(canvas, ctx){
-        super(canvas, ctx);
+    constructor(){
+        super();
         this._listenerManager= new ListenerManager(new Array());
     }
 
@@ -17,7 +17,6 @@ export default class Brush extends Tool {
         let ctx = state.canvas.context;
         if(isFinite(state.brush.alpha)) color=ColorHelper.toRgba(color, state.brush.alpha);
         store.dispatch(changeBrushSetting({color}))
-
     }
 
     getColor(){

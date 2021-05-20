@@ -5,12 +5,13 @@ import Brush from "./Brush";
 
 
 export default class SketchBrush extends Brush{
-    constructor(canvas, ctx, canvasBlock){
-        super(canvas, ctx);
+    constructor(){
+        super();
         this.started = false;
-        this._canvasBlock = canvasBlock;
+        let state = store.getState();
+        this._canvasBlock = state.canvas.canvasBlock;
     }
-    
+
     create(){
         var ppts = [];
 
