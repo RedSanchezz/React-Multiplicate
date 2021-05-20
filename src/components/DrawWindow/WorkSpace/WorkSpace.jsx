@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 
 import './WorkSpace.scss'
 import setToolManager, { changeCanvasSize } from './../../../redux/actionCreators/canvasActionCreator';
-import { addLayoutManager } from './../../../redux/actionCreators/layoutActionCreator';
 import ToolManager from './../../../paint/ToolManager/ToolManager';
 import LayoutManager from './../../../paint/LayoutManager/LayoutManager';
 import Canvas from './Canvas/Canvas';
@@ -29,8 +28,7 @@ function WorkSpace(props) {
             let toolManager = new ToolManager(props.canvas, props.context, workSpace.current);
             toolManager.setTool();
             props.setToolManager(toolManager);
-            let layoutManager = new LayoutManager();
-            props.addLayoutManager(layoutManager);
+            LayoutManager.init();
         }
     }, [props.canvas]);
 
@@ -45,8 +43,7 @@ function WorkSpace(props) {
 function mapDispatchToProps(dispatch){
     return {
         changeCanvasSize: bindActionCreators(changeCanvasSize, dispatch),
-        setToolManager: bindActionCreators(setToolManager, dispatch),
-        addLayoutManager: bindActionCreators(addLayoutManager, dispatch)
+        setToolManager: bindActionCreators(setToolManager, dispatch)
     }
 }
 function mapStateToProps(state){
@@ -57,7 +54,6 @@ function mapStateToProps(state){
         defaultBackgorund: state.setting.canvasDefaultBackground,
         currentLayout: state.layouts.currentLayout,
         forRender: state.layouts
-
     }
 }
 

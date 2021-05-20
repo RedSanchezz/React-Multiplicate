@@ -1,4 +1,5 @@
 import store from "../../../redux/store";
+import LayoutManager from "../../LayoutManager/LayoutManager";
 import Brush from "../Brush/Brush";
 
 export default class Eraser extends Brush{
@@ -58,8 +59,8 @@ export default class Eraser extends Brush{
             
             this._ctx.putImageData(imageData, 0, 0);
 
-            state.layouts.layoutManager.update();
-            state.layouts.layoutManager.render();
+            LayoutManager.update();
+            LayoutManager.render();
             state.layouts.currentLayout.saveInHistory()
 
             tmpCtx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);

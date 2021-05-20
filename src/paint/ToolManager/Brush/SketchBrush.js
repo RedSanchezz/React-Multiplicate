@@ -1,5 +1,6 @@
 
 import store from "../../../redux/store";
+import LayoutManager from "../../LayoutManager/LayoutManager";
 import Brush from "./Brush";
 
 
@@ -64,8 +65,8 @@ export default class SketchBrush extends Brush{
                 this._ctx.drawImage(tmp_canvas, 0, 0);
 
                 let state = store.getState();
-                state.layouts.layoutManager.update();
-                state.layouts.layoutManager.render();
+                LayoutManager.update();
+                LayoutManager.render();
                 state.layouts.currentLayout.saveInHistory();
                 
                 tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
@@ -84,8 +85,8 @@ export default class SketchBrush extends Brush{
                 this._ctx.drawImage(tmp_canvas, 0, 0);
 
                 let state = store.getState();
-                state.layouts.layoutManager.update();
-                state.layouts.layoutManager.render();
+                LayoutManager.update();
+                LayoutManager.render();
                 state.layouts.currentLayout.saveInHistory();
                 
                 tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);

@@ -1,13 +1,13 @@
+import LayoutManager from "./LayoutManager";
+
 export default class Layout {
-    constructor(canvas, ctx, show, layoutManager){
+    constructor(canvas, ctx, show){
         this._canvas = canvas;
         this._ctx = ctx;
         this._show=show;
         this._name=null;
         this._historyArr=[];
-        
         this._positionInHistory=-1;
-        this._layoutManager = layoutManager;
         this.saveInHistory();
         this.selected = false;
     }
@@ -53,7 +53,7 @@ export default class Layout {
         if(this._positionInHistory!==0){ 
             this._positionInHistory-=1;
             this._ctx.putImageData(this._historyArr[this._positionInHistory],0,0);
-            this._layoutManager.update();
+            LayoutManager.update();
         }
     }
 
@@ -61,7 +61,7 @@ export default class Layout {
         if(this._positionInHistory!==this._historyArr.length-1){ 
             this._positionInHistory+=1;
             this._ctx.putImageData(this._historyArr[this._positionInHistory],0,0);
-            this._layoutManager.update();
+            LayoutManager.update();
         }
     }
 

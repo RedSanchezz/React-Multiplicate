@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
+import LayoutManager from '../../../../paint/LayoutManager/LayoutManager';
 
 import Layout from './Layout/Layout';
 import './Layouts.scss';
@@ -14,10 +14,10 @@ function Layouts(props) {
     let layoutListBlock = useRef();
 
     function addLayoutHandler(){
-        props.layoutManager.addLayout();
+        LayoutManager.addLayout();
     }
     function cancelSelection(){
-        props.layoutManager.unSelectAll();
+        LayoutManager.unSelectAll();
     }
 
 
@@ -43,8 +43,7 @@ function mapStateToProps(state){
     return {
         layoutList: state.layouts.layoutList,
         currentLayout: state.layouts.currentLayout,
-        forRender: state.layouts,
-        layoutManager: state.layouts.layoutManager
+        forRender: state.layouts
     }
 }
 

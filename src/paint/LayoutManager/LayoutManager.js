@@ -3,30 +3,27 @@ import store from "../../redux/store";
 import Layout from "./Layout";
 
 //Класс для управления слоями
-export default  class  LayoutManager{
-    constructor(){
-        let state = store.getState();
-        //true canvas 
-        this._canvas = state.canvas.canvas;
-        this._ctx = state.canvas.context;
+export default class LayoutManager{
 
-        this._init();
-    }
-    _init(){
+
+    static init(){
         let state = store.getState();
+
+        let mainCanvas = state.canvas.canvas;
+        let mainCanvasCtx = state.canvas.context;
+
         let layoutList = state.layouts.layoutList;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
 
-        let defCanvas = document.createElement("canvas");
-        defCanvas.width=state.canvas.size.width;
-        defCanvas.height=state.canvas.size.height;
+        let defLayoutCanvas = document.createElement("canvas");
+        defLayoutCanvas.width=state.canvas.size.width;
+        defLayoutCanvas.height=state.canvas.size.height;
 
-        let defCtx = defCanvas.getContext("2d");
+        let defLayoutCtx = defLayoutCanvas.getContext("2d");
 
-        defCtx.putImageData(this._ctx.createImageData( defCanvas.width, defCanvas.height),0,0);
-        
-        let layout = new Layout(defCanvas, defCtx, true, this);
 
+        defLayoutCtx.putImageData(mainCanvasCtx.createImageData(defLayoutCanvas.width, defLayoutCanvas.height),0,0);
+        let layout = new Layout(defLayoutCanvas, defLayoutCtx, true, this);
 
         layoutList.push(layout);
 
@@ -35,18 +32,19 @@ export default  class  LayoutManager{
     }
 
     //обновляем канвас, из всех слоев
-    update(){
+    static update(){
         let state = store.getState();
         let layoutList= state.layouts.layoutList;
+        let mainCanvasCtx = state.canvas.context;
 
-        this._ctx.clearRect(0, 0, state.canvas.size.width, state.canvas.size.height);
+        mainCanvasCtx.clearRect(0, 0, state.canvas.size.width, state.canvas.size.height);
         for(let i=0; i< layoutList.length; i++){
-            if(!layoutList[i].isHidden()) this._ctx.drawImage(layoutList[i].getCanvas(),0,0);
+            if(!layoutList[i].isHidden()) mainCanvasCtx.drawImage(layoutList[i].getCanvas(),0,0);
         }
     }
 
     //Добавляем новый пустой слой
-    addLayout(){
+    static addLayout(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
 
@@ -62,7 +60,7 @@ export default  class  LayoutManager{
         store.dispatch(changeLayoutList(layoutList));
     }
 
-    copyLayout(index){
+    static copyLayout(index){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
 
@@ -87,7 +85,7 @@ export default  class  LayoutManager{
 
 
     //получаем список картинок из слоев
-    getCanvasList(){
+    static getCanvasList(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
 
@@ -114,30 +112,30 @@ export default  class  LayoutManager{
         return imageList;
     }
     //Возвращает обьект 
-    getCurrentLayout(){
+    static getCurrentLayout(){
         return store.getState().layouts.currentLayout;
     }
 
-    setCurrentLayout(index){
+    static setCurrentLayout(index){
         if(index<0) index=0;
         let currentLayout = store.getState().layouts.layoutList[index];
         store.dispatch(changeCurrentLayout(currentLayout, index));
     }
 
-    getCurrentLayoutIndex(){
+    static getCurrentLayoutIndex(){
         let state = store.getState();
         return +state.layouts.currentLayoutIndex;
     }
 
     
-    toggleHide(index){
+    static toggleHide(index){
         let state = store.getState();
         index=+index;
         state.layouts.layoutList[index].toggleHide();
         this.update();
     }
 
-    deleteLayout(index){
+    static deleteLayout(index){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayout = state.layouts.currentLayout;
@@ -163,7 +161,7 @@ export default  class  LayoutManager{
         this.update();
     }
 
-    deleteLayouts(indexArray){
+    static deleteLayouts(indexArray){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayout = state.layouts.currentLayout;
@@ -203,7 +201,7 @@ export default  class  LayoutManager{
         this.update();
     }
     
-    swap(index1, index2){
+    static swap(index1, index2){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
@@ -227,7 +225,7 @@ export default  class  LayoutManager{
         this.update();
     }
     
-    combine(indexArray){
+    static combine(indexArray){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
@@ -248,25 +246,25 @@ export default  class  LayoutManager{
         
     }
 
-    isHidden(index){
+    static isHidden(index){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         return layoutList[index].isHidden();
     }
-    getLayoutList(){
+    static getLayoutList(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
 
         return layoutList;
     }
-    setLayout(layout, index){
+    static setLayout(layout, index){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
 
         layoutList[index]=layout;
         this.update();
     }
-    select(id){
+    static select(id){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         
@@ -275,7 +273,7 @@ export default  class  LayoutManager{
         this.update();
     }
 
-    unSelectAll(){
+    static unSelectAll(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         layoutList.forEach((layout) => {
@@ -286,7 +284,7 @@ export default  class  LayoutManager{
         this.update();
     }
 
-    render(){
+    static render(){
         let state = store.getState();
         store.dispatch(changeCurrentLayout(state.layouts.currentLayout, state.layouts.currentLayoutIndex));
     }

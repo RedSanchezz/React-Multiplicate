@@ -1,4 +1,4 @@
-import { ADD_LAYOUT_MANAGER, CHANGE_LAYOUT_LIST } from "../actionTypes";
+import { CHANGE_LAYOUT_LIST } from "../actionTypes";
 import { CHANGE_CURRENT_LAYOUT } from './../actionTypes';
 
 export function changeLayoutList(layoutList){
@@ -18,9 +18,3 @@ export function changeCurrentLayout(currentLayout, index){
     }
 }
 
-export function addLayoutManager(layoutManager){
-    return {
-        type: ADD_LAYOUT_MANAGER,
-        payload: layoutManager
-    }
-}

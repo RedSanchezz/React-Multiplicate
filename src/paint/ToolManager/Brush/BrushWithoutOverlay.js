@@ -5,7 +5,6 @@ import Brush from "./Brush";
 export default class BrushWithoutOverlay extends Brush{
     constructor(canvas, ctx, paint){
         super(canvas, ctx, paint);
-        
     }
     create(){
         var ppts = [];
@@ -52,8 +51,8 @@ export default class BrushWithoutOverlay extends Brush{
             
             tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
             ppts=[];
-            this._layoutManager.update();
-            this._layoutManager.getCurrentLayout().saveInHistory();
+            LayoutManager.update();
+            LayoutManager.getCurrentLayout().saveInHistory();
 
         });
 

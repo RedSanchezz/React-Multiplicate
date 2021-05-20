@@ -39,7 +39,7 @@ function FrameBlock(props) {
         let ctx = canvas.getContext('2d');
         ctx.drawImage(value.canvas, 0, 0);
 
-        let layout = new Layout(canvas, ctx, true, props.layoutManager);
+        let layout = new Layout(canvas, ctx, true);
         props.layoutList.push(layout);
         props.changeLayoutList(props.layoutList);
     }
@@ -81,7 +81,6 @@ function FrameBlock(props) {
 
 function mapStateToPorps(state){
     return {
-        layoutManager: state.layouts.layoutManager,
         layoutList: state.layouts.layoutList,
         frameList: state.multiplicate.frameList
     }

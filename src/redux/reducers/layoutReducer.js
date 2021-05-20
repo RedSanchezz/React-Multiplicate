@@ -1,11 +1,10 @@
-import { ADD_LAYOUT_MANAGER, CHANGE_LAYOUT_LIST } from "../actionTypes";
+import { CHANGE_LAYOUT_LIST } from "../actionTypes";
 import { CHANGE_CURRENT_LAYOUT } from './../actionTypes';
 
 let initState = {
     layoutList: [],
     currentLayout: null,
     currentLayoutIndex: 0,
-    layoutManager: null
 }
 
 export default function layoutReducer(state = initState, action) {
@@ -21,12 +20,6 @@ export default function layoutReducer(state = initState, action) {
                 ...state,
                 currentLayout: action.payload.currentLayout,
                 currentLayoutIndex: action.payload.currentLayoutIndex
-            }
-        }
-        case ADD_LAYOUT_MANAGER: {
-            return {
-                ...state,
-                layoutManager: action.payload
             }
         }
         default: {

@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { changeCurrentLayout } from '../../../../../redux/actionCreators/layoutActionCreator';
 import './Layout.scss'
 import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
+import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
 
 
 function Layout(props) {
@@ -19,48 +20,48 @@ function Layout(props) {
 
 
     function hideLayoutHandler(e){
-        props.layoutManager.toggleHide(index);
+        LayoutManager.toggleHide(index);
         props.changeCurrentLayout(props.currentLayout, index);
         e.stopPropagation();
     }
 
     function setCurrent(e){
         if(e.ctrlKey) {
-            props.layoutManager.select(index);
+            LayoutManager.select(index);
             return;
         }
-        props.layoutManager.setCurrentLayout(index);
+        LayoutManager.setCurrentLayout(index);
         e.stopPropagation();
     }
 
     
     function upHandler(e){
-        props.layoutManager.swap(index, index-1);
+        LayoutManager.swap(index, index-1);
         e.stopPropagation();
 
     }
     function downHandler(e){
-        props.layoutManager.swap(index, index+1);
+        LayoutManager.swap(index, index+1);
         e.stopPropagation();
 
     }
 
     function historyBackHandler(e){
         layout.back();
-        props.layoutManager.update();
-        props.layoutManager.render();
+        LayoutManager.update();
+        LayoutManager.render();
         e.stopPropagation();
     }
 
     function historyNextHandler(e){
         layout.next();
-        props.layoutManager.update();
-        props.layoutManager.render();
+        LayoutManager.update();
+        LayoutManager.render();
         e.stopPropagation();
     }
 
     function deleteLayoutHandler(e){
-        props.layoutManager.deleteLayout(index);
+        LayoutManager.deleteLayout(index);
         e.stopPropagation();
     }
 
@@ -83,7 +84,7 @@ function Layout(props) {
             if(value.selected) indexArray.push(index);
             return value;
         })
-        props.layoutManager.deleteLayouts(indexArray);
+        LayoutManager.deleteLayouts(indexArray);
     }
 
     function combineSelectedHandler(e){
@@ -91,7 +92,7 @@ function Layout(props) {
         props.layoutList.map((value, index) => {
             if(value.selected) indexArray.push(index);
         })
-        props.layoutManager.combine(indexArray);
+        LayoutManager.combine(indexArray);
     }
 
     function contextMenuMouseLeaveHandler(){
@@ -99,7 +100,7 @@ function Layout(props) {
     }
 
     function unselectAllHandler(){
-        props.layoutManager.unSelectAll();
+        LayoutManager.unSelectAll();
     }
 
     function addToMultiplicate(){
@@ -155,8 +156,7 @@ function mapStateToProps(state){
     return {
         layoutList: state.layouts.layoutList,
         currentLayout: state.layouts.currentLayout,
-        forRender: state.layouts,
-        layoutManager: state.layouts.layoutManager
+        forRender: state.layouts
     }
 }
 
