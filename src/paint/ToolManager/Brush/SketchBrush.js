@@ -66,7 +66,7 @@ export default class SketchBrush extends Brush{
 
                 let state = store.getState();
                 LayoutManager.update();
-                LayoutManager.render();
+                LayoutManager.renderCurrent();
                 state.layouts.currentLayout.saveInHistory();
                 
                 tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
@@ -86,7 +86,7 @@ export default class SketchBrush extends Brush{
 
                 let state = store.getState();
                 LayoutManager.update();
-                LayoutManager.render();
+                LayoutManager.renderCurrent();
                 state.layouts.currentLayout.saveInHistory();
                 
                 tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);

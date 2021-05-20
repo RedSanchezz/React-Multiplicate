@@ -60,7 +60,7 @@ export default class Eraser extends Brush{
             this._ctx.putImageData(imageData, 0, 0);
 
             LayoutManager.update();
-            LayoutManager.render();
+            LayoutManager.renderCurrent();
             state.layouts.currentLayout.saveInHistory()
 
             tmpCtx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);

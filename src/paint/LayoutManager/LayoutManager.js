@@ -5,7 +5,6 @@ import Layout from "./Layout";
 //Класс для управления слоями
 export default class LayoutManager{
 
-
     static init(){
         let state = store.getState();
 
@@ -21,8 +20,7 @@ export default class LayoutManager{
 
         let defLayoutCtx = defLayoutCanvas.getContext("2d");
 
-
-        defLayoutCtx.putImageData(mainCanvasCtx.createImageData(defLayoutCanvas.width, defLayoutCanvas.height),0,0);
+        defLayoutCtx.putImageData(mainCanvasCtx.createImageData(mainCanvas.width, mainCanvas.height),0,0);
         let layout = new Layout(defLayoutCanvas, defLayoutCtx, true, this);
 
         layoutList.push(layout);
@@ -133,6 +131,7 @@ export default class LayoutManager{
         index=+index;
         state.layouts.layoutList[index].toggleHide();
         this.update();
+        this.renderCurrent();
     }
 
     static deleteLayout(index){
@@ -182,7 +181,8 @@ export default class LayoutManager{
 
         if(layoutList.length==0){
             console.log("Нулевая длинна");
-            this.addLayout();            
+            this.addLayout();
+            this.setCurrentLayout(0);
             this.update();
             return;
         }
@@ -223,6 +223,7 @@ export default class LayoutManager{
             this.setCurrentLayout(currentLayoutIndex);
         }
         this.update();
+        this.renderAll();
     }
     
     static combine(indexArray){
@@ -283,10 +284,14 @@ export default class LayoutManager{
 
         this.update();
     }
-
-    static render(){
+    //обновляем все связанное с выбранным элементом
+    static renderCurrent(){
         let state = store.getState();
         store.dispatch(changeCurrentLayout(state.layouts.currentLayout, state.layouts.currentLayoutIndex));
+    }
+    static renderAll(){
+        let state = store.getState();
+        store.dispatch(changeLayoutList(state.layouts.layoutList));
     }
 }
 

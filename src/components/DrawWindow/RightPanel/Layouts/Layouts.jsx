@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 
 import { connect } from 'react-redux';
 import LayoutManager from '../../../../paint/LayoutManager/LayoutManager';
@@ -11,8 +11,6 @@ import './Layouts.scss';
 
 function Layouts(props) {
 
-    let layoutListBlock = useRef();
-
     function addLayoutHandler(){
         LayoutManager.addLayout();
     }
@@ -20,14 +18,14 @@ function Layouts(props) {
         LayoutManager.unSelectAll();
     }
 
-
     return (
         <>  
+            {console.log('render parent')}
             <div className='right-panel__layout-buttons'>
                 <button onClick={addLayoutHandler}>Добавить слой</button>
                 <button onClick={cancelSelection}>Отменить выделение</button>
             </div>
-            <div  ref={layoutListBlock} className='right-panel__layout-list'>
+            <div  className='right-panel__layout-list'>
                 {
                     props.layoutList.map((value, index) => {
                         return <Layout key={index} value={value} index={index}></Layout>
@@ -42,11 +40,7 @@ function Layouts(props) {
 function mapStateToProps(state){
     return {
         layoutList: state.layouts.layoutList,
-        currentLayout: state.layouts.currentLayout,
-        forRender: state.layouts
     }
 }
-
-
 
 export default connect(mapStateToProps)(Layouts);

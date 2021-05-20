@@ -1,4 +1,4 @@
-import { CHANGE_LAYOUT_LIST } from "../actionTypes";
+import { CHANGE_LAYOUT_LIST, RENDER_CURRENT_LAYOUT } from "../actionTypes";
 import { CHANGE_CURRENT_LAYOUT } from './../actionTypes';
 
 export function changeLayoutList(layoutList){

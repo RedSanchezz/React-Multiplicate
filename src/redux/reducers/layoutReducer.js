@@ -5,6 +5,7 @@ let initState = {
     layoutList: [],
     currentLayout: null,
     currentLayoutIndex: 0,
+    changeCurrentCanvas: true
 }
 
 export default function layoutReducer(state = initState, action) {
@@ -19,7 +20,8 @@ export default function layoutReducer(state = initState, action) {
             return {
                 ...state,
                 currentLayout: action.payload.currentLayout,
-                currentLayoutIndex: action.payload.currentLayoutIndex
+                currentLayoutIndex: action.payload.currentLayoutIndex,
+                changeCurrentCanvas: !state.changeCurrentCanvas
             }
         }
         default: {

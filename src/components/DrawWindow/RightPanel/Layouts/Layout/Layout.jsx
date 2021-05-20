@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import  ReactDOM  from 'react-dom';
 
 import { connect } from 'react-redux';
@@ -12,16 +12,37 @@ import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
 function Layout(props) {
 
     let contextMenu = useRef();
+
     let layout = props.value;
     let canvas = layout.getCanvas();
-
-    let canvasJsx = getCanvas(canvas);
+    
+    let canvasRef = useRef();
     let index = props.index;
 
+    useEffect(() => {
+        if(props.currentLayout===layout){
+            let context = canvasRef.current.getContext('2d');
+            if(context) {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(canvas, 0, 0);
+            }
+            console.log('Перерисовываем слой  '+ index);
+        }
+    //перерисовываем канвас, только у активного слоя 
+    }, [props.changeCurrentCanvas]);
+
+
+    useEffect(() => {
+        let context = canvasRef.current.getContext('2d');
+        if(context) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(canvas, 0, 0);
+        }
+    //перерисовываем канвас, только у активного слоя 
+    }, [props.layoutList]);
 
     function hideLayoutHandler(e){
         LayoutManager.toggleHide(index);
-        props.changeCurrentLayout(props.currentLayout, index);
         e.stopPropagation();
     }
 
@@ -34,7 +55,6 @@ function Layout(props) {
         e.stopPropagation();
     }
 
-    
     function upHandler(e){
         LayoutManager.swap(index, index-1);
         e.stopPropagation();
@@ -48,15 +68,17 @@ function Layout(props) {
 
     function historyBackHandler(e){
         layout.back();
+        //обновляем большой канвас
         LayoutManager.update();
-        LayoutManager.render();
+        //вызываем отрисовку
+        LayoutManager.renderAll();
         e.stopPropagation();
     }
 
     function historyNextHandler(e){
         layout.next();
         LayoutManager.update();
-        LayoutManager.render();
+        LayoutManager.renderAll();
         e.stopPropagation();
     }
 
@@ -64,8 +86,6 @@ function Layout(props) {
         LayoutManager.deleteLayout(index);
         e.stopPropagation();
     }
-
-
 
     function contextMenuHandler(e){
         if(layout.selected){
@@ -131,32 +151,22 @@ function Layout(props) {
                         <div onClick={addToMultiplicate} className="layout-block__bottom-menu-item favorites">Для мульта</div>
                         <div onClick={historyNextHandler} className="layout-block__bottom-menu-item next"><img src="/img/up.svg" alt="" style={{transform: 'rotateZ(90deg)'}} /></div>
                     </div>
-                    {canvasJsx}
+                    <canvas ref={canvasRef} 
+                            style={props.index===props.currentLayoutIndex ? {outline: '10px solid red'} : {}}
+                            width={canvas.width} 
+                            height={canvas.height}>
+                    </canvas>
                 </div>
             </React.Fragment>)
-
-
-    function getCanvas(canvas){   
-        return (<canvas 
-                    style={props.value===props.currentLayout ? {outline: '10px solid red'} : {}}
-                    ref={(c) => {
-                        let context = c?.getContext('2d');
-                        if(context) {
-                            context?.clearRect(0, 0, canvas.width, canvas.height);
-                            context?.drawImage(canvas, 0, 0);
-                        }
-                    }} 
-                    width={canvas.width} 
-                    height={canvas.height}>
-                </canvas>)
-    }
 }
+
 
 function mapStateToProps(state){
     return {
         layoutList: state.layouts.layoutList,
         currentLayout: state.layouts.currentLayout,
-        forRender: state.layouts
+        currentLayoutIndex: state.layouts.currentLayoutIndex,
+        changeCurrentCanvas: state.layouts.changeCurrentCanvas
     }
 }
 
