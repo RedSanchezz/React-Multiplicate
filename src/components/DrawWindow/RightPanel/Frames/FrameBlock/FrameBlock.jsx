@@ -5,91 +5,99 @@ import './FrameBlock.scss'
 import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
 import { connect } from 'react-redux';
 import Layout from './../../../../../paint/LayoutManager/Layout';
-import { bindActionCreators } from 'redux';
-import { changeLayoutList } from '../../../../../redux/actionCreators/layoutActionCreator';
+import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
 
-function FrameBlock(props) {
-    let value = props.value;
-    let index = props.index;
+class FrameBlock extends React.Component {
 
-    let refCanvas = useRef();
+    constructor(props){
+        super(props);
+        this.value = props.value;
+        this.index = props.index;
+        this.reDraw = this.index===this.props.currentFrame;
 
-    useEffect(() => {
-        console.log('effect');
-        let canvas   = refCanvas.current;
-        let context = canvas.getContext('2d');
-        context.clearRect(0, 0, value.canvas.width, value.canvas.height);
-        context.drawImage(value.canvas, 0, 0);
-    }, [props.frameList])
+    }
 
-    function deleteFrameHandler(){
+
+    // useEffect(() => {
+    //     console.log('start' + index);
+    //     refFrameBlock.current.prepend(value.canvas);
+    //     return ()=>{
+    //         value.canvas.remove();
+    //         console.log('kill'+index);
+
+    //     }
+    // }, [reDraw, value.id]);
+
+
+    deleteFrameHandler = (e)=>{
         console.log('del');
-        MultiplicateManager.deleteFrame(index);
+        MultiplicateManager.deleteFrame(this.index);
+        e.stopPropagation();
     }
 
-    function changeDelayHandler(e){
-        value.delay=e.currentTarget.value;
+    changeDelayHandler = (e) => {
+        this.value.delay=e.currentTarget.this.value;
         MultiplicateManager.renderRightPanel();
+        e.stopPropagation();
     }
 
-    function addToLayoutListHandler(e){
+    addToLayoutListHandler =(e) =>{
         let canvas = document.createElement('canvas');
-        canvas.width=value.canvas.width;
-        canvas.height = value.canvas.height;
+        canvas.width=this.value.canvas.width;
+        canvas.height = this.value.canvas.height;
         let ctx = canvas.getContext('2d');
-        ctx.drawImage(value.canvas, 0, 0);
+        ctx.drawImage(this.value.canvas, 0, 0);
 
         let layout = new Layout(canvas, ctx, true);
-        props.layoutList.push(layout);
-        props.changeLayoutList(props.layoutList);
+        this.props.layoutList.push(layout);
+        LayoutManager.changeLayoutList(this.props.layoutList)
+        e.stopPropagation();
     }
 
-    function upPositionHandler(e){
-        MultiplicateManager.swap(index, index-1);
+    upPositionHandler = (e)=> {
+        MultiplicateManager.swap(this.index, this.index-1);
+        e.stopPropagation();
     }
 
-    function downPositionHandler(e){
-        MultiplicateManager.swap(index, index+1);
+    downPositionHandler = (e) =>{
+        MultiplicateManager.swap(this.index, this.index+1);
+        e.stopPropagation();
     }
 
-    return (
-        <div className='frame-block'>
-            <canvas
-                width={value.canvas.width}
-                height={value.canvas.height}
-                ref={refCanvas}>
-            </canvas>
-            <div className='frame-menu'>
-                <div onClick={upPositionHandler} className="frame-menu__item">
-                    <img src="img/up.svg" alt="" />
+    setCurrentFrame = (e)=>{
+        MultiplicateManager.setCurrentFrame(this.index);
+    }
+
+    render(){
+        return (
+            <div ref={this.refFrameBlock} className='frame-block' style={this.props.currentFrame === this.index ? {background: 'darkred'} : {background: 'none'}} onClick={this.setCurrentFrame}>
+                <div className='frame-menu'>
+                    <div onClickCapture={this.upPositionHandler} className="frame-menu__item">
+                        <img src="img/up.svg" alt="" />
+                    </div>
+                    <div className="frame-menu__item">
+                        <button onClickCapture={this.addToLayoutListHandler}>В слои</button>
+                    </div>
+                    <div onClickCapture={this.downPositionHandler} className="frame-menu__item down-arrow">
+                        <img src="img/up.svg" alt="" />
+                    </div>
                 </div>
-                <div className="frame-menu__item">
-                    <button onClick={addToLayoutListHandler}>В слои</button>
-                </div>
-                <div onClick={downPositionHandler} className="frame-menu__item down-arrow">
-                    <img src="img/up.svg" alt="" />
+                <div className="frame-block__input-block">
+                    <div className="frame-block__input-block-title"><h2>Задержка</h2></div>
+                    <input onClickCapture={e=>e.stopPropagation()} value={this.value.delay} onChange={this.changeDelayHandler} min='0'  type="number" />
+                    <img onClickCapture={this.deleteFrameHandler} src="img/delete.svg" alt="" />
                 </div>
             </div>
-            <div className="frame-block__input-block">
-                <div className="frame-block__input-block-title"><h2>Задержка</h2></div>
-                <input value={value.delay} onChange={changeDelayHandler} min='0'  type="number" />
-                <img onClick={deleteFrameHandler} src="img/delete.svg" alt="" />
-            </div>
-        </div>
-    )
+        )
+    }
 }
 
 function mapStateToPorps(state){
     return {
-        layoutList: state.layouts.layoutList,
-        frameList: state.multiplicate.frameList
+        // layoutList: state.layouts.layoutList,
+        // frameList: state.multiplicate.frameList,
+        currentFrame: state.multiplicate.currentFrame
     }
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-        changeLayoutList: bindActionCreators(changeLayoutList, dispatch)
-    }
-}
-
-export default connect(mapStateToPorps, mapDispatchToProps)(FrameBlock);
+export default connect(mapStateToPorps)(FrameBlock);

@@ -67,6 +67,5 @@ export default class Layout {
 
     select(){
         this.selected=!this.selected;
-        console.log('model' + this.selected);
     }
 }

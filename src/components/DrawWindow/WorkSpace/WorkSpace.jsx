@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { bindActionCreators } from 'redux';
 
 import './WorkSpace.scss'
-import { setToolManager, changeCanvasSize, setCanvasBlock } from './../../../redux/actionCreators/canvasActionCreator';
+import {changeCanvasSize, setCanvasBlock } from './../../../redux/actionCreators/canvasActionCreator';
 import ToolManager from './../../../paint/ToolManager/ToolManager';
 import LayoutManager from './../../../paint/LayoutManager/LayoutManager';
 import Canvas from './Canvas/Canvas';
@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 function WorkSpace(props) {
 
     const workSpace = useRef();
-
     useEffect(() => {
         let style = getComputedStyle(workSpace.current)
         props.changeCanvasSize(parseInt(style.width)-2, parseInt(style.height)-2);

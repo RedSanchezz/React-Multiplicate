@@ -13,7 +13,9 @@ export default class LayoutManager{
 
         let layoutList = state.layouts.layoutList;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
+        if(layoutList.length==0){
 
+        
         let defLayoutCanvas = document.createElement("canvas");
         defLayoutCanvas.width=state.canvas.size.width;
         defLayoutCanvas.height=state.canvas.size.height;
@@ -25,8 +27,11 @@ export default class LayoutManager{
 
         layoutList.push(layout);
 
-        store.dispatch(changeLayoutList(layoutList))
-        store.dispatch(changeCurrentLayout(layout, currentLayoutIndex));
+            store.dispatch(changeLayoutList(layoutList))
+            store.dispatch(changeCurrentLayout(layout, currentLayoutIndex));
+        }
+        this.update();
+        this.renderAll();
     }
 
     //обновляем канвас, из всех слоев
@@ -41,6 +46,9 @@ export default class LayoutManager{
         }
     }
 
+    static changeLayoutList(layoutList){
+        store.dispatch(changeLayoutList(layoutList));
+    }
     //Добавляем новый пустой слой
     static addLayout(){
         let state = store.getState();

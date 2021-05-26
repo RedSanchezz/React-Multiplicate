@@ -2,8 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import  ReactDOM  from 'react-dom';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { changeCurrentLayout } from '../../../../../redux/actionCreators/layoutActionCreator';
 import './Layout.scss'
 import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
 import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
@@ -170,9 +168,5 @@ function mapStateToProps(state){
     }
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-        changeCurrentLayout: bindActionCreators(changeCurrentLayout, dispatch),
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+
+export default connect(mapStateToProps)(Layout);

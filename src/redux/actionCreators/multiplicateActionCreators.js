@@ -1,11 +1,7 @@
-import { CHANGE_CURRENT_FRAME, CHANGE_FRAME_LIST } from "../actionTypes"
+import {  CHANGE_FRAME_LIST, PLAY, SET_MULTIPLICATE_CANVAS, STOP_PLAY } from "../actionTypes"
+import { SET_CURRENT_FRAME } from './../actionTypes';
 
-export function changeCurrentFrame(frame){
-    return {
-        type: CHANGE_CURRENT_FRAME,
-        payload: frame
-    }
-}
+
 export function changeFrameList(frameList){
     return {
         type: CHANGE_FRAME_LIST,
@@ -15,3 +11,30 @@ export function changeFrameList(frameList){
     }
 }
 
+export function setMultiplicateCanvas(canvas){
+    return {
+        type: SET_MULTIPLICATE_CANVAS,
+        payload: {
+            canvas: canvas,
+            context: canvas.getContext('2d')
+        }
+    }
+}
+
+export function stopPlay(){
+    return {
+        type: STOP_PLAY
+    }
+}
+
+export function play(){
+    return {
+        type: PLAY
+    }
+}
+export function setCurrentFrame(index){
+    return {
+        type: SET_CURRENT_FRAME,
+        payload: index
+    }
+}

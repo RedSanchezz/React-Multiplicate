@@ -5,6 +5,8 @@ import LayoutManager from '../../../../paint/LayoutManager/LayoutManager';
 
 import Layout from './Layout/Layout';
 import './Layouts.scss';
+import MultiplicateManager from './../../../../paint/MultiplicateManager/MultiplicateManager';
+import LayoutModel from './../../../../paint/LayoutManager/Layout';
 
 
 
@@ -17,13 +19,16 @@ function Layouts(props) {
     function cancelSelection(){
         LayoutManager.unSelectAll();
     }
-
+    function addToMultiplication(e){
+        //Обычный слой из модели, просто нужно было другое название в импорте
+        let layout = new LayoutModel(props.canvas, props.context, true);
+        MultiplicateManager.addFrame(layout, 100);
+    }
     return (
-        <>  
-            {console.log('render parent')}
+        <>
             <div className='right-panel__layout-buttons'>
                 <button onClick={addLayoutHandler}>Добавить слой</button>
-                <button onClick={cancelSelection}>Отменить выделение</button>
+                <button onClick={addToMultiplication}>Добавить для мульта</button>
             </div>
             <div  className='right-panel__layout-list'>
                 {
@@ -40,6 +45,9 @@ function Layouts(props) {
 function mapStateToProps(state){
     return {
         layoutList: state.layouts.layoutList,
+        canvas: state.canvas.canvas,
+        context: state.canvas.context
+        
     }
 }
 

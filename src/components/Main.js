@@ -9,6 +9,7 @@ import MultiplicateWindow from './MultiplicateWindow/MultiplicateWindow';
 
 
 function Main (props){
+    
     const [state, setState] = useState('draw');
 
     return (

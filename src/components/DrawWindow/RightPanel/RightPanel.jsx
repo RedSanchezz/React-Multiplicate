@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import './RightPanel.scss';
 import RightPanelDrawContent from './RightPanelDrawContent/RightPanelDrawContent';

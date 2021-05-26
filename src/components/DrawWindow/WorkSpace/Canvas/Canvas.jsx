@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Layout from '../../../../paint/LayoutManager/Layout';
+import MultiplicateManager from '../../../../paint/MultiplicateManager/MultiplicateManager';
 import { setCanvas } from '../../../../redux/actionCreators/canvasActionCreator';
-import './Canvas.scss'
+import store from '../../../../redux/store';
+import './Canvas.scss';
+
 function Canvas(props) {
 
     let canvas = React.createRef();
@@ -11,8 +15,25 @@ function Canvas(props) {
         let context = canvas.current.getContext('2d');
         props.setCanvas(canvas.current, context);
 
-    }, [])
+        window.addEventListener('keyup', toMultiplicate);
 
+        return ()=>{
+            window.removeEventListener('keyup', toMultiplicate)
+        }
+    }, []);
+
+
+    function toMultiplicate(e){
+        if(e.code==='KeyS'){
+            let canvas = store.getState().canvas.canvas;
+            let context = store.getState().canvas.context
+            if(canvas!=null) {
+                let layout = new Layout(canvas, context, true);
+                MultiplicateManager.addFrame(layout, 100);
+            }
+        }
+        e.preventDefault();
+    }
     return (
         <React.Fragment>
             <canvas ref={canvas}
@@ -22,6 +43,7 @@ function Canvas(props) {
             </canvas>
         </React.Fragment>
     )
+
 }
 
 
@@ -31,7 +53,7 @@ function mapStateToProps(state){
         height: state.canvas.size.height,
         top: state.canvas.position.top,
         left: state.canvas.position.left,
-        tmpCanvas: state.canvas.tmpCanvas
+        tmpCanvas: state.canvas.tmpCanvas,
     }
 }
 
@@ -43,3 +65,5 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Canvas);
+
+

@@ -2,10 +2,8 @@
 import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveBrush } from '../../../../../redux/actionCreators/brushActionCreators';
 import ColorHelper from '../../../../../utils/ColorHelper';
 import './BrushPanel.scss';
-import { changeSavedBrushes } from '../../../../../redux/actionCreators/brushActionCreators';
 import ToolManager from '../../../../../paint/ToolManager/ToolManager';
 
 
@@ -30,7 +28,7 @@ function BrushPanel(props) {
     }
 
     function saveBrushHandler(e){
-        props.saveBrush({color: props.brushColor, alpha: props.brushAlpha, size: props.brushSize})
+        ToolManager.saveBrush({color: props.brushColor, alpha: props.brushAlpha, size: props.brushSize})
     }
 
     function changeBrushHandler(index){
@@ -77,7 +75,7 @@ function BrushPanel(props) {
 
     function deleteColorHandler(){
         props.savedBrushes.splice(colorIndex, 1);
-        props.changeSavedBrushes(props.savedBrushes);
+        ToolManager.changeSavedBrushes(props.savedBrushes);
         brushMenu.current.classList.add('fastRemove');
         brushMenu.current.classList.remove('active');
         //без таймаута браузер может добавлять и убирать класы за "1 круг"
@@ -91,7 +89,7 @@ function BrushPanel(props) {
         props.savedBrushes[colorIndex].color=props.brushColor;
         props.savedBrushes[colorIndex].alpha=props.brushAlpha;
 
-        props.changeSavedBrushes(props.savedBrushes);
+        ToolManager.changeSavedBrushes(props.savedBrushes);
         //После клика нужно убирать меню быстро
         brushMenu.current.classList.add('fastRemove');
         brushMenu.current.classList.remove('active');
@@ -161,11 +159,4 @@ function mapStateToProps(state){
     }
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-        saveBrush: bindActionCreators(saveBrush, dispatch),
-        changeSavedBrushes: bindActionCreators(changeSavedBrushes, dispatch)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BrushPanel);
+export default connect(mapStateToProps)(BrushPanel);

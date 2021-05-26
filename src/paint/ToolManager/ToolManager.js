@@ -1,4 +1,5 @@
 
+import { changeSavedBrushes, saveBrush } from "../../redux/actionCreators/brushActionCreators";
 import { setCurrentTool } from "../../redux/actionCreators/canvasActionCreator";
 import store from "../../redux/store";
 import SketchBrush from "./Brush/SketchBrush";
@@ -6,7 +7,6 @@ import Eraser from "./Eraser/Eraser";
 
 
 //класс для выбора инструмента рисования
-
 export default class ToolManager{
 
     static setTool(tool){
@@ -26,7 +26,6 @@ export default class ToolManager{
                 store.dispatch(setCurrentTool(brush));
                 break;
             }
-            
             default: {
                 let brush = new SketchBrush();
                 brush.create();
@@ -36,6 +35,14 @@ export default class ToolManager{
         }
     }
 
+    static saveBrush(brush){
+        store.dispatch(saveBrush(brush));
+    }
+    
+    static changeSavedBrushes(savedBrushes){
+        store.dispatch(changeSavedBrushes(savedBrushes))
+    }
+    
     static getTool(){
         return store.getState().canvas.currentTool;
     }
