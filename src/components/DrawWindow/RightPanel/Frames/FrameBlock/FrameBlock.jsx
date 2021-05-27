@@ -7,95 +7,86 @@ import { connect } from 'react-redux';
 import Layout from './../../../../../paint/LayoutManager/Layout';
 import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
 
-class FrameBlock extends React.Component {
+function FrameBlock(props) {
 
-    constructor(props){
-        super(props);
-        this.value = props.value;
-        this.index = props.index;
-        this.reDraw = this.index===this.props.currentFrame;
+    let value = props.value;
+    let index = props.index;
+    let reDraw = index===props.currentFrame;
+    let refFrameBlock = React.createRef();
 
-    }
-
-
-    // useEffect(() => {
-    //     console.log('start' + index);
-    //     refFrameBlock.current.prepend(value.canvas);
-    //     return ()=>{
-    //         value.canvas.remove();
-    //         console.log('kill'+index);
-
-    //     }
-    // }, [reDraw, value.id]);
+    useEffect(() => {
+        refFrameBlock.current.prepend(value.canvas);
+        return ()=>{
+            value.canvas.remove();
+        }
+    }, [value.id]);
 
 
-    deleteFrameHandler = (e)=>{
+    function deleteFrameHandler (e){
         console.log('del');
-        MultiplicateManager.deleteFrame(this.index);
+        MultiplicateManager.deleteFrame(index);
         e.stopPropagation();
     }
 
-    changeDelayHandler = (e) => {
-        this.value.delay=e.currentTarget.this.value;
+    function changeDelayHandler (e) {
+        value.delay=e.currentTarget.value;
         MultiplicateManager.renderRightPanel();
         e.stopPropagation();
     }
 
-    addToLayoutListHandler =(e) =>{
+    function addToLayoutListHandler(e){
         let canvas = document.createElement('canvas');
-        canvas.width=this.value.canvas.width;
-        canvas.height = this.value.canvas.height;
+        canvas.width=value.canvas.width;
+        canvas.height = value.canvas.height;
         let ctx = canvas.getContext('2d');
-        ctx.drawImage(this.value.canvas, 0, 0);
+        ctx.drawImage(value.canvas, 0, 0);
 
         let layout = new Layout(canvas, ctx, true);
-        this.props.layoutList.push(layout);
-        LayoutManager.changeLayoutList(this.props.layoutList)
+        props.layoutList.push(layout);
+        LayoutManager.changeLayoutList(props.layoutList)
         e.stopPropagation();
     }
 
-    upPositionHandler = (e)=> {
-        MultiplicateManager.swap(this.index, this.index-1);
+    function upPositionHandler(e){
+        MultiplicateManager.swap(index, index-1);
         e.stopPropagation();
     }
 
-    downPositionHandler = (e) =>{
-        MultiplicateManager.swap(this.index, this.index+1);
+    function downPositionHandler(e){
+        MultiplicateManager.swap(index, index+1);
         e.stopPropagation();
     }
 
-    setCurrentFrame = (e)=>{
-        MultiplicateManager.setCurrentFrame(this.index);
+    function setCurrentFrame (e){
+        MultiplicateManager.setCurrentFrame(index);
     }
 
-    render(){
+
         return (
-            <div ref={this.refFrameBlock} className='frame-block' style={this.props.currentFrame === this.index ? {background: 'darkred'} : {background: 'none'}} onClick={this.setCurrentFrame}>
+            <div ref={refFrameBlock} className='frame-block' style={props.currentFrame === index ? {background: 'darkred'} : {background: 'none'}} onClick={setCurrentFrame}>
                 <div className='frame-menu'>
-                    <div onClickCapture={this.upPositionHandler} className="frame-menu__item">
+                    <div onClickCapture={upPositionHandler} className="frame-menu__item">
                         <img src="img/up.svg" alt="" />
                     </div>
                     <div className="frame-menu__item">
-                        <button onClickCapture={this.addToLayoutListHandler}>В слои</button>
+                        <button onClickCapture={addToLayoutListHandler}>В слои</button>
                     </div>
-                    <div onClickCapture={this.downPositionHandler} className="frame-menu__item down-arrow">
+                    <div onClickCapture={downPositionHandler} className="frame-menu__item down-arrow">
                         <img src="img/up.svg" alt="" />
                     </div>
                 </div>
                 <div className="frame-block__input-block">
                     <div className="frame-block__input-block-title"><h2>Задержка</h2></div>
-                    <input onClickCapture={e=>e.stopPropagation()} value={this.value.delay} onChange={this.changeDelayHandler} min='0'  type="number" />
-                    <img onClickCapture={this.deleteFrameHandler} src="img/delete.svg" alt="" />
+                    <input onClickCapture={e=>e.stopPropagation()} value={value.delay} onChange={changeDelayHandler} min='0'  type="number" />
+                    <img onClickCapture={deleteFrameHandler} src="img/delete.svg" alt="" />
                 </div>
             </div>
         )
-    }
+    
 }
 
 function mapStateToPorps(state){
     return {
-        // layoutList: state.layouts.layoutList,
-        // frameList: state.multiplicate.frameList,
         currentFrame: state.multiplicate.currentFrame
     }
 }
