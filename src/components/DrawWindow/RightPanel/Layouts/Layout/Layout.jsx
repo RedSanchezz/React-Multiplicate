@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import  ReactDOM  from 'react-dom';
 
 import { connect } from 'react-redux';
@@ -6,38 +6,26 @@ import './Layout.scss'
 import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
 import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
 
-
 function Layout(props) {
 
     let contextMenu = useRef();
 
     let layout = props.value;
     let canvas = layout.getCanvas();
-    
-    let canvasRef = useRef();
+
+    let layoutBlock = useRef();
     let index = props.index;
 
     useEffect(() => {
-        if(props.currentLayout===layout){
-            let context = canvasRef.current.getContext('2d');
-            if(context) {
-                context.clearRect(0, 0, canvas.width, canvas.height);
-                context.drawImage(canvas, 0, 0);
-            }
-            console.log('Перерисовываем слой  '+ index);
+        console.log('rend Layput' + index);
+        layoutBlock.current.append(canvas);
+        canvas.style.backgroundColor=props.defaultBackgorund;
+        canvas.style.outline = props.isCurrent ? '10px solid red' : 'none';
+        //перерисовываем канвас, только у активного слоя 
+        return ()=>{
+            canvas.remove();
         }
-    //перерисовываем канвас, только у активного слоя 
-    }, [props.changeCurrentCanvas]);
-
-
-    useEffect(() => {
-        let context = canvasRef.current.getContext('2d');
-        if(context) {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(canvas, 0, 0);
-        }
-    //перерисовываем канвас, только у активного слоя 
-    }, [props.layoutList]);
+    });
 
     function hideLayoutHandler(e){
         LayoutManager.toggleHide(index);
@@ -56,12 +44,11 @@ function Layout(props) {
     function upHandler(e){
         LayoutManager.swap(index, index-1);
         e.stopPropagation();
-
     }
+
     function downHandler(e){
         LayoutManager.swap(index, index+1);
         e.stopPropagation();
-
     }
 
     function historyBackHandler(e){
@@ -86,7 +73,7 @@ function Layout(props) {
     }
 
     function contextMenuHandler(e){
-        if(layout.selected){
+        if(layout.isSelected()){
             contextMenu.current.classList.add('active');
             contextMenu.current.style.top = e.pageY-10+'px';
             contextMenu.current.style.left = e.pageX-20+'px';
@@ -97,9 +84,8 @@ function Layout(props) {
 
     function deleteSelectedHandler(e){
         let indexArray =[];
-
         props.layoutList.map((value, index) => {
-            if(value.selected) indexArray.push(index);
+            if(value.isSelected()) indexArray.push(index);
             return value;
         })
         LayoutManager.deleteLayouts(indexArray);
@@ -108,7 +94,7 @@ function Layout(props) {
     function combineSelectedHandler(e){
         let indexArray =[];
         props.layoutList.map((value, index) => {
-            if(value.selected) indexArray.push(index);
+            if(value.isSelected()) indexArray.push(index);
         })
         LayoutManager.combine(indexArray);
     }
@@ -127,18 +113,22 @@ function Layout(props) {
 
     let menu = 
     <div ref={contextMenu} onContextMenu={(e)=>{e.stopPropagation(); e.preventDefault()}} onMouseLeave = {contextMenuMouseLeaveHandler} className='right-panel__context-menu'>
-        <div onClick={deleteSelectedHandler} className="right-panel__context-menu-item">Удалить выбранные</div>
+        <div onClick = {deleteSelectedHandler}  className="right-panel__context-menu-item">Удалить выбранные</div>
         <div onClick = {combineSelectedHandler} className="right-panel__context-menu-item">Обьеденить</div>
-        <div onClick = {unselectAllHandler} className="right-panel__context-menu-item">Отменить выделение</div>
+        <div onClick = {unselectAllHandler}     className="right-panel__context-menu-item">Отменить выделение</div>
     </div>;
 
-    return (<React.Fragment>
-                {ReactDOM.createPortal(menu, document.getElementById('root'))}
-                <div onContextMenu={contextMenuHandler} onClick={setCurrent} key={index} style={layout.selected ? {backgroundColor: 'darkred'} : {backgroundColor:'black'}} className='right-panel__layout-block layout-block'>
+    return (    
+                <div onContextMenu={contextMenuHandler} 
+                        ref={layoutBlock}
+                        onClick={setCurrent} 
+                        key={index} 
+                        style={props.isSelected ? {backgroundColor: 'darkred'} : {backgroundColor:'black'}} className='right-panel__layout-block layout-block'>
+                    {ReactDOM.createPortal(menu, document.getElementById('root'))}
                     <div className='layout-block__left-menu'>
                         <div onClick={upHandler} className="layout-block__left-menu-item"><img src="/img/up.svg" alt="" /></div>
                         <div onClick={hideLayoutHandler} className="layout-block__left-menu-item">
-                            {!layout.isHidden() ? <img src="/img/show.svg" alt="" /> : <img src="/img/hide.svg" alt="" />}
+                            {!props.isHidden ? <img src="/img/show.svg" alt="" /> : <img src="/img/hide.svg" alt="" />}
                         </div>
                         <div onClick={deleteLayoutHandler} className="layout-block__left-menu-item"><img src="/img/delete.svg" alt="" /></div>
                         <div onClick={downHandler} className="layout-block__left-menu-item"><img src="/img/up.svg" alt="" style={{transform: 'rotateX(180deg)'}} /></div>
@@ -149,24 +139,15 @@ function Layout(props) {
                         <div onClick={addToMultiplicate} className="layout-block__bottom-menu-item favorites">Для мульта</div>
                         <div onClick={historyNextHandler} className="layout-block__bottom-menu-item next"><img src="/img/up.svg" alt="" style={{transform: 'rotateZ(90deg)'}} /></div>
                     </div>
-                    <canvas ref={canvasRef} 
-                            style={props.index===props.currentLayoutIndex ? {outline: '10px solid red'} : {}}
-                            width={canvas.width} 
-                            height={canvas.height}>
-                    </canvas>
                 </div>
-            </React.Fragment>)
+            )
 }
 
 
 function mapStateToProps(state){
     return {
-        layoutList: state.layouts.layoutList,
-        currentLayout: state.layouts.currentLayout,
-        currentLayoutIndex: state.layouts.currentLayoutIndex,
-        changeCurrentCanvas: state.layouts.changeCurrentCanvas
+        defaultBackgorund: state.setting.canvasDefaultBackground,
     }
 }
-
 
 export default connect(mapStateToProps)(Layout);

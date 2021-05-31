@@ -19,7 +19,6 @@ function WorkSpace(props) {
         props.changeCanvasSize(parseInt(style.width)-2, parseInt(style.height)-2);
     }, []);
 
-
     useEffect(() => {
         let style = getComputedStyle(workSpace.current)
         props.changeCanvasSize(parseInt(style.width)-2, parseInt(style.height)-2);

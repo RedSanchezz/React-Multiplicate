@@ -6,6 +6,7 @@ import MultiplicateManager from '../../../../paint/MultiplicateManager/Multiplic
 import { setCanvas } from '../../../../redux/actionCreators/canvasActionCreator';
 import store from '../../../../redux/store';
 import './Canvas.scss';
+import LayoutManager from './../../../../paint/LayoutManager/LayoutManager';
 
 function Canvas(props) {
 
@@ -14,25 +15,23 @@ function Canvas(props) {
     useEffect(() => {
         let context = canvas.current.getContext('2d');
         props.setCanvas(canvas.current, context);
-
-        window.addEventListener('keyup', toMultiplicate);
-
+        window.addEventListener('keydown', toMultiplicate);
         return ()=>{
-            window.removeEventListener('keyup', toMultiplicate)
+            window.removeEventListener('keydown', toMultiplicate)
         }
     }, []);
 
 
     function toMultiplicate(e){
-        if(e.code==='KeyS'){
+        if(e.code==='KeyS' && e.ctrlKey){
             let canvas = store.getState().canvas.canvas;
             let context = store.getState().canvas.context
             if(canvas!=null) {
-                let layout = new Layout(canvas, context, true);
+                let layout = new Layout(canvas, context, true, ++LayoutManager.id);
                 MultiplicateManager.addFrame(layout, 100);
             }
+            e.preventDefault();
         }
-        e.preventDefault();
     }
     return (
         <React.Fragment>

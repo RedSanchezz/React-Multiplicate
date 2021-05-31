@@ -1,7 +1,7 @@
 import LayoutManager from "./LayoutManager";
 
 export default class Layout {
-    constructor(canvas, ctx, show){
+    constructor(canvas, ctx, show, id){
         this._canvas = canvas;
         this._ctx = ctx;
         this._show=show;
@@ -10,8 +10,12 @@ export default class Layout {
         this._positionInHistory=-1;
         this.saveInHistory();
         this.selected = false;
+        this.id=id;
     }
 
+    getId(){
+        return this.id;
+    }
     toggleHide(){
         if(this._show){
             this._show=false;
@@ -67,5 +71,8 @@ export default class Layout {
 
     select(){
         this.selected=!this.selected;
+    }
+    isSelected(){
+        return this.selected;
     }
 }

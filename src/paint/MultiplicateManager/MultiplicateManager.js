@@ -2,6 +2,7 @@ import { changeFrameList, setCurrentFrame, setMultiplicateCanvas, stopPlay } fro
 import {play} from "../../redux/actionCreators/multiplicateActionCreators";
 
 import store from "../../redux/store";
+import Frame from "./Frame";
 
 
 //Прослойка для работы с фреймами
@@ -11,18 +12,14 @@ export default class MultiplicateManager {
     }
 
     static id=0;
+    
     static addFrame(layout, delay){
         let canvas = document.createElement('canvas');
-        
         canvas.width=layout.getCanvas().width;
         canvas.height=layout.getCanvas().height;
         canvas.getContext('2d').drawImage(layout.getCanvas(), 0, 0);
-        let frame = {
-            canvas: canvas,
-            delay: delay,
-            id: this.id++
-        }
-        let frameList =  store.getState().multiplicate.frameList;
+        let frame = new Frame(canvas, delay, this.id++);
+        let frameList = store.getState().multiplicate.frameList;
         frameList.push(frame);
         store.dispatch(changeFrameList(frameList));
     }
@@ -44,7 +41,6 @@ export default class MultiplicateManager {
     }
 
     static swap(index1, index2){
-        let state = store.getState();
         let frameList =  store.getState().multiplicate.frameList;
 
         if(index1<0 || index1 > frameList.length-1 || index2<0 || index2 > frameList.length-1) {
@@ -74,7 +70,7 @@ export default class MultiplicateManager {
 
 
         let promise = new Promise((resolve)=>{resolve()});
-        modelFrameList.map((value, index, array) => {
+        modelFrameList.map((value, index) => {
             index = index + currentFrameIndex;
             promise = promise.then(()=>{
                 return new Promise(resolve=>{
@@ -91,7 +87,7 @@ export default class MultiplicateManager {
                             }
                             resolve();
                         }
-                    }, value.delay);
+                    }, value.getDelay());
                 });
             });
         })

@@ -16,7 +16,7 @@ function MultiplicateCanvasPanel(props) {
         let currentFrame = props.currentFrame;
         let context=canvasRef.current.getContext('2d');
         context.clearRect(0, 0, props.drawCanvas.width, props.drawCanvas.height);
-        context.drawImage(props.frameList[currentFrame].canvas, 0, 0);
+        context.drawImage(props.frameList[currentFrame].getCanvas(), 0, 0);
     })
 
 

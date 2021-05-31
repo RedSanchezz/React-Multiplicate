@@ -11,10 +11,6 @@ let initState = {
     currentFrame: 0
 }
 
-let frame = {
-    delay: 100,
-    canvas: 'canvas'
-}
 
 export default function multiplicateReducer(state = initState, action) {
     switch(action.type){

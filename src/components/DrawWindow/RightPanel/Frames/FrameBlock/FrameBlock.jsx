@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import './FrameBlock.scss'
 import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
 import { connect } from 'react-redux';
@@ -11,39 +11,38 @@ function FrameBlock(props) {
 
     let value = props.value;
     let index = props.index;
-    let reDraw = index===props.currentFrame;
     let refFrameBlock = React.createRef();
 
     useEffect(() => {
-        refFrameBlock.current.prepend(value.canvas);
+        refFrameBlock.current.prepend(value.getCanvas());
+        value.getCanvas().style.backgroundColor=props.defaultBackgorund;
         return ()=>{
-            value.canvas.remove();
+            value.getCanvas().remove();
         }
-    }, [value.id]);
+    }, [value.getId(), props.defaultBackgorund]);
 
 
     function deleteFrameHandler (e){
-        console.log('del');
         MultiplicateManager.deleteFrame(index);
         e.stopPropagation();
     }
 
     function changeDelayHandler (e) {
-        value.delay=e.currentTarget.value;
+        value.setDelay(e.currentTarget.value);
         MultiplicateManager.renderRightPanel();
         e.stopPropagation();
     }
 
     function addToLayoutListHandler(e){
         let canvas = document.createElement('canvas');
-        canvas.width=value.canvas.width;
-        canvas.height = value.canvas.height;
+        canvas.width=value.getCanvas().width;
+        canvas.height = value.getCanvas().height;
         let ctx = canvas.getContext('2d');
-        ctx.drawImage(value.canvas, 0, 0);
+        ctx.drawImage(value.getCanvas(), 0, 0);
 
-        let layout = new Layout(canvas, ctx, true);
+        let layout = new Layout(canvas, ctx, true, ++LayoutManager.id);
         props.layoutList.push(layout);
-        LayoutManager.changeLayoutList(props.layoutList)
+        LayoutManager.changeLayoutList(props.layoutList);
         e.stopPropagation();
     }
 
@@ -77,7 +76,7 @@ function FrameBlock(props) {
                 </div>
                 <div className="frame-block__input-block">
                     <div className="frame-block__input-block-title"><h2>Задержка</h2></div>
-                    <input onClickCapture={e=>e.stopPropagation()} value={value.delay} onChange={changeDelayHandler} min='0'  type="number" />
+                    <input onClickCapture={e=>e.stopPropagation()} value={value.getDelay()} onChange={changeDelayHandler} min='0'  type="number" />
                     <img onClickCapture={deleteFrameHandler} src="img/delete.svg" alt="" />
                 </div>
             </div>
@@ -87,7 +86,9 @@ function FrameBlock(props) {
 
 function mapStateToPorps(state){
     return {
-        currentFrame: state.multiplicate.currentFrame
+        currentFrame: state.multiplicate.currentFrame,
+        defaultBackgorund: state.setting.canvasDefaultBackground,
+        layoutList: state.layouts.layoutList
     }
 }
 

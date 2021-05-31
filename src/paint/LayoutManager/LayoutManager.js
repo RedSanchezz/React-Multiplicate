@@ -14,26 +14,24 @@ export default class LayoutManager{
         let layoutList = state.layouts.layoutList;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
         if(layoutList.length==0){
-
         
-        let defLayoutCanvas = document.createElement("canvas");
-        defLayoutCanvas.width=state.canvas.size.width;
-        defLayoutCanvas.height=state.canvas.size.height;
+            let defLayoutCanvas = document.createElement("canvas");
+            defLayoutCanvas.width=state.canvas.size.width;
+            defLayoutCanvas.height=state.canvas.size.height;
 
-        let defLayoutCtx = defLayoutCanvas.getContext("2d");
+            let defLayoutCtx = defLayoutCanvas.getContext("2d");
 
-        defLayoutCtx.putImageData(mainCanvasCtx.createImageData(mainCanvas.width, mainCanvas.height),0,0);
-        let layout = new Layout(defLayoutCanvas, defLayoutCtx, true, this);
+            defLayoutCtx.putImageData(mainCanvasCtx.createImageData(mainCanvas.width, mainCanvas.height),0,0);
+            let layout = new Layout(defLayoutCanvas, defLayoutCtx, true, ++LayoutManager.id);
 
-        layoutList.push(layout);
-
-            store.dispatch(changeLayoutList(layoutList))
-            store.dispatch(changeCurrentLayout(layout, currentLayoutIndex));
-        }
+            layoutList.push(layout);
+                store.dispatch(changeLayoutList(layoutList))
+                store.dispatch(changeCurrentLayout(layout, currentLayoutIndex));
+            }
         this.update();
         this.renderAll();
     }
-
+    static id = 0;
     //обновляем канвас, из всех слоев
     static update(){
         let state = store.getState();
@@ -48,6 +46,7 @@ export default class LayoutManager{
 
     static changeLayoutList(layoutList){
         store.dispatch(changeLayoutList(layoutList));
+        this.update();
     }
     //Добавляем новый пустой слой
     static addLayout(){
@@ -59,7 +58,7 @@ export default class LayoutManager{
         canvas.width = state.canvas.size.width;
         canvas.height= state.canvas.size.height;
         let context = canvas.getContext("2d");
-        let layout= new Layout(canvas, context, true, this);
+        let layout= new Layout(canvas, context, true, ++LayoutManager.id);
 
         layoutList.splice(state.layouts.currentLayoutIndex+1, 0, layout);
         store.dispatch(changeCurrentLayout(layout, state.layouts.currentLayoutIndex+1));
@@ -77,7 +76,7 @@ export default class LayoutManager{
         let context = canvas.getContext("2d");
 
         context.drawImage(state.layouts.layoutList[index].getCanvas(),0,0);
-        let layout= new Layout(canvas, context, true, this);
+        let layout= new Layout(canvas, context, true, ++LayoutManager.id);
 
         layoutList.splice(index+1, 0, layout);
 
@@ -111,7 +110,7 @@ export default class LayoutManager{
                 id: i,
                 isCurrent: i===this.getCurrentLayoutIndex(),
                 isHidden: this.isHidden(i),
-                selected: layoutList[i].selected
+                selected: layoutList[i].isSelected()
             }
             imageList.push(objImg);
         }
@@ -138,11 +137,12 @@ export default class LayoutManager{
         let state = store.getState();
         index=+index;
         state.layouts.layoutList[index].toggleHide();
+        store.dispatch(changeLayoutList(state.layouts.layoutList));
         this.update();
-        this.renderCurrent();
     }
 
     static deleteLayout(index){
+        console.log('delete lay');
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayout = state.layouts.currentLayout;
@@ -166,6 +166,7 @@ export default class LayoutManager{
             this.setCurrentLayout(currentLayoutIndex);
         }
         this.update();
+        this.renderAll();
     }
 
     static deleteLayouts(indexArray){
@@ -260,12 +261,14 @@ export default class LayoutManager{
         let layoutList = state.layouts.layoutList;
         return layoutList[index].isHidden();
     }
+
     static getLayoutList(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
 
         return layoutList;
     }
+
     static setLayout(layout, index){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
@@ -273,6 +276,7 @@ export default class LayoutManager{
         layoutList[index]=layout;
         this.update();
     }
+
     static select(id){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
@@ -286,7 +290,7 @@ export default class LayoutManager{
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         layoutList.forEach((layout) => {
-            if(layout.selected) layout.select();
+            if(layout.isSelected()) layout.select();
         });
         store.dispatch(changeLayoutList(layoutList))
 
@@ -297,6 +301,7 @@ export default class LayoutManager{
         let state = store.getState();
         store.dispatch(changeCurrentLayout(state.layouts.currentLayout, state.layouts.currentLayoutIndex));
     }
+
     static renderAll(){
         let state = store.getState();
         store.dispatch(changeLayoutList(state.layouts.layoutList));
