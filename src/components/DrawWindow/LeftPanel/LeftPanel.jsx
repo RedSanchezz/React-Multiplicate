@@ -1,33 +1,35 @@
-import React, { useState }  from 'react'
+import React  from 'react'
 import { connect } from 'react-redux';
-
 import './LeftPanel.scss';
-
 import ToolManager from '../../../paint/ToolManager/ToolManager';
 
-function LeftPanel() {
 
-    let [activeTool, setActiveTool] = useState(0);
+function LeftPanel(props) {
 
     function setScetchBrushHandler(){
         ToolManager.setTool('SCETCH_BRUSH');
-        setActiveTool(0);
     }
 
     function setEraserHandler(){
         ToolManager.setTool('ERASER');
-        setActiveTool(1);
     }
 
+    function setHandToolHandler(){
+        ToolManager.setTool('HAND');
+    }
     return (
         <div className='left-panel'>
             <div onClick={setScetchBrushHandler} 
-                className={activeTool===0 ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
+                className={props.currentToolName==='SCETCH_BRUSH' ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src="./img/brush.svg" alt=""/>
             </div>
 
             <div onClick={setEraserHandler} 
-                className={activeTool===1 ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
+                className={props.currentToolName=== 'ERASER' ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
+                <img src="./img/eraser.svg" alt=""/>
+            </div>
+            <div onClick={setHandToolHandler} 
+                className={props.currentToolName=== 'HAND' ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src="./img/eraser.svg" alt=""/>
             </div>
         </div>
@@ -35,5 +37,11 @@ function LeftPanel() {
 }
 
 
-export default  connect()(LeftPanel);
+function mapStateToProps(state){
+    return {
+        currentToolName: state.canvas.currentToolName
+    }
+}
+
+export default  connect(mapStateToProps)(LeftPanel);
 

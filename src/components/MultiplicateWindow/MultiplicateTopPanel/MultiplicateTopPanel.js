@@ -6,9 +6,6 @@ import './MultiplicateTopPanel.scss';
 
 export default function MultiplicateTopPanel() {
     
-
-
-
     return (
         <div className="top-panel multiplicate-top-panel">
             <div className='top-panel__menu'>

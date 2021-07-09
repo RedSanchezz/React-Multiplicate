@@ -12,9 +12,11 @@ function Canvas(props) {
 
     let canvas = React.createRef();
 
+    //Когда компонент отрендерился, добавляем канвас в state
     useEffect(() => {
         let context = canvas.current.getContext('2d');
         props.setCanvas(canvas.current, context);
+
         window.addEventListener('keydown', toMultiplicate);
         return ()=>{
             window.removeEventListener('keydown', toMultiplicate)
@@ -33,12 +35,18 @@ function Canvas(props) {
             e.preventDefault();
         }
     }
+    
     return (
         <React.Fragment>
             <canvas ref={canvas}
                 height={props.height} width={props.width} 
                 className='canvas' 
-                style={{top: props.top, left: props.left}}>
+                style={{
+                            top: props.top, 
+                            left: props.left,
+                            transform: `scale(${props.canvasZoom})`
+                        }}
+                >
             </canvas>
         </React.Fragment>
     )
@@ -53,6 +61,7 @@ function mapStateToProps(state){
         top: state.canvas.position.top,
         left: state.canvas.position.left,
         tmpCanvas: state.canvas.tmpCanvas,
+        canvasZoom: state.canvas.zoom
     }
 }
 

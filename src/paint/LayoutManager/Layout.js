@@ -16,6 +16,7 @@ export default class Layout {
     getId(){
         return this.id;
     }
+    
     toggleHide(){
         if(this._show){
             this._show=false;

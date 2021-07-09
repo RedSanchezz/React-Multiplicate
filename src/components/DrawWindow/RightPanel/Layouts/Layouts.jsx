@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
 import LayoutManager from '../../../../paint/LayoutManager/LayoutManager';
@@ -15,6 +15,7 @@ function Layouts(props) {
     let menuBlock = React.createRef();
 
     let [menuPosition, setMenuPosition] = useState({x: 0, y: 0});
+
     let [active, setMenuActive] = useState(false);
 
 
@@ -28,16 +29,13 @@ function Layouts(props) {
         MultiplicateManager.addFrame(layout, 100);
     }
 
-    useEffect(() => {
-
-    })
-    
     let layoutMenu = <LayoutMenu ref={menuBlock}
                     menuPosition={menuPosition} 
                     active={active} 
                     setMenuActive={setMenuActive}
                     layoutList = {props.layoutList}
                     ></LayoutMenu>;
+
     return (
         <>
             <div className='right-panel__layout-buttons'>
@@ -47,13 +45,13 @@ function Layouts(props) {
             {ReactDOM.createPortal(layoutMenu, document.getElementById('root'))}
             <div className='right-panel__layout-list'>
                 {
-                    props.layoutList.map((value, index) => {
-                        return <Layout key={value.getId()} 
-                                    value={value} 
+                    props.layoutList.map((layout, index) => {
+                        return <Layout key={layout.getId()} 
+                                    layout={layout} 
                                     index={index} 
                                     isCurrent={index===props.currentLayoutIndex}
-                                    isHidden={value.isHidden()}
-                                    isSelected={value.isSelected()}
+                                    isHidden={layout.isHidden()}
+                                    isSelected={layout.isSelected()}
                                     setMenuPosition = {setMenuPosition}
                                     setMenuActive ={setMenuActive}
                                     >
@@ -63,7 +61,6 @@ function Layouts(props) {
             </div>
         </>
     )
-
 }
 
 function mapStateToProps(state){
@@ -76,5 +73,3 @@ function mapStateToProps(state){
 }
 
 export default connect(mapStateToProps)(Layouts);
-// 00371-853-3076273-85245
-// CT7MR-7YRGY-WJBYX-RB8Q2-Q3GQC

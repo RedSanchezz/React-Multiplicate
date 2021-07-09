@@ -5,14 +5,18 @@ import './Layout.scss'
 import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
 import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
 
+
+
 function Layout(props) {
 
-    let layout = props.value;
+    let layout = props.layout;
     let canvas = layout.getCanvas();
 
     let layoutBlock = useRef();
     let index = props.index;
 
+
+    //когда компонент отрендерился, вставляем канвас из модели
     useEffect(() => {
         layoutBlock.current.append(canvas);
         canvas.style.backgroundColor=props.defaultBackgorund;
@@ -52,14 +56,12 @@ function Layout(props) {
         //обновляем большой канвас
         LayoutManager.update();
         //вызываем отрисовку
-        LayoutManager.renderAll();
         e.stopPropagation();
     }
 
     function historyNextHandler(e){
         layout.next();
         LayoutManager.update();
-        LayoutManager.renderAll();
         e.stopPropagation();
     }
 
@@ -96,6 +98,7 @@ function Layout(props) {
                         key={index} 
                         style={props.isSelected ? {backgroundColor: 'darkred'} : {backgroundColor:'black'}} 
                         className='right-panel__layout-block layout-block'>
+
                     <div className='layout-block__left-menu'>
                         <div onClick={upHandler} className="layout-block__left-menu-item">
                             <img src="/img/up.svg" alt="" />

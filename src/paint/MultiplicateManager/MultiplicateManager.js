@@ -63,13 +63,12 @@ export default class MultiplicateManager {
         if(isPlaying) return;
 
         let frameList = state.multiplicate.frameList;
-        if(state.multiplicate.currentFrame==frameList.length-1) store.dispatch(setCurrentFrame(0));
         store.dispatch(play());
 
 
         let currentFrameIndex = state.multiplicate.currentFrame;
         let modelFrameList = frameList.slice(currentFrameIndex);
-
+        
 
         let promise = new Promise((resolve)=>{resolve()});
 

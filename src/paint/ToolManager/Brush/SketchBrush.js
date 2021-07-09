@@ -53,6 +53,12 @@ export default class SketchBrush extends Brush{
             tmp_ctx.lineWidth = this._ctx.lineWidth;
             tmp_ctx.lineCap  = this._ctx.lineCap;
 
+            console.log(state.canvas.size.height);
+
+            tmp_canvas.style.transform = `scale(${state.canvas.zoom})`;
+            tmp_canvas.style.top = state.canvas.position.top + 'px';
+            tmp_canvas.style.left = state.canvas.position.left + 'px';
+
             onPaint(e);
             this._listenerManager.addListener(tmp_canvas, "mousemove", onPaint);
         });
@@ -67,7 +73,6 @@ export default class SketchBrush extends Brush{
 
                 let state = store.getState();
                 LayoutManager.update();
-                LayoutManager.renderCurrent();
                 state.layouts.currentLayout.saveInHistory();
                 
                 tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
@@ -87,7 +92,6 @@ export default class SketchBrush extends Brush{
 
                 let state = store.getState();
                 LayoutManager.update();
-                LayoutManager.renderCurrent();
                 state.layouts.currentLayout.saveInHistory();
                 
                 tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);

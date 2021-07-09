@@ -1,4 +1,4 @@
-import { CHANGE_CANVAS_SIZE, SET_CANVAS, SET_CANVAS_BLOCK, SET_CURRENT_TOOL } from "../actionTypes";
+import { CHANGE_CANVAS_SIZE, SET_CANVAS, SET_CANVAS_BLOCK, SET_CANVAS_POSITION, SET_CANVAS_ZOOM, SET_CURRENT_TOOL } from "../actionTypes";
 
 export function changeCanvasSize(width, height) {
     return {
@@ -17,10 +17,10 @@ export function setCanvas(canvas, context) {
     }
 };
 
-export function setCurrentTool(currentTool) {
+export function setCurrentTool(currentTool, currentToolName) {
     return {
         type: SET_CURRENT_TOOL,
-        payload: currentTool
+        payload: {currentTool, currentToolName}
     }
 };
 
@@ -30,3 +30,17 @@ export function setCanvasBlock(canvasBlock){
         payload: canvasBlock
     }
 };
+
+export function setCanvasPosition(position){
+    return {
+        type: SET_CANVAS_POSITION,
+        payload: position
+    }
+}
+
+export function setCanvasZoom(zoom){
+    return {
+        type: SET_CANVAS_ZOOM,
+        payload: zoom
+    }
+}

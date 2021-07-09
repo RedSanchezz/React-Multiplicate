@@ -14,18 +14,19 @@ import { connect } from 'react-redux';
 function WorkSpace(props) {
 
     const workSpace = useRef();
-    useEffect(() => {
-        let style = getComputedStyle(workSpace.current)
-        props.changeCanvasSize(parseInt(style.width)-2, parseInt(style.height)-2);
-    }, []);
 
+    //когда меняется канвас, инициализируем на работу с ним инструменты и слои
     useEffect(() => {
+        console.log('first load canvas');
         let style = getComputedStyle(workSpace.current)
         props.changeCanvasSize(parseInt(style.width)-2, parseInt(style.height)-2);
-            if(props.canvas!==null){
-                props.setCanvasBlock(workSpace.current);
-                ToolManager.setTool();
-                LayoutManager.init();
+
+        if(props.canvas!==null){
+            //canvasBlock Нужен для корректной работы кисти. Это блок в котором находится canvas
+            props.setCanvasBlock(workSpace.current);
+            //устанавливаем кисть по умолчанию
+            ToolManager.setTool(props.currentToolName);
+            LayoutManager.init();
         }
     }, [props.canvas]);
 
@@ -49,7 +50,7 @@ function mapStateToProps(state){
         context: state.canvas.context,
         defaultBackgorund: state.setting.canvasDefaultBackground,
         currentLayout: state.layouts.currentLayout,
-        forRender: state.layouts,
+        currentToolName: state.canvas.currentToolName
     }
 }
 

@@ -13,8 +13,8 @@ export default class LayoutManager{
 
         let layoutList = state.layouts.layoutList;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
+        //если список слоев пуст, создаем один слой
         if(layoutList.length==0){
-        
             let defLayoutCanvas = document.createElement("canvas");
             defLayoutCanvas.width=state.canvas.size.width;
             defLayoutCanvas.height=state.canvas.size.height;
@@ -25,14 +25,15 @@ export default class LayoutManager{
             let layout = new Layout(defLayoutCanvas, defLayoutCtx, true, ++LayoutManager.id);
 
             layoutList.push(layout);
-                store.dispatch(changeLayoutList(layoutList))
+                store.dispatch(changeLayoutList(layoutList));
                 store.dispatch(changeCurrentLayout(layout, currentLayoutIndex));
-            }
+        }
         this.update();
-        this.renderAll();
+        store.dispatch(changeLayoutList(state.layouts.layoutList));
     }
     static id = 0;
-    //обновляем канвас, из всех слоев
+
+    //обновляем основной канвас, из всех слоев
     static update(){
         let state = store.getState();
         let layoutList= state.layouts.layoutList;
@@ -48,6 +49,7 @@ export default class LayoutManager{
         store.dispatch(changeLayoutList(layoutList));
         this.update();
     }
+
     //Добавляем новый пустой слой
     static addLayout(){
         let state = store.getState();
@@ -115,7 +117,8 @@ export default class LayoutManager{
         }
         return imageList;
     }
-    //Возвращает обьект 
+
+    //Возвращает класс с выбраным слоем 
     static getCurrentLayout(){
         return store.getState().layouts.currentLayout;
     }
@@ -125,6 +128,7 @@ export default class LayoutManager{
         let currentLayout = store.getState().layouts.layoutList[index];
         store.dispatch(changeCurrentLayout(currentLayout, index));
     }
+
 
     static getCurrentLayoutIndex(){
         let state = store.getState();
@@ -139,6 +143,7 @@ export default class LayoutManager{
         store.dispatch(changeLayoutList(state.layouts.layoutList));
         this.update();
     }
+
 
     static deleteLayout(index){
         let state = store.getState();
@@ -162,7 +167,7 @@ export default class LayoutManager{
             this.setCurrentLayout(currentLayoutIndex);
         }
         this.update();
-        this.renderAll();
+        store.dispatch(changeLayoutList(state.layouts.layoutList));
     }
 
     static deleteLayouts(indexArray){
@@ -224,7 +229,7 @@ export default class LayoutManager{
             this.setCurrentLayout(currentLayoutIndex);
         }
         this.update();
-        this.renderAll();
+        store.dispatch(changeLayoutList(state.layouts.layoutList));
     }
     
     static combine(indexArray){
@@ -246,11 +251,6 @@ export default class LayoutManager{
         
     }
 
-    static isHidden(index){
-        let state = store.getState();
-        let layoutList = state.layouts.layoutList;
-        return layoutList[index].isHidden();
-    }
 
     static getLayoutList(){
         let state = store.getState();
@@ -267,6 +267,7 @@ export default class LayoutManager{
         this.update();
     }
 
+    //Выделить слой ( ctrl + mouse1)
     static select(id){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
@@ -276,6 +277,7 @@ export default class LayoutManager{
         this.update();
     }
 
+    //сделать все не выделенными
     static unSelectAll(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
@@ -286,15 +288,6 @@ export default class LayoutManager{
 
         this.update();
     }
-    //обновляем все связанное с выбранным элементом
-    static renderCurrent(){
-        let state = store.getState();
-        store.dispatch(changeCurrentLayout(state.layouts.currentLayout, state.layouts.currentLayoutIndex));
-    }
 
-    static renderAll(){
-        let state = store.getState();
-        store.dispatch(changeLayoutList(state.layouts.layoutList));
-    }
 }
 
