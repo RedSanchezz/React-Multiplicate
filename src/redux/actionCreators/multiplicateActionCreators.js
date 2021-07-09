@@ -1,4 +1,4 @@
-import {  CHANGE_FRAME_LIST, PLAY, SET_MULTIPLICATE_CANVAS, STOP_PLAY } from "../actionTypes"
+import {  CAN_PLAY, CHANGE_FRAME_LIST, PLAY, SET_MULTIPLICATE_CANVAS, STOP_PLAY } from "../actionTypes"
 import { SET_CURRENT_FRAME } from './../actionTypes';
 
 
@@ -27,9 +27,9 @@ export function stopPlay(){
     }
 }
 
-export function play(){
+export function canPlay(){
     return {
-        type: PLAY
+        type: CAN_PLAY
     }
 }
 export function setCurrentFrame(index){

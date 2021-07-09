@@ -1,4 +1,4 @@
-import { changeFrameList, setCurrentFrame, setMultiplicateCanvas, stopPlay } from "../../redux/actionCreators/multiplicateActionCreators";
+import { canPlay, changeFrameList, setCurrentFrame, setMultiplicateCanvas, stopPlay } from "../../redux/actionCreators/multiplicateActionCreators";
 import {play} from "../../redux/actionCreators/multiplicateActionCreators";
 
 import store from "../../redux/store";
@@ -58,41 +58,30 @@ export default class MultiplicateManager {
 
     static playFilm(){
         let state = store.getState();
-        let isPlaying = state.multiplicate.isPlaying;
-        //Если уже идет фильм, то выходим из функции
-        if(isPlaying) return;
+        let stopPlay = state.multiplicate.stopPlay;
+        //Если нажали на паузу - выходим из функции
+        if(stopPlay) {
+            store.dispatch(canPlay());
+            return;
+        }
 
         let frameList = state.multiplicate.frameList;
-        store.dispatch(play());
-
-
         let currentFrameIndex = state.multiplicate.currentFrame;
-        let modelFrameList = frameList.slice(currentFrameIndex);
+
+        let currentFrame = frameList[currentFrameIndex];
+
+        currentFrame.getDelay();
+        setTimeout(() => {
+            if(frameList.length-1 != currentFrameIndex){
+                store.dispatch(setCurrentFrame(++currentFrameIndex));
+                this.playFilm();
+            }
+            else {
+                return;
+            }
+        }, currentFrame.getDelay());
+
         
-
-        let promise = new Promise((resolve)=>{resolve()});
-
-        modelFrameList.map((value, index) => {
-            index = index + currentFrameIndex;
-            promise = promise.then(()=>{
-                return new Promise(resolve=>{
-                    //не надо кидать другие кадры, в event loop если воспроизведение окончено
-                    let isPlaying = store.getState().multiplicate.isPlaying;
-                    if(!isPlaying){ resolve()};
-                    setTimeout(() => {
-                        //не надо рисовать после срабатывания таймаута, если нажали на паузу
-                        let isPlaying = store.getState().multiplicate.isPlaying;
-                        if(isPlaying){
-                            store.dispatch(setCurrentFrame(index));
-                            if(frameList.length-1 === index){
-                                store.dispatch(stopPlay());
-                            }
-                            resolve();
-                        }
-                    }, value.getDelay());
-                });
-            });
-        })
     }
 
     static pause(){

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import MultiplicateManager from './../../../paint/MultiplicateManager/MultiplicateManager';
 
 function MultiplicateCanvasPanel(props) {

@@ -1,13 +1,12 @@
 
-import { CHANGE_FRAME_LIST, SET_MULTIPLICATE_CANVAS, STOP_PLAY, PLAY, SET_CURRENT_FRAME } from './../actionTypes';
+import { CHANGE_FRAME_LIST, SET_MULTIPLICATE_CANVAS, STOP_PLAY, SET_CURRENT_FRAME, CAN_PLAY } from './../actionTypes';
 
 
 
 let initState = {
     frameList: [],
     multiplicateCanvas: null,
-    isPlaying: false,
-    canPlay: true,
+    stopPlay: false,
     currentFrame: 0
 }
 
@@ -29,13 +28,13 @@ export default function multiplicateReducer(state = initState, action) {
         case STOP_PLAY: {
             return {
                 ...state,
-                isPlaying: false
+                stopPlay: true
             }
         }
-        case PLAY: {
+        case CAN_PLAY: {
             return {
                 ...state,
-                isPlaying: true
+                stopPlay: false
             }
         }
         case SET_CURRENT_FRAME: {
