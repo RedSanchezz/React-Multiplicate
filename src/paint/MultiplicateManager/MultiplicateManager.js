@@ -3,6 +3,7 @@ import {play} from "../../redux/actionCreators/multiplicateActionCreators";
 
 import store from "../../redux/store";
 import Frame from "./Frame";
+import GroupFrames from "./GroupFrames";
 
 
 //Прослойка для работы с фреймами
@@ -10,11 +11,12 @@ import Frame from "./Frame";
 export default class MultiplicateManager {
     constructor(){
     }
-
     static id=0;
     
     static addFrame(layout, delay){
         let canvas = document.createElement('canvas');
+        let currentFrame =  store.getState().multiplicate.currentFrame;
+
         canvas.width=layout.getCanvas().width;
         canvas.height=layout.getCanvas().height;
         canvas.getContext('2d').drawImage(layout.getCanvas(), 0, 0);
@@ -22,12 +24,12 @@ export default class MultiplicateManager {
         let frameList = store.getState().multiplicate.frameList;
         frameList.push(frame);
         store.dispatch(changeFrameList(frameList));
+        if(currentFrame===-1) store.dispatch(setCurrentFrame(0));
     }
 
     static deleteFrame(index){
         let frameList =  store.getState().multiplicate.frameList;
         let currentFrame =  store.getState().multiplicate.currentFrame;
-
 
         frameList.splice(index, 1);
         store.dispatch(changeFrameList(frameList));
@@ -70,6 +72,7 @@ export default class MultiplicateManager {
 
 
         let promise = new Promise((resolve)=>{resolve()});
+
         modelFrameList.map((value, index) => {
             index = index + currentFrameIndex;
             promise = promise.then(()=>{
@@ -101,6 +104,14 @@ export default class MultiplicateManager {
 
     }
 
+
+    static createGroupFrames(){
+        let frameList = store.getState().multiplicate.frameList;
+        let frameGroup = new GroupFrames();
+        frameList.push(frameGroup);
+        frameGroup.setId(this.id);
+        store.dispatch(changeFrameList(frameList));
+    }
     static setDefaultDelay(){
 
     }
@@ -108,9 +119,7 @@ export default class MultiplicateManager {
     static setCurrentFrame(index){
         store.dispatch(setCurrentFrame(index));
     }
-    static getGif(){
 
-    }
 
 
 

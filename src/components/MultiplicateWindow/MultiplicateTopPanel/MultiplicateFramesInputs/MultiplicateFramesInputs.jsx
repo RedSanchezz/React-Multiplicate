@@ -1,19 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import MultiplicateManager from '../../../../paint/MultiplicateManager/MultiplicateManager';
-
+import './MultiplicateFramesInputs.scss';
 
 function MultiplicateFramesInputs(props) {
-    
     function changeCurrentFrame(e){
-        console.log(e.target.value);
         MultiplicateManager.setCurrentFrame(+e.target.value);
     }
 
     return (
-        <div>
-            <input onChange={changeCurrentFrame} value={props.currentFrame} type="number" min='0' max={props.frameList.length-1}  />
-            <input onChange={changeCurrentFrame} value={props.currentFrame} type="range" min='0' max={props.frameList.length-1}  />
+        <div className='top-panel-inputs-block'>
+            <span>Кадры</span>
+            <div className='top-panel-inputs'>
+                <input onChange={changeCurrentFrame} value={props.currentFrame} type="number" min='0' max={props.frameList.length-1}  />
+                <input onChange={changeCurrentFrame} value={props.currentFrame} type="range" min='0' max={props.frameList.length-1}  />
+            </div>
         </div>
     )
 }

@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux';
 
 import './Main.scss';
+
 import DrawWindow from './DrawWindow/DrawWindow';
 import { WindowContext } from './WindowContext';
 import MultiplicateWindow from './MultiplicateWindow/MultiplicateWindow';
 
 
 
-function Main (props){
+function Main (){
     
     const [state, setState] = useState('draw');
 

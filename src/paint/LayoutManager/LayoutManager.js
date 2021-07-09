@@ -83,7 +83,6 @@ export default class LayoutManager{
         if(state.layouts.currentLayoutIndex>index){
             this.setCurrentLayout(state.layouts.currentLayoutIndex+1);
         } else {
-            console.log("Ошибка будет !");
             this.update();
         }
     }
@@ -142,7 +141,6 @@ export default class LayoutManager{
     }
 
     static deleteLayout(index){
-        console.log('delete lay');
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayout = state.layouts.currentLayout;
@@ -158,11 +156,9 @@ export default class LayoutManager{
 
         //Если элемент который надо удалить находится выше нужного
         if(currentLayoutIndex>=index){
-            console.log(currentLayoutIndex-1);
             this.setCurrentLayout(currentLayoutIndex-1);
         }
         else{
-            console.log(currentLayoutIndex);
             this.setCurrentLayout(currentLayoutIndex);
         }
         this.update();
@@ -189,7 +185,6 @@ export default class LayoutManager{
         store.dispatch(changeLayoutList(layoutList));
 
         if(layoutList.length==0){
-            console.log("Нулевая длинна");
             this.addLayout();
             this.setCurrentLayout(0);
             this.update();
@@ -199,12 +194,9 @@ export default class LayoutManager{
             //если индекс больше допустимого
             if(currentLayoutIndex >= layoutList.length-1){
                 this.setCurrentLayout(layoutList.length-1);
-                console.log(layoutList);
-                console.log("Больше чем нужно");
             }
             else{
                 this.setCurrentLayout(currentLayoutIndex);
-                console.log("Норм");
             }
         }
         this.update();
@@ -245,11 +237,9 @@ export default class LayoutManager{
 
         for(let i=1; i<indexArray.length; i++){
             const elem = layoutList[indexArray[i]];
-            console.log(i);
             minElem.getContext().drawImage(elem.getCanvas(), 0, 0);
         }
         minElem.saveInHistory();
-        console.log(indexArray.slice(1));
         store.dispatch(changeLayoutList(layoutList));
 
         this.deleteLayouts(indexArray.slice(1))

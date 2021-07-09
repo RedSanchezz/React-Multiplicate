@@ -27,14 +27,11 @@ export default class Brush extends Tool {
     //Задаем прозрачность кисти
     setAlpha(alpha){
         alpha = Math.floor(alpha*100)/100;
-        console.log("alpha:"+alpha);
 
         store.dispatch(changeBrushSetting({alpha}))
 
         let state = store.getState();
         this.setColor(state.brush.color);
-
-        console.log('test2', this.getColor());
         // store.dispatch(changeBrushOpacity(alpha));
     }
 
@@ -45,7 +42,6 @@ export default class Brush extends Tool {
 
     //ширина линии
     setSize(width){
-        console.log(width);
         store.dispatch(changeBrushSetting({size: width}))
     }
 

@@ -1,0 +1,34 @@
+.multiplicate-top-panel .top-panel-buttons {
+    background-color: black;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 300px;
+    height: 75px;
+    button {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+    }
+    .pause-button {
+        background-image: url(img/pause.svg);
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .play-button {
+        background-image: url(img/play.svg);
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .stop-button {
+        background-image: url(img/stop.svg);
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}

@@ -4,6 +4,7 @@ export default class Frame{
         this._canvas = canvas;
         this._delay = delay;
         this._id= id;
+        this._type = 'Frame';
     }
     
     getCanvas(){
@@ -22,5 +23,8 @@ export default class Frame{
     }
     getId(){
         return this._id;
+    }
+    getType(){
+        return this._type;
     }
 }

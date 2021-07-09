@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+
 import './RightPanel.scss';
-import RightPanelDrawContent from './RightPanelDrawContent/RightPanelDrawContent';
+
+import Layouts from './Layouts/Layouts';
+import Tabs from './Tabs/Tabs';
 
 
 
 function RightPanel() {    
+
+    const [content, setContent] = useState(<Layouts></Layouts>)
+
     return (
         <div className="right-panel">
-            <RightPanelDrawContent/> 
+            <Tabs setContent={setContent}></Tabs>
+            {content}
         </div>
     )
 }

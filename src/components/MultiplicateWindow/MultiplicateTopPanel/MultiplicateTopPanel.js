@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { WindowContext } from '../../WindowContext'
-import MultiplicateManager from './../../../paint/MultiplicateManager/MultiplicateManager';
+import MultiplicateFrameButtons from './MultiplicateFrameButtons/MultiplicateFrameButtons';
 import MultiplicateFramesInputs from './MultiplicateFramesInputs/MultiplicateFramesInputs';
+import './MultiplicateTopPanel.scss';
 
 export default function MultiplicateTopPanel() {
     
@@ -11,20 +12,19 @@ export default function MultiplicateTopPanel() {
         windowContext.changeWindow('draw');
     }
 
-    function play(){
-        MultiplicateManager.playFilm();
-    }
-    
-    function pause(){
-        MultiplicateManager.pause();
-    }
+
 
     return (
-        <div  className="top-panel">
-            <button onClick={toDrawWindowhandler}>Назад</button>
-            <button onClick={play}>Play !</button>
-            <button onClick={pause}>Pause !</button>
-            <MultiplicateFramesInputs></MultiplicateFramesInputs>
+        <div className="top-panel multiplicate-top-panel">
+            <div className='top-panel__menu'>
+                <div className='top-panel__menu-item'>File</div>
+                <div className='top-panel__menu-item'>Save</div>
+                <div onClick={toDrawWindowhandler} className='top-panel__menu-item'>Draw</div>
+            </div>
+            <div className="top-panel-content">
+                <MultiplicateFrameButtons></MultiplicateFrameButtons>
+                <MultiplicateFramesInputs></MultiplicateFramesInputs>
+            </div>
         </div>
     )
 }

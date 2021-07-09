@@ -45,6 +45,8 @@
     display: none;
     background-color: red;
     z-index: 999;
+    width: 200px;
+    border-radius: 10px;
     &.active {
         display: block;
     }
@@ -53,6 +55,7 @@
 .right-panel__context-menu-item {
     cursor: pointer;
     padding: 10px 20px;
+    border-radius: 10px;
     &:hover {
         background-color: gray;
     }

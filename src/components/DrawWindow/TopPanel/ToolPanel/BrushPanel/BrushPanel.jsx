@@ -1,28 +1,27 @@
 
-import React, { useRef } from 'react';
+import React  from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import ColorHelper from '../../../../../utils/ColorHelper';
+
 import './BrushPanel.scss';
+
 import ToolManager from '../../../../../paint/ToolManager/ToolManager';
+import ColorHelper from '../../../../../utils/ColorHelper';
+import SavedColors from './SavedBrushes/SavedBrushes';
 
 
 function BrushPanel(props) {
 
-    let brushMenu = useRef();
-    let colorIndex =null;
-
-    function brushSizeHandler(e){
+    function changeSizeInputsHandler(e){
         let tool = ToolManager.getTool();
         tool.setSize(e.target.value);
     }
 
-    function brushColorHandler(e){
+    function changeColorInputsHandler(e){
         let tool = ToolManager.getTool();
         tool.setColor(e.target.value);
     }
 
-    function brushAlphaHandler(e){
+    function setBrushAlphaHandler(e){
         let tool = ToolManager.getTool();
         tool.setAlpha(e.target.value);
     }
@@ -31,120 +30,31 @@ function BrushPanel(props) {
         ToolManager.saveBrush({color: props.brushColor, alpha: props.brushAlpha, size: props.brushSize})
     }
 
-    function changeBrushHandler(index){
-        let brushSetting = props.savedBrushes[index];
-        let tool = ToolManager.getTool();
-        tool.setColor(brushSetting.color);
-        tool.setSize(brushSetting.size);
-        tool.setAlpha(brushSetting.alpha);
-    }
-
-
-    function contextMenuColorHandler(e, index){
-        colorIndex=index;
-        brushMenu.current.classList.add('active');
-        let domRect = e.target.getBoundingClientRect();
-        console.log(domRect.left);
-        brushMenu.current.style.top=domRect.top+'px';
-        brushMenu.current.style.left=domRect.left+'px';
-        brushMenu.current.addEventListener('mouseleave', mouseLeave);
-        e.preventDefault();
-        let timeOutId;
-
-        //Ставим таймаут что бы само закрылось
-        timeOutId= setTimeout(() => {
-            brushMenu.current.classList.remove('active');
-        }, 500);
-
-        //Если зашли мышкой в меню - отключаем таймаут
-        brushMenu.current.addEventListener('mouseenter', (e) => {
-            clearTimeout(timeOutId);
-            brushMenu.current.classList.add('active');
-        })
-
-        //Вышли из меню - включаем таймаут
-        function mouseLeave(){
-            brushMenu.current.classList.add('fastRemove');
-            brushMenu.current.classList.remove('active');
-            //без таймаута браузер может добавлять и убирать класы за "1 круг"
-            setTimeout(() => {
-                brushMenu.current.classList.remove('fastRemove');
-            }, 0);
-        }
-    }
-
-    function deleteColorHandler(){
-        props.savedBrushes.splice(colorIndex, 1);
-        ToolManager.changeSavedBrushes(props.savedBrushes);
-        brushMenu.current.classList.add('fastRemove');
-        brushMenu.current.classList.remove('active');
-        //без таймаута браузер может добавлять и убирать класы за "1 круг"
-        setTimeout(() => {
-            brushMenu.current.classList.remove('fastRemove');
-        }, 0);
-    }
-
-    function changeColorHandler(){
-        props.savedBrushes[colorIndex].size=props.brushSize;
-        props.savedBrushes[colorIndex].color=props.brushColor;
-        props.savedBrushes[colorIndex].alpha=props.brushAlpha;
-
-        ToolManager.changeSavedBrushes(props.savedBrushes);
-        //После клика нужно убирать меню быстро
-        brushMenu.current.classList.add('fastRemove');
-        brushMenu.current.classList.remove('active');
-        //без таймаута браузер может добавлять и убирать класы за "1 круг"
-        setTimeout(() => {
-            brushMenu.current.classList.remove('fastRemove');
-        }, 0);
-    }
-
     return (
         <div className="brush-panel">
                 <div className="brush-panel__block size-block">
                     <div className="brush-panel__panel-titile">Размер кисти</div>
                     <div className="brush-panel__inputs-block">
-                        <input min='0' max='200' onChange={brushSizeHandler} value={props.brushSize} type="number" />
-                        <input min='0' max='200' onChange={brushSizeHandler} value={props.brushSize} type="range" />
+                        <input min='0' max='200' onChange={changeSizeInputsHandler} value={props.brushSize} type="number" />
+                        <input min='0' max='200' onChange={changeSizeInputsHandler} value={props.brushSize} type="range" />
                     </div>
                 </div>
                 <div className="brush-panel__block ">
                     <div className="brush-panel__panel-titile">Прозрачность</div>
                     <div className="brush-panel__inputs-block">
-                        <input min='0' max='1' step='0.01' onChange={brushAlphaHandler} value={props.brushAlpha} type="number" />
-                        <input min='0' max='1' step='0.01' onChange={brushAlphaHandler} value={props.brushAlpha} type="range" />
+                        <input min='0' max='1' step='0.01' onChange={setBrushAlphaHandler} value={props.brushAlpha} type="number" />
+                        <input min='0' max='1' step='0.01' onChange={setBrushAlphaHandler} value={props.brushAlpha} type="range" />
                     </div>
                 </div>
-
                 <div className="brush-panel__block">
                     <div className="brush-panel__panel-titile">Цвет кисти</div>
                     <div className="brush-panel__inputs-block">
-                        <input onChange = {brushColorHandler} value={ColorHelper.toHex(props.brushColor)} type="color" />
+                        <input onChange = {changeColorInputsHandler} value={ColorHelper.toHex(props.brushColor)} type="color" />
                         <input value={ColorHelper.toHex(props.brushColor)} type="text" />
                     </div>
                     <button onClick={saveBrushHandler} className='panel__block-button'>Сохранить</button>
                 </div>
-                <div className="brush-panel__block">
-                    <div className="brush-panel__panel-titile">Сохраненные кисти</div>
-                    <div className='brush-panel__saved-brush'>
-                        <div ref={brushMenu} className="brush-panel__saved-brush-menu ">
-                            <div onClick={changeColorHandler} className="brush-panel__saved-brush-menu-item">Изменить</div>
-                            <div onClick={deleteColorHandler} className="brush-panel__saved-brush-menu-item">Удалить</div>
-                        </div>
-
-                        {props.savedBrushes.map((value, index) => {
-                            return <div 
-                                    onClick={()=>{changeBrushHandler(index)}} 
-                                    onContextMenu={(e)=>{contextMenuColorHandler(e, index)}}
-                                    key={index} 
-                                    style={{backgroundColor: value.color}} 
-                                    className="brush-panel__saved-brush-item">
-                                s:{value.size} o:{value.alpha}
-                            </div>
-                        })}
-
-                    </div>
-                </div>
+                <SavedColors/>
         </div>
     )
 }

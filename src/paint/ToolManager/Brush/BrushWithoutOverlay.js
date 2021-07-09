@@ -25,8 +25,6 @@ export default class BrushWithoutOverlay extends Brush{
         this._listenerManager.addListener(tmp_canvas, "mousedown",(e) =>{
             
             let state = store.getState();
-
-            console.log(state.brush);
             this._ctx.strokeStyle = state.brush.color;
             this._ctx.lineWidth = state.brush.size;
             this._ctx.lineCap = 'round';

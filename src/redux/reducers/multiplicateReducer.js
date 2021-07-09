@@ -27,7 +27,6 @@ export default function multiplicateReducer(state = initState, action) {
             }
         }
         case STOP_PLAY: {
-            console.log('stop play');
             return {
                 ...state,
                 isPlaying: false
