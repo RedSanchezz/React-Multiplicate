@@ -4,24 +4,20 @@ import { connect } from 'react-redux';
 import './Main.scss';
 
 import DrawWindow from './DrawWindow/DrawWindow';
-import { WindowContext } from './WindowContext';
 import MultiplicateWindow from './MultiplicateWindow/MultiplicateWindow';
-
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 
 
 function Main (){
     
-    const [state, setState] = useState('draw');
-
     return (
-        <WindowContext.Provider value={{
-                window: state,
-                changeWindow: setState
-            }}>
+        <BrowserRouter>
             <div className='main'>
-                {state==='draw' ? <DrawWindow></DrawWindow> : <MultiplicateWindow></MultiplicateWindow>}
+                <Route path='/draw' render={()=><DrawWindow></DrawWindow>}></Route>
+                <Route path='/multiplicate' render={()=><MultiplicateWindow></MultiplicateWindow>}></Route>
+                <Redirect from='/' to='/draw'/>
             </div>
-        </WindowContext.Provider>
+        </BrowserRouter>
     )
 }
 

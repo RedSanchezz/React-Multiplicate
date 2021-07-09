@@ -1,16 +1,11 @@
-import React, { useContext } from 'react'
-import { WindowContext } from '../../WindowContext'
+import React from 'react'
+import { NavLink } from 'react-router-dom';
 import MultiplicateFrameButtons from './MultiplicateFrameButtons/MultiplicateFrameButtons';
 import MultiplicateFramesInputs from './MultiplicateFramesInputs/MultiplicateFramesInputs';
 import './MultiplicateTopPanel.scss';
 
 export default function MultiplicateTopPanel() {
     
-    let windowContext = useContext(WindowContext);
-
-    function toDrawWindowhandler(){
-        windowContext.changeWindow('draw');
-    }
 
 
 
@@ -19,7 +14,8 @@ export default function MultiplicateTopPanel() {
             <div className='top-panel__menu'>
                 <div className='top-panel__menu-item'>File</div>
                 <div className='top-panel__menu-item'>Save</div>
-                <div onClick={toDrawWindowhandler} className='top-panel__menu-item'>Draw</div>
+                <NavLink to='/draw' className='top-panel__menu-item'>Draw</NavLink>
+
             </div>
             <div className="top-panel-content">
                 <MultiplicateFrameButtons></MultiplicateFrameButtons>
