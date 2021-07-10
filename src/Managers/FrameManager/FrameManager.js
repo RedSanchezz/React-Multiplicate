@@ -1,14 +1,12 @@
 import { canPlay, changeFrameList, setCurrentFrame, setMultiplicateCanvas, stopPlay } from "../../redux/actionCreators/multiplicateActionCreators";
-import {play} from "../../redux/actionCreators/multiplicateActionCreators";
 
 import store from "../../redux/store";
-import Frame from "./Frame";
-import GroupFrames from "./GroupFrames";
+import Frame from "../../models/Frame";
 
 
 //Прослойка для работы с фреймами
 
-export default class MultiplicateManager {
+export default class FrameManager {
     constructor(){
     }
     static id=0;
@@ -36,8 +34,7 @@ export default class MultiplicateManager {
         if(frameList.length-1< currentFrame) store.dispatch(setCurrentFrame(frameList.length-1));
     }
 
-
-    static renderRightPanel(){
+    static renderAllFrame(){
         let frameList =  store.getState().multiplicate.frameList;
         store.dispatch(changeFrameList(frameList));
     }
@@ -53,7 +50,7 @@ export default class MultiplicateManager {
         frameList[index1]=frameList[index2];
         frameList[index2]=help;
 
-        this.renderRightPanel();
+        this.renderAllFrame();
     }
 
     static playFilm(){
@@ -72,6 +69,8 @@ export default class MultiplicateManager {
 
         currentFrame.getDelay();
         setTimeout(() => {
+            let state = store.getState();
+            currentFrameIndex = state.multiplicate.currentFrame;
             if(frameList.length-1 != currentFrameIndex){
                 store.dispatch(setCurrentFrame(++currentFrameIndex));
                 this.playFilm();
@@ -93,13 +92,6 @@ export default class MultiplicateManager {
     }
 
 
-    static createGroupFrames(){
-        let frameList = store.getState().multiplicate.frameList;
-        let frameGroup = new GroupFrames();
-        frameList.push(frameGroup);
-        frameGroup.setId(this.id);
-        store.dispatch(changeFrameList(frameList));
-    }
     static setDefaultDelay(){
 
     }

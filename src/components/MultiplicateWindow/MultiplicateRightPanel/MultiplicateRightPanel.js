@@ -1,13 +1,13 @@
 
 import React  from 'react'
 import { Suspense } from 'react';
-import MultiplicateManager from '../../../paint/MultiplicateManager/MultiplicateManager';
+import FrameManager from './../../../Managers/FrameManager/FrameManager';
 
 export default function MultiplicateRightPanel() {
     const Frames = React.lazy(()=>import('../../DrawWindow/RightPanel/Frames/Frames'));
 
     function testButtonClick(){
-        MultiplicateManager.createGroupFrames();
+        FrameManager.createGroupFrames();
     }
 
     return (

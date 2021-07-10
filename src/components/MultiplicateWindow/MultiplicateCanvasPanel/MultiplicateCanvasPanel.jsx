@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import MultiplicateManager from './../../../paint/MultiplicateManager/MultiplicateManager';
+import FrameManager from './../../../Managers/FrameManager/FrameManager';
 
 function MultiplicateCanvasPanel(props) {
     let canvasRef = useRef();
 
     useEffect(() => {
-        MultiplicateManager.setMultiplicateCanvas(canvasRef.current);
+        FrameManager.setMultiplicateCanvas(canvasRef.current);
     },[]);
     
     useEffect(()=>{

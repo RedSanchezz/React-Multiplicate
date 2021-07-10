@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import LayoutManager from '../../../../paint/LayoutManager/LayoutManager';
 import Layout from './Layout/Layout';
 import './Layouts.scss';
-import MultiplicateManager from './../../../../paint/MultiplicateManager/MultiplicateManager';
-import LayoutModel from './../../../../paint/LayoutManager/Layout';
+import LayoutModel from '../../../../models/Layout';
 import LayoutMenu from './LayoutMenu';
 import  ReactDOM  from 'react-dom';
+import FrameManager from './../../../../Managers/FrameManager/FrameManager';
+import LayoutManager from '../../../../Managers/LayoutManager/LayoutManager';
 
 
 function Layouts(props) {
@@ -20,13 +20,14 @@ function Layouts(props) {
 
 
     function addLayoutHandler(){
+        new Layout
         LayoutManager.addLayout();
     }
     
     function addToMultiplication(e){
         //Обычный слой из модели, просто нужно было другое название в импорте
         let layout = new LayoutModel(props.canvas, props.context, true, ++LayoutManager.id);
-        MultiplicateManager.addFrame(layout, 100);
+        FrameManager.addFrame(layout, 100);
     }
 
     let layoutMenu = <LayoutMenu ref={menuBlock}

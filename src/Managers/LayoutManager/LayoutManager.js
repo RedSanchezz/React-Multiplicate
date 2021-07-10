@@ -1,6 +1,6 @@
 import { changeCurrentLayout, changeLayoutList } from "../../redux/actionCreators/layoutActionCreator";
 import store from "../../redux/store";
-import Layout from "./Layout";
+import Layout from './../../models/Layout';
 
 //Класс для управления слоями
 export default class LayoutManager{

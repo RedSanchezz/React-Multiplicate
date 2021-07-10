@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 
 import './WorkSpace.scss'
 import {changeCanvasSize, setCanvasBlock } from './../../../redux/actionCreators/canvasActionCreator';
-import ToolManager from './../../../paint/ToolManager/ToolManager';
-import LayoutManager from './../../../paint/LayoutManager/LayoutManager';
 import Canvas from './Canvas/Canvas';
 import { connect } from 'react-redux';
+import LayoutManager from '../../../Managers/LayoutManager/LayoutManager';
+import ToolManager from './../../../Managers/ToolManager/ToolManager';
 
 
 

@@ -1,8 +1,8 @@
 
 import store from '../../../redux/store';
-import Tool from './../Tool';
-import ListenerManager from './../../ListenerManager/ListenerManager';
-import { setCanvasPosition, setCanvasZoom } from './../../../redux/actionCreators/canvasActionCreator';
+import Tool from '../Tool';
+import ListenerManager from '../../../utils/ListenerManager';
+import { setCanvasPosition, setCanvasZoom } from '../../../redux/actionCreators/canvasActionCreator';
 
 export default class Hand extends Tool {
     constructor(){

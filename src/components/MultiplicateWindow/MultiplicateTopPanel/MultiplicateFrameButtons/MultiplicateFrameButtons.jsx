@@ -1,16 +1,16 @@
 
 import React from 'react'
-import MultiplicateManager from '../../../../paint/MultiplicateManager/MultiplicateManager';
 import './MultiplicateFrameButtons.scss';
+import FrameManager from './../../../../Managers/FrameManager/FrameManager';
 
 export default function MultiplicateFrameButtons() {
 
     function play(){
-        MultiplicateManager.playFilm();
+        FrameManager.playFilm();
     }
     
     function pause(){
-        MultiplicateManager.pause();
+        FrameManager.pause();
     }
 
     return (

@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import MultiplicateManager from '../../../../paint/MultiplicateManager/MultiplicateManager';
 import './MultiplicateFramesInputs.scss';
+import FrameManager from './../../../../Managers/FrameManager/FrameManager';
 
 function MultiplicateFramesInputs(props) {
     function changeCurrentFrame(e){
-        MultiplicateManager.setCurrentFrame(+e.target.value);
+        FrameManager.setCurrentFrame(+e.target.value);
     }
 
     return (

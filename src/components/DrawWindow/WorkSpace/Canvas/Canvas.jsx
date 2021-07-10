@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Layout from '../../../../paint/LayoutManager/Layout';
-import MultiplicateManager from '../../../../paint/MultiplicateManager/MultiplicateManager';
 import { setCanvas } from '../../../../redux/actionCreators/canvasActionCreator';
 import store from '../../../../redux/store';
 import './Canvas.scss';
-import LayoutManager from './../../../../paint/LayoutManager/LayoutManager';
+import FrameManager from './../../../../Managers/FrameManager/FrameManager';
+import LayoutManager from '../../../../Managers/LayoutManager/LayoutManager';
+import Layout from '../../../../models/Layout';
 
 function Canvas(props) {
 
@@ -30,7 +30,7 @@ function Canvas(props) {
             let context = store.getState().canvas.context
             if(canvas!=null) {
                 let layout = new Layout(canvas, context, true, ++LayoutManager.id);
-                MultiplicateManager.addFrame(layout, 100);
+                FrameManager.addFrame(layout, 100);
             }
             e.preventDefault();
         }

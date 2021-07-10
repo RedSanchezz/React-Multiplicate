@@ -16,7 +16,9 @@ function Frames(props) {
                         return <FrameBlock  key={value.getId()} 
                                             value={value} 
                                             index={index} 
-                                            delay={value.getDelay()}>
+                                            delay={value.getDelay()}
+                                            isOpen={value.isOpen()}
+                                            >
                                 </FrameBlock>
                     }
                     else {

@@ -1,7 +1,7 @@
 import React  from 'react'
 import { connect } from 'react-redux';
+import ToolManager from '../../../Managers/ToolManager/ToolManager';
 import './LeftPanel.scss';
-import ToolManager from '../../../paint/ToolManager/ToolManager';
 
 
 function LeftPanel(props) {

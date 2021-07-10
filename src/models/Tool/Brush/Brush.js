@@ -1,8 +1,8 @@
-import ListenerManager from "../../ListenerManager/ListenerManager";
+import ListenerManager from "../../../utils/ListenerManager";
 import ColorHelper from "../../../utils/ColorHelper";
 import Tool from "../Tool";
-import store from './../../../redux/store';
-import { changeBrushSetting } from './../../../redux/actionCreators/brushActionCreators';
+import store from '../../../redux/store';
+import { changeBrushSetting } from '../../../redux/actionCreators/brushActionCreators';
 
 //Базовый класс для кисти
 export default class Brush extends Tool {

@@ -1,6 +1,6 @@
 
 import React, { useRef } from 'react'
-import LayoutManager from './../../../../paint/LayoutManager/LayoutManager';
+import LayoutManager from '../../../../Managers/LayoutManager/LayoutManager';
 
 function LayoutMenu(props) {
 

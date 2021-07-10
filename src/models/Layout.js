@@ -1,4 +1,4 @@
-import LayoutManager from "./LayoutManager";
+import LayoutManager from './../Managers/LayoutManager/LayoutManager';
 
 export default class Layout {
     constructor(canvas, ctx, show, id){

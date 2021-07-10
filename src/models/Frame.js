@@ -5,6 +5,7 @@ export default class Frame{
         this._delay = delay;
         this._id= id;
         this._type = 'Frame';
+        this._open = false;
     }
     
     getCanvas(){
@@ -26,5 +27,14 @@ export default class Frame{
     }
     getType(){
         return this._type;
+    }
+    isOpen(){
+        return this._open;
+    }
+    open(){
+        this._open = true;
+    }
+    close(){
+        this._open = false;
     }
 }

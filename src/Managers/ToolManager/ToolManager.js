@@ -1,10 +1,11 @@
 
+import SketchBrush from "../../models/Tool/Brush/SketchBrush";
+import Eraser from "../../models/Tool/Eraser/Eraser";
+import Hand from "../../models/Tool/Hand/Hand";
 import { changeSavedBrushes, saveBrush } from "../../redux/actionCreators/brushActionCreators";
 import { setCurrentTool } from "../../redux/actionCreators/canvasActionCreator";
 import store from "../../redux/store";
-import SketchBrush from "./Brush/SketchBrush";
-import Eraser from "./Eraser/Eraser";
-import Hand from './Hand/Hand';
+
 
 
 //класс для выбора инструмента рисования

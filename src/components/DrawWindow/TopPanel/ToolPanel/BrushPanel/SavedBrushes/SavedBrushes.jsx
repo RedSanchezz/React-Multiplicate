@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react'
 import { connect } from 'react-redux';
-import ToolManager from './../../../../../../paint/ToolManager/ToolManager';
+import ToolManager from '../../../../../../Managers/ToolManager/ToolManager';
 
 
 

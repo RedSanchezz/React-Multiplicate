@@ -1,11 +1,10 @@
 
 import React, { useEffect } from 'react'
 import './FrameItem.scss'
-import MultiplicateManager from '../../../../../paint/MultiplicateManager/MultiplicateManager';
+import FrameManager from '../../../../../Managers/FrameManager/FrameManager';
 import { connect } from 'react-redux';
-import Layout from '../../../../../paint/LayoutManager/Layout';
-import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
-import { useState } from 'react';
+import Layout from '../../../../../models/Layout';
+import LayoutManager from '../../../../../Managers/LayoutManager/LayoutManager';
 
 function FrameItem(props) {
 
@@ -14,8 +13,6 @@ function FrameItem(props) {
 
     const index = props.index;
     const refFrameBlock = React.createRef();
-
-    let [active, setActive] = useState(false);
 
     useEffect(() => {
         refFrameBlock.current.prepend(value.getCanvas());
@@ -27,14 +24,14 @@ function FrameItem(props) {
 
 
     function deleteFrameHandler (e){
-        MultiplicateManager.deleteFrame(index);
+        FrameManager.deleteFrame(index);
         e.stopPropagation();
     }
 
 
     function changeDelayHandler(e) {
         value.setDelay(e.currentTarget.value);
-        MultiplicateManager.renderRightPanel();
+        FrameManager.renderAllFrame();
         e.stopPropagation();
     }
 
@@ -53,29 +50,28 @@ function FrameItem(props) {
     }
 
     function upPositionHandler(e){
-        MultiplicateManager.swap(index, index-1);
+        FrameManager.swap(index, index-1);
         e.stopPropagation();
     }
 
     function downPositionHandler(e){
-        MultiplicateManager.swap(index, index+1);
+        FrameManager.swap(index, index+1);
         e.stopPropagation();
     }
 
     function setCurrentFrame (e){
-        MultiplicateManager.setCurrentFrame(index);
+        FrameManager.setCurrentFrame(index);
     }
 
     function clickOpenHandler(e){
-        console.log('eee');
-        setActive(!active);
+        if(props.isOpen) value.close();
+        else value.open();
+        
+        FrameManager.renderAllFrame();
         e.stopPropagation();
     }
 
-    function clickCloseHandler(){
-        setActive(false);
-    }
-    let className = active ? 'frame-block opened' : 'frame-block';
+    let className = props.isOpen ? 'frame-block opened' : 'frame-block';
     return (
         <div ref={refFrameBlock} 
             className={className}

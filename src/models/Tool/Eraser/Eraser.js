@@ -1,5 +1,5 @@
 import store from "../../../redux/store";
-import LayoutManager from "../../LayoutManager/LayoutManager";
+import LayoutManager from "../../../Managers/LayoutManager/LayoutManager";
 import Brush from "../Brush/Brush";
 
 export default class Eraser extends Brush{

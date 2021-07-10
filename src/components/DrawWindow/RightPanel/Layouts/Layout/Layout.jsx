@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import './Layout.scss'
-import MultiplicateManager from './../../../../../paint/MultiplicateManager/MultiplicateManager';
-import LayoutManager from '../../../../../paint/LayoutManager/LayoutManager';
+import FrameManager from './../../../../../Managers/FrameManager/FrameManager';
+import LayoutManager from '../../../../../Managers/LayoutManager/LayoutManager';
 
 
 
@@ -86,7 +86,7 @@ function Layout(props) {
     }
 
     function addToMultiplicate(){
-        MultiplicateManager.addFrame(layout, 100);
+        FrameManager.addFrame(layout, 100);
     }
 
 

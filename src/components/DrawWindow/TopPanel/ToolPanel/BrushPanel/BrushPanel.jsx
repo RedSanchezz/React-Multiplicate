@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import './BrushPanel.scss';
 
-import ToolManager from '../../../../../paint/ToolManager/ToolManager';
 import ColorHelper from '../../../../../utils/ColorHelper';
 import SavedColors from './SavedBrushes/SavedBrushes';
+import ToolManager from '../../../../../Managers/ToolManager/ToolManager';
 
 
 function BrushPanel(props) {
