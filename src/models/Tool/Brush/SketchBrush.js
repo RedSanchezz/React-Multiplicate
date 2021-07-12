@@ -15,23 +15,23 @@ export default class SketchBrush extends Brush{
     create(){
         var ppts = [];
 
-        const tmp_canvas = document.createElement("canvas");
-        this._fakeCanvas =tmp_canvas;
+        const tmpCanvas = document.createElement("canvas");
+        this._fakeCanvas =tmpCanvas;
 
         let state = store.getState();
 
-        tmp_canvas.style.zIndex=100;
-        tmp_canvas.height= state.canvas.size.height;
-        tmp_canvas.width = state.canvas.size.width;
-        tmp_canvas.style.top = state.canvas.position.top;
-        tmp_canvas.style.left = state.canvas.position.left;
-        tmp_canvas.style.position = 'absolute';
+        tmpCanvas.style.zIndex=100;
+        tmpCanvas.height= state.canvas.size.height;
+        tmpCanvas.width = state.canvas.size.width;
+        tmpCanvas.style.top = state.canvas.position.top;
+        tmpCanvas.style.left = state.canvas.position.left;
+        tmpCanvas.style.position = 'absolute';
         //для удобства
-        tmp_canvas.classList.add("tmp_canvas");
+        tmpCanvas.classList.add("tmpCanvas");
         
-        const tmp_ctx=tmp_canvas.getContext("2d");
-        this._canvasBlock.prepend(tmp_canvas);
-
+        tmpCanvas.style.cursor= 'crosshair';
+        const tmp_ctx=tmpCanvas.getContext("2d");
+        this._canvasBlock.prepend(tmpCanvas);
         //Нажимаем на клавишу мыши
         this._listenerManager.addListener(this._canvasBlock, "mousedown",(e) =>{
         
@@ -55,12 +55,12 @@ export default class SketchBrush extends Brush{
 
             console.log(state.canvas.size.height);
 
-            tmp_canvas.style.transform = `scale(${state.canvas.zoom})`;
-            tmp_canvas.style.top = state.canvas.position.top + 'px';
-            tmp_canvas.style.left = state.canvas.position.left + 'px';
+            tmpCanvas.style.transform = `scale(${state.canvas.zoom})`;
+            tmpCanvas.style.top = state.canvas.position.top + 'px';
+            tmpCanvas.style.left = state.canvas.position.left + 'px';
 
             onPaint(e);
-            this._listenerManager.addListener(tmp_canvas, "mousemove", onPaint);
+            this._listenerManager.addListener(tmpCanvas, "mousemove", onPaint);
         });
         
         //когда отжимаем клавишу мыши
@@ -68,14 +68,14 @@ export default class SketchBrush extends Brush{
             if(this.started){
                 this.started = false;
 
-                this._listenerManager.removeListener(tmp_canvas, "mousemove", onPaint);
-                this._ctx.drawImage(tmp_canvas, 0, 0);
+                this._listenerManager.removeListener(tmpCanvas, "mousemove", onPaint);
+                this._ctx.drawImage(tmpCanvas, 0, 0);
 
                 let state = store.getState();
                 LayoutManager.update();
                 state.layouts.currentLayout.saveInHistory();
                 
-                tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+                tmp_ctx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
 
                 ppts=[];
             }
@@ -87,14 +87,14 @@ export default class SketchBrush extends Brush{
             if(this.started){
                 this.started = false;
 
-                this._listenerManager.removeListener(tmp_canvas, "mousemove", onPaint);
-                this._ctx.drawImage(tmp_canvas, 0, 0);
+                this._listenerManager.removeListener(tmpCanvas, "mousemove", onPaint);
+                this._ctx.drawImage(tmpCanvas, 0, 0);
 
                 let state = store.getState();
                 LayoutManager.update();
                 state.layouts.currentLayout.saveInHistory();
                 
-                tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+                tmp_ctx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
 
                 ppts=[];
             }

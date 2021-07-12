@@ -9,25 +9,27 @@ export default class Eraser extends Brush{
     create(){
         var ppts = [];
 
-        const tmp_canvas = document.createElement("canvas");
-        this._fakeCanvas =tmp_canvas;
+        const tmpCanvas = document.createElement("canvas");
+        this._fakeCanvas =tmpCanvas;
 
         let state = store.getState();
 
-        tmp_canvas.style.zIndex=100;
+        tmpCanvas.style.zIndex=100;
 
-        tmp_canvas.height= state.canvas.size.height;
-        tmp_canvas.width = state.canvas.size.width;
-        tmp_canvas.style.top = state.canvas.position.top;
-        tmp_canvas.style.left = state.canvas.position.left;
-        tmp_canvas.style.position = 'absolute';
+        tmpCanvas.height= state.canvas.size.height;
+        tmpCanvas.width = state.canvas.size.width;
+        tmpCanvas.style.top = state.canvas.position.top;
+        tmpCanvas.style.left = state.canvas.position.left;
+        tmpCanvas.style.position = 'absolute';
         //для удобства
-        tmp_canvas.classList.add("tmp_canvas");
+        tmpCanvas.classList.add("tmpCanvas");
         
-        const tmpCtx=tmp_canvas.getContext("2d");
-        state.canvas.canvasBlock.prepend(tmp_canvas);
+        tmpCanvas.style.cursor= 'crosshair';
 
-        this._listenerManager.addListener(tmp_canvas, "mousedown",(e) =>{
+        const tmpCtx=tmpCanvas.getContext("2d");
+        state.canvas.canvasBlock.prepend(tmpCanvas);
+
+        this._listenerManager.addListener(tmpCanvas, "mousedown",(e) =>{
 
             let state = store.getState();
 
@@ -45,20 +47,20 @@ export default class Eraser extends Brush{
             tmpCtx.strokeStyle = state.setting.canvasDefaultBackground;
             onPaint(e);
 
-            this._listenerManager.addListener(tmp_canvas, "mousemove", onPaint);
+            this._listenerManager.addListener(tmpCanvas, "mousemove", onPaint);
         });
         
-        this._listenerManager.addListener(tmp_canvas, "mouseup", ()=> {
-            this._listenerManager.removeListener(tmp_canvas, "mousemove",onPaint);
+        this._listenerManager.addListener(tmpCanvas, "mouseup", ()=> {
+            this._listenerManager.removeListener(tmpCanvas, "mousemove",onPaint);
 
-            let imageData=testFunc(tmpCtx.getImageData(0, 0, tmp_canvas.width, tmp_canvas.height), this._ctx.getImageData(0, 0, tmp_canvas.width, tmp_canvas.height));
+            let imageData=testFunc(tmpCtx.getImageData(0, 0, tmpCanvas.width, tmpCanvas.height), this._ctx.getImageData(0, 0, tmpCanvas.width, tmpCanvas.height));
             
             this._ctx.putImageData(imageData, 0, 0);
 
             LayoutManager.update();
             state.layouts.currentLayout.saveInHistory()
 
-            tmpCtx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+            tmpCtx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
             ppts=[];
         });
 
