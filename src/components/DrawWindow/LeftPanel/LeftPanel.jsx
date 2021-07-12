@@ -30,7 +30,7 @@ function LeftPanel(props) {
             </div>
             <div onClick={setHandToolHandler} 
                 className={props.currentToolName=== 'HAND' ?   'left-panel__tool-item active' : 'left-panel__tool-item'}>
-                <img src="./img/eraser.svg" alt=""/>
+                <img src="./img/hand.svg" alt=""/>
             </div>
         </div>
     )

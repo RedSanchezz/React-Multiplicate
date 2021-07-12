@@ -19,6 +19,7 @@ export default class Hand extends Tool {
         let startYCoord = 0;
         let startXCoord = 0;
 
+        canvas.style.cursor='move';
 
         this._listenerManager.addListener(canvas, 'mousedown', (e)=>{
 
@@ -63,12 +64,14 @@ export default class Hand extends Tool {
             }))
             startYCoord=startYCoord + offsetY;
             startXCoord=startXCoord + offsetX;
-
         }
-
     }
     destroy(){
+        let state = store.getState();
+        let canvas = state.canvas.canvas;
         this._listenerManager.removeAllListener();
+        canvas.style.cursor='default';
+
     }
 
 }
