@@ -38,10 +38,10 @@ export default function Tabs(props) {
                         className={tabsNumber===0 ? 'right-panel__tabs-button active' : 'right-panel__tabs-button'}>
                         Слои
                 </button>
-                <button onClick={()=>{setTabsActive(1)}} 
+                {/* <button onClick={()=>{setTabsActive(1)}} 
                         className={tabsNumber===1 ? 'right-panel__tabs-button active' : 'right-panel__tabs-button'}>
                         История
-                </button>
+                </button> */}
                 <button onClick={()=>{setTabsActive(2)}}
                         className={tabsNumber===2 ? 'right-panel__tabs-button active' : 'right-panel__tabs-button'}>
                         Избранное

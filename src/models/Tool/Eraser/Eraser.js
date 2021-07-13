@@ -18,12 +18,14 @@ export default class Eraser extends Brush{
 
         tmpCanvas.height= state.canvas.size.height;
         tmpCanvas.width = state.canvas.size.width;
+
         tmpCanvas.style.top = state.canvas.position.top;
         tmpCanvas.style.left = state.canvas.position.left;
+
         tmpCanvas.style.position = 'absolute';
         //для удобства
         tmpCanvas.classList.add("tmpCanvas");
-        
+
         tmpCanvas.style.cursor= 'crosshair';
 
         const tmpCtx=tmpCanvas.getContext("2d");
@@ -36,7 +38,6 @@ export default class Eraser extends Brush{
             this._ctx = state.layouts.currentLayout.getContext();
             this._canvas = state.layouts.currentLayout.getCanvas();
 
-
             this._ctx.lineWidth = state.brush.size;
             this._ctx.lineCap = 'round';
 
@@ -45,6 +46,7 @@ export default class Eraser extends Brush{
 
             this._ctx.strokeStyle= state.setting.canvasDefaultBackground;
             tmpCtx.strokeStyle = state.setting.canvasDefaultBackground;
+
             onPaint(e);
 
             this._listenerManager.addListener(tmpCanvas, "mousemove", onPaint);
@@ -54,7 +56,7 @@ export default class Eraser extends Brush{
             this._listenerManager.removeListener(tmpCanvas, "mousemove",onPaint);
 
             let imageData=testFunc(tmpCtx.getImageData(0, 0, tmpCanvas.width, tmpCanvas.height), this._ctx.getImageData(0, 0, tmpCanvas.width, tmpCanvas.height));
-            
+
             this._ctx.putImageData(imageData, 0, 0);
 
             LayoutManager.update();

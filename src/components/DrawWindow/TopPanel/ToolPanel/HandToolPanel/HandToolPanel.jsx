@@ -15,10 +15,11 @@ function HandToolPanel(props) {
     return (
         <div>
             <div>
-                <input type="number" value={props.canvasZoom} />
+                <input type="number" value={props.canvasZoom} onChange={zoomChangeHandler}  />
                 <input onChange={zoomChangeHandler} 
-                    type="range" step='0.1' min='0.1' max='5' 
-                    value={props.canvasZoom}/>
+                        value={props.canvasZoom}
+                        type="range" step='0.1' min='0.1' max='5' 
+                />
             </div>
         </div>
     )

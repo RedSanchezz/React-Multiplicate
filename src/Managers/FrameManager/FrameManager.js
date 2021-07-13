@@ -3,7 +3,6 @@ import { canPlay, changeFrameList, setCurrentFrame, setMultiplicateCanvas, stopP
 import store from "../../redux/store";
 import Frame from "../../models/Frame";
 
-
 //Прослойка для работы с фреймами
 
 export default class FrameManager {
@@ -18,11 +17,18 @@ export default class FrameManager {
         canvas.width=layout.getCanvas().width;
         canvas.height=layout.getCanvas().height;
         canvas.getContext('2d').drawImage(layout.getCanvas(), 0, 0);
+
         let frame = new Frame(canvas, delay, this.id++);
         let frameList = store.getState().multiplicate.frameList;
         frameList.push(frame);
         store.dispatch(changeFrameList(frameList));
+
         if(currentFrame===-1) store.dispatch(setCurrentFrame(0));
+    }
+
+    static changeFrame(){
+        let frameList =  store.getState().multiplicate.frameList;
+        store.dispatch(changeFrameList(frameList));
     }
 
     static deleteFrame(index){
@@ -71,6 +77,12 @@ export default class FrameManager {
         setTimeout(() => {
             let state = store.getState();
             currentFrameIndex = state.multiplicate.currentFrame;
+            let stopPlay = state.multiplicate.stopPlay;
+            if(stopPlay) {
+                store.dispatch(canPlay());
+                return;
+            }
+
             if(frameList.length-1 != currentFrameIndex){
                 store.dispatch(setCurrentFrame(++currentFrameIndex));
                 this.playFilm();
@@ -91,7 +103,6 @@ export default class FrameManager {
 
     }
 
-
     static setDefaultDelay(){
 
     }
@@ -100,10 +111,16 @@ export default class FrameManager {
         store.dispatch(setCurrentFrame(index));
     }
 
-
-
-
     static setMultiplicateCanvas(canvas){
         store.dispatch(setMultiplicateCanvas(canvas));
+    }
+
+    static setDelayToAll(delay){
+        let state = store.getState();
+        let frameList = state.multiplicate.frameList;
+        frameList.map((frame, index) => {
+            frame.setDelay(delay);
+        });
+        store.dispatch(changeFrameList(frameList));
     }
 }

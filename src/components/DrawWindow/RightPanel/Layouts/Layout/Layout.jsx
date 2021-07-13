@@ -18,10 +18,11 @@ function Layout(props) {
 
     //когда компонент отрендерился, вставляем канвас из модели
     useEffect(() => {
+        console.log('render layout');
         layoutBlock.current.append(canvas);
         canvas.style.backgroundColor=props.defaultBackgorund;
         canvas.style.outline = props.isCurrent ? '10px solid red' : 'none';
-        //перерисовываем канвас, только у активного слоя 
+        //когда компонент демонтируется, удаляем канвас
         return ()=>{
             canvas.remove();
         }
@@ -32,7 +33,7 @@ function Layout(props) {
         e.stopPropagation();
     }
 
-    function setCurrent(e){
+    function clickToLayoutHandler(e) {
         if(e.ctrlKey) {
             LayoutManager.select(index);
             return;
@@ -52,15 +53,15 @@ function Layout(props) {
     }
 
     function historyBackHandler(e){
-        layout.back();
-        //обновляем большой канвас
+        layout.historyBack();
+        //обновляем основной канвас, перерисовывая каждый слой
         LayoutManager.update();
-        //вызываем отрисовку
         e.stopPropagation();
     }
 
     function historyNextHandler(e){
-        layout.next();
+        layout.historyNext();
+        //обновляем основной канвас, перерисовывая каждый слой
         LayoutManager.update();
         e.stopPropagation();
     }
@@ -70,11 +71,13 @@ function Layout(props) {
         e.stopPropagation();
     }
 
+
     function contextMenuHandler(e){
         if(layout.isSelected()){
             props.setMenuActive(true);
             let x = e.pageY-10;
             let y = e.pageX-20;
+            //если меню выезжает за правый край
             if(y+200>=window.innerWidth){
                 y=window.innerWidth-200;
             }
@@ -89,12 +92,10 @@ function Layout(props) {
         FrameManager.addFrame(layout, 100);
     }
 
-
-
     return (    
                 <div onContextMenu={contextMenuHandler} 
                         ref={layoutBlock}
-                        onClick={setCurrent} 
+                        onClick={clickToLayoutHandler} 
                         key={index} 
                         style={props.isSelected ? {backgroundColor: 'darkred'} : {backgroundColor:'black'}} 
                         className='right-panel__layout-block layout-block'>

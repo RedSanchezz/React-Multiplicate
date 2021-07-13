@@ -15,13 +15,13 @@ function Layouts(props) {
     let menuBlock = React.createRef();
 
     let [menuPosition, setMenuPosition] = useState({x: 0, y: 0});
-
     let [active, setMenuActive] = useState(false);
 
 
     function addLayoutHandler(){
-        new Layout
-        LayoutManager.addLayout();
+        //Обычный слой из модели
+        let layout = new LayoutModel(props.canvas, props.context, true, ++LayoutManager.id);
+        LayoutManager.addLayout(layout);
     }
     
     function addToMultiplication(e){
@@ -31,11 +31,11 @@ function Layouts(props) {
     }
 
     let layoutMenu = <LayoutMenu ref={menuBlock}
-                    menuPosition={menuPosition} 
-                    active={active} 
-                    setMenuActive={setMenuActive}
-                    layoutList = {props.layoutList}
-                    ></LayoutMenu>;
+                                menuPosition={menuPosition} 
+                                active={active} 
+                                setMenuActive={setMenuActive}
+                                layoutList = {props.layoutList}
+                    />
 
     return (
         <>
@@ -55,8 +55,7 @@ function Layouts(props) {
                                     isSelected={layout.isSelected()}
                                     setMenuPosition = {setMenuPosition}
                                     setMenuActive ={setMenuActive}
-                                    >
-                                </Layout>
+                                />
                     })
                 }
             </div>

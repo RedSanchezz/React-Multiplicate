@@ -15,27 +15,30 @@ function FrameItem(props) {
     const refFrameBlock = React.createRef();
 
     useEffect(() => {
-        refFrameBlock.current.prepend(value.getCanvas());
-        value.getCanvas().style.backgroundColor=props.defaultBackgorund;
+        if(props.isOpen){
+            refFrameBlock.current.prepend(value.getCanvas());
+            value.getCanvas().style.backgroundColor=props.defaultBackgorund;
+        }
         return ()=>{
             value.getCanvas().remove();
         }
     }, [id, props.defaultBackgorund, value, refFrameBlock]);
 
+    useEffect(()=>{
 
+    }, []);
     function deleteFrameHandler (e){
         FrameManager.deleteFrame(index);
         e.stopPropagation();
     }
 
-
     function changeDelayHandler(e) {
-        value.setDelay(e.currentTarget.value);
-        FrameManager.renderAllFrame();
+        let delay = e.currentTarget.value;
+        value.setDelay(delay);
+        FrameManager.changeFrame(index, value);
         e.stopPropagation();
     }
 
-    
     function addToLayoutListHandler(e){
         let canvas = document.createElement('canvas');
         canvas.width=value.getCanvas().width;
@@ -72,6 +75,7 @@ function FrameItem(props) {
     }
 
     let className = props.isOpen ? 'frame-block opened' : 'frame-block';
+    
     return (
         <div ref={refFrameBlock} 
             className={className}

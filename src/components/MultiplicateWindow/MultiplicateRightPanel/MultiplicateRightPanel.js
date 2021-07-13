@@ -1,23 +1,27 @@
 
-import React  from 'react'
-import { Suspense } from 'react';
+import React, { useState }  from 'react'
+import Frames from './../../DrawWindow/RightPanel/Frames/Frames';
 import FrameManager from './../../../Managers/FrameManager/FrameManager';
-
 export default function MultiplicateRightPanel() {
-    const Frames = React.lazy(()=>import('../../DrawWindow/RightPanel/Frames/Frames'));
 
-    function testButtonClick(){
-        FrameManager.createGroupFrames();
+    let [delay, setDelay] = useState(100);
+
+    function setDelayToAllHandler() {
+        FrameManager.setDelayToAll(delay)
     }
-
     return (
         <div className="right-panel">
-            <button onClick = {testButtonClick}>
-                Click me pls
-            </button>
-            <Suspense fallback={<h1>Загрузка..</h1>}>
-                <Frames></Frames>
-            </Suspense>
+            <div>
+                <h3>Установить задержку для всех слоев</h3>
+                <input type='number'
+                        value={delay} 
+                        onChange={(e)=>{setDelay(e.currentTarget.value)}}></input>
+                <button onClick = {setDelayToAllHandler} >
+                OK
+                </button>
+
+            </div>
+            <Frames></Frames>
         </div>
     )
 }

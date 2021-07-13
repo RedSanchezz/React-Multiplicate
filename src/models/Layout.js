@@ -54,7 +54,7 @@ export default class Layout {
         this._positionInHistory = this._historyArr.length-1;
     }
 
-    back(){
+    historyBack(){
         if(this._positionInHistory!==0){ 
             this._positionInHistory-=1;
             this._ctx.putImageData(this._historyArr[this._positionInHistory],0,0);
@@ -62,7 +62,7 @@ export default class Layout {
         }
     }
 
-    next(){
+    historyNext(){
         if(this._positionInHistory!==this._historyArr.length-1){ 
             this._positionInHistory+=1;
             this._ctx.putImageData(this._historyArr[this._positionInHistory],0,0);
