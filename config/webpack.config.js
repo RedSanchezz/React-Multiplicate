@@ -26,6 +26,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const WorkerPlugin = require('worker-plugin');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -65,16 +66,16 @@ const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 const hasJsxRuntime = (() => {
-  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
-    return false;
-  }
+    if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+      return false;
+    }
 
-  try {
-    require.resolve('react/jsx-runtime');
-    return true;
-  } catch (e) {
-    return false;
-  }
+    try {
+      require.resolve('react/jsx-runtime');
+      return true;
+    } catch (e) {
+      return false;
+    }
 })();
 
 // This is the production and development configuration.
@@ -112,7 +113,6 @@ module.exports = function (webpackEnv) {
         loader: require.resolve('css-loader'),
         options: cssOptions,
       },
-      
       {
         // Options for PostCSS as we reference these options twice
         // Adds vendor prefixing based on your specified browser support in
@@ -349,6 +349,7 @@ module.exports = function (webpackEnv) {
           paths.appPackageJson,
           reactRefreshOverlayEntry,
         ]),
+
       ],
     },
     resolveLoader: {
@@ -356,11 +357,21 @@ module.exports = function (webpackEnv) {
         // Also related to Plug'n'Play, but this time it tells webpack to load its loaders
         // from the current package.
         PnpWebpackPlugin.moduleLoader(module),
+
       ],
     },
     module: {
       strictExportPresence: true,
       rules: [
+        {
+          test: /\.gif.worker.js$/,
+          use: {
+            loader: 'worker-loader',
+            options: {
+              inline: true
+            }
+          }
+        },
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
         {
@@ -377,7 +388,7 @@ module.exports = function (webpackEnv) {
                 limit: imageInlineSizeLimit,
                 mimetype: 'image/avif',
                 name: 'static/media/[name].[hash:8].[ext]',
-              },
+            },
             },
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
@@ -390,8 +401,6 @@ module.exports = function (webpackEnv) {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
-            // Process application JS with Babel.
-            // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
@@ -420,6 +429,7 @@ module.exports = function (webpackEnv) {
                         },
                       },
                     },
+
                   ],
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
@@ -584,6 +594,7 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358

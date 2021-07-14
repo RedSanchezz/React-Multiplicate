@@ -65,25 +65,15 @@ export default class SketchBrush extends Brush{
         
         //когда отжимаем клавишу мыши
         this._listenerManager.addListener(this._canvasBlock, "mouseup", ()=> {
-            if(this.started){
-                this.started = false;
-
-                this._listenerManager.removeListener(tmpCanvas, "mousemove", onPaint);
-                this._ctx.drawImage(tmpCanvas, 0, 0);
-
-                let state = store.getState();
-                LayoutManager.update();
-                state.layouts.currentLayout.saveInHistory();
-                
-                tmp_ctx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
-
-                ppts=[];
-            }
-
+            endPaint.call(this);
         });
 
         //когда мышка уходит с холста
         this._listenerManager.addListener(this._canvasBlock, "mouseleave", ()=> {
+            endPaint.call(this);
+        });
+
+        function endPaint(){
             if(this.started){
                 this.started = false;
 
@@ -98,7 +88,7 @@ export default class SketchBrush extends Brush{
 
                 ppts=[];
             }
-        });
+        }
 
         var onPaint = (e)=> {
             let x= e.offsetX;

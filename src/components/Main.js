@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import './Main.scss';
 
 import DrawWindow from './DrawWindow/DrawWindow';
-import MultiplicateWindow from './MultiplicateWindow/MultiplicateWindow';
 import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import RedirectSec from './MultiplicateWindow/RedirectSec';
+import GifSettingPanel from './gifSettingPanel/GifSettingPanel';
 
 
 function Main (){
@@ -16,6 +16,8 @@ function Main (){
             <div className='main'>
                 <Route path='/draw' render={()=><DrawWindow></DrawWindow>}></Route>
                 <Route path='/multiplicate' render={()=><RedirectSec></RedirectSec>}></Route>
+                <Route path='/createGif' render={()=> <GifSettingPanel></GifSettingPanel>}></Route>
+
                 <Redirect from='/' to='/draw'/>
             </div>
         </BrowserRouter>

@@ -19,14 +19,17 @@ export default class Eraser extends Brush{
         tmpCanvas.height= state.canvas.size.height;
         tmpCanvas.width = state.canvas.size.width;
 
-        tmpCanvas.style.top = state.canvas.position.top;
-        tmpCanvas.style.left = state.canvas.position.left;
 
+        tmpCanvas.style.transform = `scale(${state.canvas.zoom})`;
+        tmpCanvas.style.top = state.canvas.position.top  ;
+        tmpCanvas.style.left = state.canvas.position.left  ;
+        console.log(state.canvas.position.top);
         tmpCanvas.style.position = 'absolute';
         //для удобства
         tmpCanvas.classList.add("tmpCanvas");
 
         tmpCanvas.style.cursor= 'crosshair';
+        
 
         const tmpCtx=tmpCanvas.getContext("2d");
         state.canvas.canvasBlock.prepend(tmpCanvas);

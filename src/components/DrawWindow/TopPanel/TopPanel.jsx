@@ -16,7 +16,7 @@ export default function TopPanel() {
             </div>
             <div className='top-panel__menu'>
                 <div className='top-panel__menu-item'>File</div>
-                <div className='top-panel__menu-item'>Save</div>
+                <NavLink to='/createGif' className='top-panel__menu-item'>Save</NavLink>
                 <NavLink to='/multiplicate' className='top-panel__menu-item'>Multiplicate</NavLink>
             </div>
             <ToolPanel></ToolPanel>

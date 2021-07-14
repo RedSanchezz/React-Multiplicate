@@ -2,7 +2,7 @@ import { canPlay, changeFrameList, setCurrentFrame, setMultiplicateCanvas, stopP
 
 import store from "../../redux/store";
 import Frame from "../../models/Frame";
-
+import GIF from "gif.js"; 
 //Прослойка для работы с фреймами
 
 export default class FrameManager {
@@ -10,16 +10,25 @@ export default class FrameManager {
     }
     static id=0;
     
+    static startDownload = false;
+
     static addFrame(layout, delay){
         let canvas = document.createElement('canvas');
         let currentFrame =  store.getState().multiplicate.currentFrame;
+        let frameList = store.getState().multiplicate.frameList;
 
+        if(frameList.length>120){
+            alert('Общее количество фреймов не должно превышать 120');
+            return;
+
+        }
         canvas.width=layout.getCanvas().width;
         canvas.height=layout.getCanvas().height;
         canvas.getContext('2d').drawImage(layout.getCanvas(), 0, 0);
 
         let frame = new Frame(canvas, delay, this.id++);
-        let frameList = store.getState().multiplicate.frameList;
+        
+
         frameList.push(frame);
         store.dispatch(changeFrameList(frameList));
 
@@ -59,9 +68,31 @@ export default class FrameManager {
         this.renderAllFrame();
     }
 
-    static playFilm(){
+    static save(){
+        console.log('save func');
+        let state = store.getState();
+        let gif = new GIF({
+            workers: 2,
+            quality: 10
+        });
+        state.multiplicate.frameList.map((frame)=> {
+            gif.addFrame(frame.getCanvas(), {delay: frame.getDelay()});
+        });
+
+        gif.on('finished', function(blob) {
+            console.log('check !');
+            window.open(URL.createObjectURL(blob));
+        });
+        gif.render();
+
+    }
+
+    static  playFilm(){
+        console.log('film started');
+
         let state = store.getState();
         let stopPlay = state.multiplicate.stopPlay;
+
         //Если нажали на паузу - выходим из функции
         if(stopPlay) {
             store.dispatch(canPlay());
