@@ -10,7 +10,7 @@ function MultiplicateFramesInputs(props) {
 
     return (
         <div className='top-panel-inputs-block'>
-            <span>Кадры</span>
+            <span>Фреймы</span>
             <div className='top-panel-inputs'>
                 <input onChange={changeCurrentFrame} value={props.currentFrame} type="number" min='0' max={props.frameList.length-1}  />
                 <input onChange={changeCurrentFrame} value={props.currentFrame} type="range" min='0' max={props.frameList.length-1}  />

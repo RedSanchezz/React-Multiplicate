@@ -45,8 +45,10 @@ export default class FrameManager {
         let currentFrame =  store.getState().multiplicate.currentFrame;
 
         frameList.splice(index, 1);
-        store.dispatch(changeFrameList(frameList));
+
         if(frameList.length-1< currentFrame) store.dispatch(setCurrentFrame(frameList.length-1));
+        
+        store.dispatch(changeFrameList(frameList));
     }
 
     static renderAllFrame(){

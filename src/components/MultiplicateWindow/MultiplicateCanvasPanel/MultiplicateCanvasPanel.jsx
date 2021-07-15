@@ -13,19 +13,15 @@ function MultiplicateCanvasPanel(props) {
         if(props.frameList.length===0) return;
         let currentFrame = props.currentFrame;
         let context=canvasRef.current.getContext('2d');
-        
-        console.log(props.frameList.length);
-
         renderCanvas();
-        if(currentFrame === props.frameList.length -1 ){
-
-            FrameManager.startDownload=false;
-        }
 
         function renderCanvas(){
-            context.clearRect(0, 0, props.drawCanvas.width, props.drawCanvas.height);
-            context.drawImage(props.frameList[currentFrame].getCanvas(), 0, 0);
+            //нужно для requestAnimationFrame. Скорее всего он пытается получить нужный фрейм в тот момент, когда он меняется
+            if(!props.frameList[props.currentFrame]) return;
 
+            context.clearRect(0, 0, props.drawCanvas.width, props.drawCanvas.height);
+
+            context.drawImage(props.frameList[props.currentFrame].getCanvas(), 0, 0);
             requestAnimationFrame(renderCanvas);
 
         }

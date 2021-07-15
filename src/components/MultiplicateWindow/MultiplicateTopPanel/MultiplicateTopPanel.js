@@ -10,9 +10,8 @@ export default function MultiplicateTopPanel() {
         <div className="top-panel multiplicate-top-panel">
             <div className='top-panel__menu'>
                 <div className='top-panel__menu-item'>File</div>
-                <div className='top-panel__menu-item'>Save</div>
+                <NavLink to='/createGif' className='top-panel__menu-item'>Save</NavLink>
                 <NavLink to='/draw' className='top-panel__menu-item'>Draw</NavLink>
-
             </div>
             <div className="top-panel-content">
                 <MultiplicateFrameButtons></MultiplicateFrameButtons>

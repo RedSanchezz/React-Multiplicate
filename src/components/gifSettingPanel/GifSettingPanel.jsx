@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import './GifSettingPanel.scss';
 import GIF from "gif.js"; 
+import { NavLink } from 'react-router-dom';
 
 function GifSettingPanel(props) {
     console.log(props.frameList);
@@ -13,7 +14,7 @@ function GifSettingPanel(props) {
             workers: 2,
             quality: 10
         });
-        
+
         props.frameList.map((frame)=> {
             gif.addFrame(frame.getCanvas(), {delay: frame.getDelay()});
         });
@@ -28,7 +29,9 @@ function GifSettingPanel(props) {
 
     return (
         <div className='gif-setting-panel'>
-            
+            <NavLink to='/draw' className='draw-button'>Draw</NavLink>
+            <NavLink to='/multiplicate' className='frame-button'> Multiplicate</NavLink>
+
             {loader ?  <h1>Загрузка...</h1> : <button onClick={onButtonClickHandler}>Создать</button>} 
         </div>
     )
