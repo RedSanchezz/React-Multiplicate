@@ -1,40 +1,45 @@
-
-export default class Frame{
-    constructor(canvas,  delay, id){
+export default class Frame {
+    constructor(canvas, delay, id) {
         this._canvas = canvas;
         this._delay = delay;
-        this._id= id;
+        this._id = id;
         this._type = 'Frame';
         this._open = false;
     }
-    
-    getCanvas(){
+
+    getCanvas() {
         return this._canvas;
     }
 
-    setDelay(delay){
+    setDelay(delay) {
         this._delay = delay;
     }
-    getDelay(){
+
+    getDelay() {
         return this._delay;
     }
 
-    setId(id){
+    setId(id) {
         this._id = id;
     }
-    getId(){
+
+    getId() {
         return this._id;
     }
-    getType(){
+
+    getType() {
         return this._type;
     }
-    isOpen(){
+
+    isOpen() {
         return this._open;
     }
-    open(){
+
+    open() {
         this._open = true;
     }
-    close(){
+
+    close() {
         this._open = false;
     }
 }

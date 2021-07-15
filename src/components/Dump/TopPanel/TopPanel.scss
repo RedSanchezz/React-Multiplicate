@@ -1,0 +1,17 @@
+.top-panel {
+  background-color: rgb(60, 60, 60);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+}
+
+.top-panel__logo {
+  width: 70px;
+  height: 100%;
+
+  img {
+    height: 100%;
+  }
+}

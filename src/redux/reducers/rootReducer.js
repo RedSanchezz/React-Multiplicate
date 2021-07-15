@@ -1,5 +1,4 @@
-
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import canvasReducer from './canvasReducer';
 import brushReducer from './brushReducer';
 import settingReducer from './settingReducer';

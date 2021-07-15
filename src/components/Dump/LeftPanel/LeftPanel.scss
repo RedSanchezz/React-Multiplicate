@@ -1,0 +1,11 @@
+.left-panel {
+  height: calc(100vh - 100px);
+  width: 70px;
+  background-color: rgb(60, 60, 60);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 100px;
+}

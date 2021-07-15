@@ -1,0 +1,18 @@
+.top-panel__menu {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: flex-start;
+  margin-right: 30px;
+}
+
+.top-panel__menu-item {
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 18px;
+
+  &:hover {
+    background-color: rgb(10, 10, 10);
+  }
+}

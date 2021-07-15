@@ -1,0 +1,97 @@
+.brush-panel {
+  display: flex;
+  justify-content: space-around;
+}
+
+.brush-panel__block {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  height: 85px;
+  padding: 5px;
+  margin-right: 20px;
+}
+
+.brush-panel__panel-titile {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.brush-panel__inputs-block {
+  display: flex;
+  justify-content: space-between;
+
+  input[type=color] {
+    width: 50px;
+    height: 20px;
+  }
+
+  input[type=number] {
+    width: 50px;
+    height: 20px;
+    background-color: floralwhite;
+    border: none;
+  }
+
+  input[type=text] {
+    width: 100px;
+    height: 20px;
+  }
+}
+
+.panel__block-button {
+  cursor: pointer;
+}
+
+.brush-panel__saved-brush {
+  display: grid;
+  overflow: hidden;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  background-color: #3c3c3c;
+  padding: 10px;
+
+  &:hover {
+    overflow: visible;
+    z-index: 9999;
+    border: 2px solid red;
+  }
+}
+
+.brush-panel__saved-brush-item {
+  min-width: 30px;
+  width: 100px;
+  height: 30px;
+  background-color: white;
+  cursor: pointer;
+  border: 1px solid darkred;
+}
+
+.brush-panel__saved-brush-menu {
+  position: absolute;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s;
+  width: 100px;
+
+  &.active {
+    height: 100px;
+  }
+
+  &.fastRemove {
+    transition: height 0s !important;
+  }
+}
+
+.brush-panel__saved-brush-menu-item {
+  background-color: black;
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darkred;
+  }
+}
