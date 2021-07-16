@@ -5,14 +5,14 @@ import FrameManager from '../../../../../Managers/FrameManager/FrameManager';
 import InputsBlock from '../../../../Dump/InputsBlock/InputsBlock';
 
 function MultiplicateFramesInputs(props) {
-    function changeCurrentFrame(e) {
-        FrameManager.setCurrentFrame(+e.target.value);
+    function changecurrentFrameIndex(e) {
+        FrameManager.setcurrentFrameIndex(+e.target.value);
     }
     return (
         <div className='top-panel-inputs-block'>
             <InputsBlock title={'Фрэймы'}
-                         onChange={changeCurrentFrame}
-                         value={props.currentFrame}
+                         onChange={changecurrentFrameIndex}
+                         value={props.currentFrameIndex}
                          min='0'  max={props.frameList.length - 1}
                          step='1'
             />
@@ -22,7 +22,7 @@ function MultiplicateFramesInputs(props) {
 
 function mapStateToProps(state) {
     return {
-        currentFrame: state.multiplicate.currentFrame,
+        currentFrameIndex: state.multiplicate.currentFrameIndex,
         frameList: state.multiplicate.frameList
     };
 }

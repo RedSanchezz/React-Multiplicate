@@ -21,11 +21,8 @@ function FrameItem(props) {
         return () => {
             value.getCanvas().remove();
         };
-    }, [id, props.defaultBackgorund, value, refFrameBlock]);
+    }, [id, props.defaultBackgorund, value, props.isOpen, refFrameBlock.current]);
 
-    useEffect(() => {
-
-    }, []);
 
     function deleteFrameHandler(e) {
         FrameManager.deleteFrame(index);
@@ -62,15 +59,12 @@ function FrameItem(props) {
         e.stopPropagation();
     }
 
-    function setCurrentFrame(e) {
-        FrameManager.setCurrentFrame(index);
+    function setcurrentFrameIndex(e) {
+        FrameManager.setcurrentFrameIndex(index);
     }
 
     function clickOpenHandler(e) {
-        if (props.isOpen) value.close();
-        else value.open();
-
-        FrameManager.renderAllFrame();
+        FrameManager.openCloseFrame(value);
         e.stopPropagation();
     }
 
@@ -79,8 +73,8 @@ function FrameItem(props) {
     return (
         <div ref={refFrameBlock}
              className={className}
-             style={props.currentFrame === index ? {background: 'darkred'} : {}}
-             onClick={setCurrentFrame}>
+             style={props.currentFrameIndex === index ? {background: 'darkred'} : {}}
+             onClick={setcurrentFrameIndex}>
             <span className='frame-block__index'>{props.index + 1}</span>
 
             <div className='frame-block__open-close-btn'
@@ -115,7 +109,7 @@ function FrameItem(props) {
 
 function mapStateToPorps(state) {
     return {
-        currentFrame: state.multiplicate.currentFrame,
+        currentFrameIndex: state.multiplicate.currentFrameIndex,
         defaultBackgorund: state.setting.canvasDefaultBackground,
         layoutList: state.layouts.layoutList
     };

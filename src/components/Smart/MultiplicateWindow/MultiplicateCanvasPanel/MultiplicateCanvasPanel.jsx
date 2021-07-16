@@ -18,11 +18,11 @@ function MultiplicateCanvasPanel(props) {
         renderCanvas();
         function renderCanvas() {
             //нужно для requestAnimationFrame. Скорее всего он пытается получить нужный фрейм в тот момент, когда он меняется
-            if (!props.frameList[props.currentFrame]) return;
+            if (!props.frameList[props.currentFrameIndex]) return;
 
             context.clearRect(0, 0, props.drawCanvas.width, props.drawCanvas.height);
 
-            context.drawImage(props.frameList[props.currentFrame].getCanvas(), 0, 0);
+            context.drawImage(props.frameList[props.currentFrameIndex].getCanvas(), 0, 0);
             requestAnimationFrame(renderCanvas);
 
         }
@@ -39,7 +39,7 @@ function mapStateToProps(state) {
     return {
         drawCanvas: state.canvas.canvas,
         frameList: state.multiplicate.frameList,
-        currentFrame: state.multiplicate.currentFrame
+        currentFrameIndex: state.multiplicate.currentFrameIndex
     };
 }
 

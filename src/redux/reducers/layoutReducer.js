@@ -1,7 +1,9 @@
 import {CHANGE_LAYOUT_LIST} from '../actionTypes';
 import {CHANGE_CURRENT_LAYOUT} from './../actionTypes';
 
-let initState = {
+
+
+let initState =   {
     layoutList: [],
     currentLayout: null,
     currentLayoutIndex: 0,

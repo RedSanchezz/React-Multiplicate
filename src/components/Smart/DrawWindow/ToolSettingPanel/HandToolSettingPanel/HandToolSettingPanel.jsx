@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {setCanvasZoom} from '../../../../../redux/actionCreators/canvasActionCreator';
+import InputsBlock from '../../../../Dump/InputsBlock/InputsBlock';
 
 function HandToolSettingPanel(props) {
 
@@ -13,10 +14,10 @@ function HandToolSettingPanel(props) {
     return (
         <div>
             <div>
-                <input type="number" value={props.canvasZoom} onChange={zoomChangeHandler}/>
-                <input onChange={zoomChangeHandler}
-                       value={props.canvasZoom}
-                       type="range" step='0.1' min='0.1' max='5'
+                <InputsBlock title='Увеличение'
+                             onChange={zoomChangeHandler}
+                             max='5' min='0.1' step='0.1'
+                             value={props.canvasZoom}
                 />
             </div>
         </div>

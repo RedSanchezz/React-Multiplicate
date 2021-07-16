@@ -21,7 +21,6 @@ function Frames(props) {
                         return <div key={value.getId()}>Группа слоев : {value.getFrames().lenght}</div>;
                     }
                 })}
-            {console.log(props.frameList)}
         </div>
     );
 }

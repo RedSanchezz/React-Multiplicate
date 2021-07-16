@@ -33,7 +33,7 @@ export function canPlay() {
     };
 }
 
-export function setCurrentFrame(index) {
+export function setcurrentFrameIndex(index) {
     return {
         type: SET_CURRENT_FRAME,
         payload: index

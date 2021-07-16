@@ -1,7 +1,7 @@
 import {
     canPlay,
     changeFrameList,
-    setCurrentFrame,
+    setcurrentFrameIndex,
     setMultiplicateCanvas,
     stopPlay
 } from '../../redux/actionCreators/multiplicateActionCreators';
@@ -13,7 +13,6 @@ import GIF from 'gif.js';
 
 export default class FrameManager {
     static id = 0;
-    static startDownload = false;
 
     constructor() {
     }
@@ -24,14 +23,14 @@ export default class FrameManager {
         if(!stopPlay) return;
 
         let canvas = document.createElement('canvas');
-        let currentFrame =state.multiplicate.currentFrame;
+        let currentFrameIndex =state.multiplicate.currentFrameIndex;
         let frameList = state.multiplicate.frameList;
 
-        if (frameList.length > 120) {
-            alert('Общее количество фреймов не должно превышать 120');
-            return;
-
-        }
+        // if (frameList.length > 120) {
+        //     alert('Общее количество фреймов не должно превышать 120');
+        //     return;
+        //
+        // }
         canvas.width = layout.getCanvas().width;
         canvas.height = layout.getCanvas().height;
         canvas.getContext('2d').drawImage(layout.getCanvas(), 0, 0);
@@ -42,7 +41,7 @@ export default class FrameManager {
         frameList.push(frame);
         store.dispatch(changeFrameList(frameList));
 
-        if (currentFrame === -1) store.dispatch(setCurrentFrame(0));
+        if (currentFrameIndex === -1) store.dispatch(setcurrentFrameIndex(0));
     }
 
     static changeFrame() {
@@ -58,16 +57,18 @@ export default class FrameManager {
         let stopPlay = state.multiplicate.stopPlay;
         if(!stopPlay) return;
         let frameList = state.multiplicate.frameList;
-        let currentFrame = state.multiplicate.currentFrame;
+        let currentFrameIndex = state.multiplicate.currentFrameIndex;
 
         frameList.splice(index, 1);
 
-        if (frameList.length - 1 < currentFrame) store.dispatch(setCurrentFrame(frameList.length - 1));
+        if (frameList.length - 1 < currentFrameIndex) store.dispatch(setcurrentFrameIndex(frameList.length - 1));
 
         store.dispatch(changeFrameList(frameList));
     }
 
-    static renderAllFrame() {
+    static openCloseFrame(frame){
+        if (frame.isOpen()) frame.close();
+        else frame.open();
         let frameList = store.getState().multiplicate.frameList;
         store.dispatch(changeFrameList(frameList));
     }
@@ -86,7 +87,7 @@ export default class FrameManager {
         frameList[index1] = frameList[index2];
         frameList[index2] = help;
 
-        this.renderAllFrame();
+        store.dispatch(changeFrameList(frameList));
     }
 
     static save() {
@@ -105,7 +106,6 @@ export default class FrameManager {
             window.open(URL.createObjectURL(blob));
         });
         gif.render();
-
     }
 
     static playFilm() {
@@ -120,8 +120,7 @@ export default class FrameManager {
         }
 
         //Если нажали на паузу - выходим из функции
-
-        let currentFrameIndex = state.multiplicate.currentFrame;
+        let currentFrameIndex = state.multiplicate.currentFrameIndex;
 
         let currentFrame = frameList[currentFrameIndex];
 
@@ -130,13 +129,13 @@ export default class FrameManager {
             let state = store.getState();
             let stopPlay = state.multiplicate.stopPlay;
 
-            currentFrameIndex = state.multiplicate.currentFrame;
+            currentFrameIndex = state.multiplicate.currentFrameIndex;
             if (stopPlay) {
                 return;
             }
 
             if (frameList.length - 1 != currentFrameIndex) {
-                store.dispatch(setCurrentFrame(++currentFrameIndex));
+                store.dispatch(setcurrentFrameIndex(++currentFrameIndex));
                 this.playFilm();
             } else {
                 return;
@@ -150,11 +149,11 @@ export default class FrameManager {
 
     static stop() {
         store.dispatch(stopPlay());
-        setCurrentFrame(0);
+        setcurrentFrameIndex(0);
     }
 
-    static setCurrentFrame(index) {
-        store.dispatch(setCurrentFrame(index));
+    static setcurrentFrameIndex(index) {
+        store.dispatch(setcurrentFrameIndex(index));
     }
 
     static setMultiplicateCanvas(canvas) {

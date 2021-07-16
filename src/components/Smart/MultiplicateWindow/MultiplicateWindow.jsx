@@ -4,7 +4,7 @@ import MultiplicateLeftPanel from './MultiplicateLeftPanel/MultiplicateLeftPanel
 import MultiplicateRightPanel from './MultiplicateRightPanel/MultiplicateRightPanel';
 import MultiplicateTopPanelContent from './MultiplicateTopPanelContent/MultiplicateTopPanelContent';
 import TopPanel from '../../Dump/TopPanel/TopPanel';
-import TopPanelMenu from '../../Dump/TopPanelMenu/TopPanelMenu';
+import TopPanelMenu from '../TopPanelMenu/TopPanelMenu';
 
 export default function MultiplicateWindow() {
     return (

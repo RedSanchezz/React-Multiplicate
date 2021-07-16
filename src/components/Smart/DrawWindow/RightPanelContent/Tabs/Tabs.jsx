@@ -47,7 +47,7 @@ export default function Tabs(props) {
                     setTabsActive(2);
                 }}
                         className={tabsNumber === 2 ? 'right-panel__tabs-button active' : 'right-panel__tabs-button'}>
-                    Избранное
+                    Кадры
                 </button>
             </div>
         </>

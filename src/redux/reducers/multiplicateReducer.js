@@ -5,7 +5,7 @@ let initState = {
     frameList: [],
     multiplicateCanvas: null,
     stopPlay: true,
-    currentFrame: 0
+    currentFrameIndex: 0
 };
 
 
@@ -38,7 +38,7 @@ export default function multiplicateReducer(state = initState, action) {
         case SET_CURRENT_FRAME: {
             return {
                 ...state,
-                currentFrame: action.payload
+                currentFrameIndex: action.payload
             };
         }
         default : {
