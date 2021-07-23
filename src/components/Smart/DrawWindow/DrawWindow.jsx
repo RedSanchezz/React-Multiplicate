@@ -7,6 +7,7 @@ import LeftPanel from '../../Dump/LeftPanel/LeftPanel';
 import ToolList from './ToolList/ToolList';
 import RightPanel from '../../Dump/RightPanel/RightPanel';
 import RightPanelContent from './RightPanelContent/RightPanelContent';
+import CenterSpace from '../../Dump/CenterSpace/CenterSpace';
 
 export default function DrawWindow() {
     return (
@@ -21,7 +22,9 @@ export default function DrawWindow() {
             <RightPanel>
                 <RightPanelContent></RightPanelContent>
             </RightPanel>
-            <WorkSpace></WorkSpace>
+            <CenterSpace>
+                <WorkSpace></WorkSpace>
+            </CenterSpace>
         </>
     );
 }

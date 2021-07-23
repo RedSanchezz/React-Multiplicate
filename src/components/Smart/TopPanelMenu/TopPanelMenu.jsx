@@ -8,13 +8,33 @@ export default function TopPanelMenu(props) {
     let location = useLocation();
     let content;
 
-    switch (location.pathname) {
+
+    let forSwitch = location.pathname.match(/\/\w+/)[0];
+    // console.log('top panel');
+    // console.log(forSwitch);
+    switch (forSwitch) {
         case '/draw':  {
-            content = <NavLink to='/multiplicate' className='top-panel__menu-item'>Работать с кадрами</NavLink>
+            content =
+                <>
+                    <NavLink to='/save' className='top-panel__menu-item'>Сохранить</NavLink>
+                    <NavLink to='/frames' className='top-panel__menu-item'>Работать с кадрами</NavLink>
+                </>
             break;
         }
-        case '/multiplicate': {
-            content =  <NavLink to='/draw' className='top-panel__menu-item'>Рисовать</NavLink>;
+        case '/frames': {
+            content =
+                <>
+                    <NavLink to='/save' className='top-panel__menu-item'>Сохранить</NavLink>
+                    <NavLink to='/draw' className='top-panel__menu-item'>Рисовать</NavLink>
+                </>;
+            break;
+        }
+        case '/save': {
+            content =
+                <>
+                    <NavLink to='/draw' className='top-panel__menu-item'>Рисовать</NavLink>
+                    <NavLink to='/frames' className='top-panel__menu-item'>Работать с кадрами</NavLink>
+                </>;
             break;
         }
         default: {
@@ -24,7 +44,6 @@ export default function TopPanelMenu(props) {
     return (
         <div className='top-panel__menu'>
             <div className='top-panel__menu-item'>Файл</div>
-            <NavLink to='/createGif' className='top-panel__menu-item'>Сохранить</NavLink>
             {content}
         </div>
     );

@@ -1,10 +1,10 @@
 import React from 'react';
-import './MultiplicateFrameButtons.scss';
+import './FrameButtons.scss';
 import FrameManager from '../../../../../Managers/FrameManager/FrameManager';
 import {connect} from 'react-redux';
 import {canPlay} from '../../../../../redux/actionCreators/multiplicateActionCreators';
 
-function MultiplicateFrameButtons(props) {
+function FrameButtons(props) {
 
     function play() {
         props.canPlay();
@@ -24,7 +24,7 @@ function MultiplicateFrameButtons(props) {
 }
 function mapStateToProps(state) {
     return {
-        stopedPlaying: state.multiplicate.stopPlay
+        stopedPlaying: state.frames.stopPlay
     }
 }
-export default connect(null, {canPlay: canPlay})(MultiplicateFrameButtons);
+export default connect(null, {canPlay: canPlay})(FrameButtons);

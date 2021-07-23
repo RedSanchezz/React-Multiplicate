@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Frames from '../../DrawWindow/RightPanelContent/Frames/Frames';
 import FrameManager from '../../../../Managers/FrameManager/FrameManager';
 
-export default function MultiplicateRightPanel() {
+export default function FrameRightPanel() {
 
     let [delay, setDelay] = useState(100);
 
@@ -11,7 +11,7 @@ export default function MultiplicateRightPanel() {
     }
 
     return (
-        <div className="right-panel">
+        <>
             <div>
                 <h3>Установить задержку для всех слоев</h3>
                 <input type='number'
@@ -25,6 +25,6 @@ export default function MultiplicateRightPanel() {
 
             </div>
             <Frames></Frames>
-        </div>
+        </>
     );
 }

@@ -9,8 +9,6 @@ import LayoutManager from '../../../../../Managers/LayoutManager/LayoutManager';
 import FrameManager from '../../../../../Managers/FrameManager/FrameManager';
 import Layout from './Layout/Layout';
 
-
-
 function Layouts(props) {
 
     let menuBlock = React.createRef();
@@ -42,7 +40,7 @@ function Layouts(props) {
         <>
             <div className='right-panel__layout-buttons'>
                 <button onClick={addLayoutHandler}>Добавить слой</button>
-                <button onClick={addToMultiplication}>Добавить для мульта</button>
+                <button onClick={addToMultiplication}>Добавить в кадры</button>
             </div>
             {ReactDOM.createPortal(layoutMenu, document.getElementById('root'))}
             <div className='right-panel__layout-list'>

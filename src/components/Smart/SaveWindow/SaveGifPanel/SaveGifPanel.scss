@@ -1,0 +1,17 @@
+.save-gif-panel {
+  padding: 30px;
+  background-color: lightgrey;
+}
+
+.save-gif-panel__item {
+  max-width: 230px;
+  margin-left: 40px;
+}
+.save-gif-panel__row {
+  display: flex;
+  justify-content: space-around;
+}
+.save-gif-panel__color-input {
+  width: 100px;
+  height: 100px;
+}

@@ -1,0 +1,26 @@
+.save-tabs {
+  display: flex;
+  align-items: center
+
+}
+.save-tabs__item {
+  margin-left: 20px;
+  width: 70px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: darkred;
+  border: 0px solid darkred;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    background-color: black;
+    border: 5px solid darkred;
+  }
+  &.active {
+    background-color: black;
+
+  }
+}

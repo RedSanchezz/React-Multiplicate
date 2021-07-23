@@ -3,13 +3,13 @@ import {CAN_PLAY, CHANGE_FRAME_LIST, SET_CURRENT_FRAME, SET_MULTIPLICATE_CANVAS,
 
 let initState = {
     frameList: [],
-    multiplicateCanvas: null,
+    frameCanvas: null,
     stopPlay: true,
     currentFrameIndex: 0
 };
 
 
-export default function multiplicateReducer(state = initState, action) {
+export default function frameReducer(state = initState, action) {
     switch (action.type) {
         case CHANGE_FRAME_LIST: {
             return {
@@ -20,7 +20,7 @@ export default function multiplicateReducer(state = initState, action) {
         case SET_MULTIPLICATE_CANVAS: {
             return {
                 ...state,
-                multiplicateCanvas: action.payload
+                frameCanvas: action.payload
             };
         }
         case STOP_PLAY: {

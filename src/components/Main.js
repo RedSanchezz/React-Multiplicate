@@ -6,8 +6,7 @@ import './Main.scss';
 import DrawWindow from './Smart/DrawWindow/DrawWindow';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom';
 import RedirectSec from './Smart/MultiplicateWindow/RedirectSec';
-import GifSettingPanel from './Smart/gifSettingPanel/GifSettingPanel';
-import store from '../redux/store';
+import SaveWindow from './Smart/SaveWindow/SaveWindow';
 
 
 function Main() {
@@ -16,8 +15,8 @@ function Main() {
         <BrowserRouter>
             <div className='main'>
                 <Route path='/draw' render={() => <DrawWindow></DrawWindow>}></Route>
-                <Route path='/multiplicate' render={() => <RedirectSec></RedirectSec>}></Route>
-                <Route path='/createGif' render={() => <GifSettingPanel></GifSettingPanel>}></Route>
+                <Route path='/frames' render={() => <RedirectSec></RedirectSec>}></Route>
+                <Route path='/save' render={() => <SaveWindow></SaveWindow>}></Route>
                 <Redirect from='/' to='/draw'/>
             </div>
         </BrowserRouter>

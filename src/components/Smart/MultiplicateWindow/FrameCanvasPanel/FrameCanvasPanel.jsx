@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import FrameManager from '../../../../Managers/FrameManager/FrameManager';
 
-function MultiplicateCanvasPanel(props) {
+function FrameCanvasPanel(props) {
     let canvasRef = useRef();
 
     useEffect(() => {
@@ -29,18 +29,18 @@ function MultiplicateCanvasPanel(props) {
     });
 
     return (
-        <div className='work-space'>
+        <>
             <canvas ref={canvasRef} width={props.drawCanvas.width} height={props.drawCanvas.height}></canvas>
-        </div>
+        </>
     );
 }
 
 function mapStateToProps(state) {
     return {
         drawCanvas: state.canvas.canvas,
-        frameList: state.multiplicate.frameList,
-        currentFrameIndex: state.multiplicate.currentFrameIndex
+        frameList: state.frames.frameList,
+        currentFrameIndex: state.frames.currentFrameIndex
     };
 }
 
-export default connect(mapStateToProps)(MultiplicateCanvasPanel);
+export default connect(mapStateToProps)(FrameCanvasPanel);

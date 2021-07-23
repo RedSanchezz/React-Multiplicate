@@ -27,7 +27,7 @@ function Frames(props) {
 
 function mapStateToProps(state) {
     return {
-        frameList: state.multiplicate.frameList
+        frameList: state.frames.frameList
     };
 }
 

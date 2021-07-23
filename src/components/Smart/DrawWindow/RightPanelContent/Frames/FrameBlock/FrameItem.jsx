@@ -109,7 +109,7 @@ function FrameItem(props) {
 
 function mapStateToPorps(state) {
     return {
-        currentFrameIndex: state.multiplicate.currentFrameIndex,
+        currentFrameIndex: state.frames.currentFrameIndex,
         defaultBackgorund: state.setting.canvasDefaultBackground,
         layoutList: state.layouts.layoutList
     };

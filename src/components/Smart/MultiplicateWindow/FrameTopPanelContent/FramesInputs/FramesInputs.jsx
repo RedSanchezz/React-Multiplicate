@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import './MultiplicateFramesInputs.scss';
+import './FramesInputs.scss';
 import FrameManager from '../../../../../Managers/FrameManager/FrameManager';
 import InputsBlock from '../../../../Dump/InputsBlock/InputsBlock';
 
-function MultiplicateFramesInputs(props) {
+function FramesInputs(props) {
     function changecurrentFrameIndex(e) {
         FrameManager.setcurrentFrameIndex(+e.target.value);
     }
@@ -22,9 +22,9 @@ function MultiplicateFramesInputs(props) {
 
 function mapStateToProps(state) {
     return {
-        currentFrameIndex: state.multiplicate.currentFrameIndex,
-        frameList: state.multiplicate.frameList
+        currentFrameIndex: state.frames.currentFrameIndex,
+        frameList: state.frames.frameList
     };
 }
 
-export default connect(mapStateToProps)(MultiplicateFramesInputs);
+export default connect(mapStateToProps)(FramesInputs);

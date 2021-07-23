@@ -19,12 +19,12 @@ export default class FrameManager {
 
     static addFrame(layout, delay) {
         let state = store.getState();
-        let stopPlay = state.multiplicate.stopPlay;
+        let stopPlay = state.frames.stopPlay;
         if(!stopPlay) return;
 
         let canvas = document.createElement('canvas');
-        let currentFrameIndex =state.multiplicate.currentFrameIndex;
-        let frameList = state.multiplicate.frameList;
+        let currentFrameIndex =state.frames.currentFrameIndex;
+        let frameList = state.frames.frameList;
 
         // if (frameList.length > 120) {
         //     alert('Общее количество фреймов не должно превышать 120');
@@ -46,18 +46,18 @@ export default class FrameManager {
 
     static changeFrame() {
         let state = store.getState();
-        let stopPlay = state.multiplicate.stopPlay;
+        let stopPlay = state.frames.stopPlay;
         if(!stopPlay) return;
-        let frameList = state.multiplicate.frameList;
+        let frameList = state.frames.frameList;
         store.dispatch(changeFrameList(frameList));
     }
 
     static deleteFrame(index) {
         let state = store.getState();
-        let stopPlay = state.multiplicate.stopPlay;
+        let stopPlay = state.frames.stopPlay;
         if(!stopPlay) return;
-        let frameList = state.multiplicate.frameList;
-        let currentFrameIndex = state.multiplicate.currentFrameIndex;
+        let frameList = state.frames.frameList;
+        let currentFrameIndex = state.frames.currentFrameIndex;
 
         frameList.splice(index, 1);
 
@@ -69,15 +69,15 @@ export default class FrameManager {
     static openCloseFrame(frame){
         if (frame.isOpen()) frame.close();
         else frame.open();
-        let frameList = store.getState().multiplicate.frameList;
+        let frameList = store.getState().frames.frameList;
         store.dispatch(changeFrameList(frameList));
     }
 
     static swap(index1, index2) {
         let state = store.getState();
-        let stopPlay = state.multiplicate.stopPlay;
+        let stopPlay = state.frames.stopPlay;
         if(!stopPlay) return;
-        let frameList = state.multiplicate.frameList;
+        let frameList = state.frames.frameList;
 
         if (index1 < 0 || index1 > frameList.length - 1 || index2 < 0 || index2 > frameList.length - 1) {
             return;
@@ -97,7 +97,7 @@ export default class FrameManager {
             workers: 2,
             quality: 10
         });
-        state.multiplicate.frameList.map((frame) => {
+        state.frames.frameList.map((frame) => {
             gif.addFrame(frame.getCanvas(), {delay: frame.getDelay()});
         });
 
@@ -111,7 +111,7 @@ export default class FrameManager {
     static playFilm() {
         console.log('playFilm');
         let state = store.getState();
-        let frameList = state.multiplicate.frameList;
+        let frameList = state.frames.frameList;
         if(frameList.length===0) {
             if(frameList.length ===0) {
                 alert('Список фреймов пуст !');
@@ -120,16 +120,16 @@ export default class FrameManager {
         }
 
         //Если нажали на паузу - выходим из функции
-        let currentFrameIndex = state.multiplicate.currentFrameIndex;
+        let currentFrameIndex = state.frames.currentFrameIndex;
 
         let currentFrame = frameList[currentFrameIndex];
 
         currentFrame.getDelay();
         setTimeout(() => {
             let state = store.getState();
-            let stopPlay = state.multiplicate.stopPlay;
+            let stopPlay = state.frames.stopPlay;
 
-            currentFrameIndex = state.multiplicate.currentFrameIndex;
+            currentFrameIndex = state.frames.currentFrameIndex;
             if (stopPlay) {
                 return;
             }
@@ -162,7 +162,7 @@ export default class FrameManager {
 
     static setDelayToAll(delay) {
         let state = store.getState();
-        let frameList = state.multiplicate.frameList;
+        let frameList = state.frames.frameList;
         frameList.map((frame, index) => {
             frame.setDelay(delay);
         });
