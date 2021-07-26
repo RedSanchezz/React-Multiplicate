@@ -16,6 +16,7 @@ function SaveGifPanel(props) {
 
     const [background, setBackground] = useState('#ffffff');
     const [loading, setLoading] = useState(false);
+    const [saveProportion, setSaveProportion] = useState(true);
 
 
     function saveGifHandler() {
@@ -33,24 +34,17 @@ function SaveGifPanel(props) {
             // transparent: background,
         });
 
+        frameList.forEach((frame, index)=>{
+            let canvas = document.createElement('canvas');
+            canvas.width=width;
+            canvas.height=height;
+            let ctx = canvas.getContext('2d');
+            ctx.fillStyle = background;
+            ctx.fillRect(0,0, width, height);
+            ctx.drawImage(frame.getCanvas(), 0, 0, width, height);
 
-
-        if(props.width != width || props.height != height){
-            frameList.forEach((frame, index)=>{
-                let canvas = document.createElement('canvas');
-                canvas.width=width;
-                canvas.height=height;
-                let ctx = canvas.getContext('2d');
-                ctx.drawImage(frame.getCanvas(), 0, 0, width, height);
-                gif.addFrame(canvas, {delay: frame.getDelay(), copy: true})
-            })
-        }
-        else {
-            frameList.forEach((frame, index)=>{
-                gif.addFrame(frame.getCanvas(), {delay: frame.getDelay(), copy: true})
-            })
-        }
-
+            gif.addFrame(canvas, {delay: frame.getDelay(), copy: true})
+        });
         gif.on('finished', function(blob) {
             setLoading(false);
             window.open(URL.createObjectURL(blob));
@@ -58,6 +52,15 @@ function SaveGifPanel(props) {
         gif.render();
     }
 
+
+    function heightChangeHandler(e){
+        setHeight(e.currentTarget.value);
+        saveProportion && setWidth(e.currentTarget.value * props.width / props.height);
+    }
+    function widthChangeHandler(e){
+        setWidth(e.currentTarget.value);
+        saveProportion && setHeight(e.currentTarget.value * props.height / props.width);
+    }
 
     return (
         <div className='save-gif-panel'>
@@ -86,6 +89,16 @@ function SaveGifPanel(props) {
                 </div>
             </div>
             <div className='save-gif-panel__row'>
+                <div>
+                    <span>Сохранять пропорции</span>
+                    <input type='checkbox'
+                           checked={saveProportion}
+                            onChange={(e)=>{
+                                console.log(e.currentTarget.checked);
+                                setSaveProportion(e.currentTarget.checked)
+                            }}/>
+
+                </div>
                 <div className='save-gif-panel__item'>
                     <InputsBlock
                         title='Ширина картинки'
@@ -93,7 +106,7 @@ function SaveGifPanel(props) {
                         min = '0'
                         step='1'
                         value = {width}
-                        onChange={(e)=> setWidth(e.currentTarget.value)}
+                        onChange={widthChangeHandler}
                     />
                 </div>
                 <div className='save-gif-panel__item'>
@@ -103,9 +116,14 @@ function SaveGifPanel(props) {
                         min = '0'
                         step='1'
                         value = {height}
-                        onChange={(e)=> setHeight(e.currentTarget.value)}
+                        onChange={heightChangeHandler}
                     />
                 </div>
+            </div>
+            <div className='save-gif-panel__row'>
+                <input type='color'
+                        value={background}
+                onChange={(e)=>{setBackground(e.currentTarget.value)}}/>
             </div>
             <div className='save-gif-panel__row'>
                 {loading ? <h1>Загрузка...</h1> : <button onClick={saveGifHandler}>Сохранить !</button>}

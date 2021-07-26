@@ -18,7 +18,6 @@ function SaveWindow(props) {
             </TopPanel>
             <LeftPanel></LeftPanel>
             <RightPanel></RightPanel>
-
             <CenterSpace>
                 <Route path='/save/gif'>
                     <SaveGifPanel></SaveGifPanel>
@@ -28,6 +27,9 @@ function SaveWindow(props) {
                 </Route>
                 <Route path='/save/png'>
                     <div>PNG</div>
+                </Route>
+                <Route exact path='/save'>
+                    <div><h1>Выберите тип файла</h1></div>
                 </Route>
             </CenterSpace>
 
