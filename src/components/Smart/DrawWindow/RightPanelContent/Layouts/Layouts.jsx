@@ -3,11 +3,11 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import './Layouts.scss';
 import LayoutModel from '../../../../../models/Layout';
-import LayoutMenu from './LayoutMenu';
 import ReactDOM from 'react-dom';
 import LayoutManager from '../../../../../Managers/LayoutManager/LayoutManager';
 import FrameManager from '../../../../../Managers/FrameManager/FrameManager';
 import Layout from './Layout/Layout';
+import ContextMenu from '../../../../Dump/ContextMenu/ContextMenu';
 
 function Layouts(props) {
 
@@ -29,12 +29,41 @@ function Layouts(props) {
         FrameManager.addFrame(layout, 100);
     }
 
-    let layoutMenu = <LayoutMenu ref={menuBlock}
-                                 menuPosition={menuPosition}
-                                 active={active}
-                                 setMenuActive={setMenuActive}
-                                 layoutList={props.layoutList}
-    />;
+    function deleteSelectedHandler(e) {
+        setMenuActive(false);
+        let indexArray = [];
+        console.log(props.layoutList);
+        props.layoutList.map((value, index) => {
+            if (value.isSelected()) indexArray.push(index);
+            return value;
+        });
+        LayoutManager.deleteLayouts(indexArray);
+    }
+
+    function combineSelectedHandler(e) {
+        setMenuActive(false);
+        let indexArray = [];
+        props.layoutList.map((value, index) => {
+            if (value.isSelected()) indexArray.push(index);
+            return value;
+        });
+        LayoutManager.combine(indexArray);
+    }
+
+    function unselectAllHandler() {
+        LayoutManager.unSelectAll();
+    }
+
+
+    let layoutMenu = <ContextMenu setMenuActive={setMenuActive}
+                                  active={active}
+                                  menuPosition={menuPosition}
+    >
+        <div onClick={deleteSelectedHandler} className="right-panel__context-menu-item">Удалить выбранные</div>
+        <div onClick={combineSelectedHandler} className="right-panel__context-menu-item">Обьеденить</div>
+        <div onClick={unselectAllHandler} className="right-panel__context-menu-item">Отменить выделение</div>
+    </ContextMenu>
+
 
     return (
         <>
@@ -72,3 +101,11 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Layouts);
+
+
+// let layoutMenu = <LayoutMenu ref={menuBlock}
+//                              menuPosition={menuPosition}
+//                              active={active}
+//                              setMenuActive={setMenuActive}
+//                              layoutList={props.layoutList}
+// />;

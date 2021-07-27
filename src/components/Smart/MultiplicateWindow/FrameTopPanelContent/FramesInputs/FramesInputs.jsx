@@ -6,7 +6,7 @@ import InputsBlock from '../../../../Dump/InputsBlock/InputsBlock';
 
 function FramesInputs(props) {
     function changecurrentFrameIndex(e) {
-        FrameManager.setcurrentFrameIndex(+e.target.value);
+        FrameManager.setСurrentFrameIndex(+e.target.value);
     }
     return (
         <div className='top-panel-inputs-block'>

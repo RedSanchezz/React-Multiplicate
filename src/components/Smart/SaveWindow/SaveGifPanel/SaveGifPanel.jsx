@@ -3,6 +3,7 @@ import InputsBlock from '../../../Dump/InputsBlock/InputsBlock';
 import './SaveGifPanel.scss';
 import GIF from 'gif.js'
 import {connect} from 'react-redux';
+import Preloader from '../../../Dump/Preloader/Preloader';
 
 function SaveGifPanel(props) {
 
@@ -20,12 +21,12 @@ function SaveGifPanel(props) {
 
 
     function saveGifHandler() {
-        setLoading(true);
         let frameList = props.frameList;
         if(frameList.length===0) {
             alert('Список фреймов пуст !');
             return;
         }
+        setLoading(true);
         let gif = new GIF({
             workers: 2,
             quality,
@@ -89,7 +90,8 @@ function SaveGifPanel(props) {
                 </div>
             </div>
             <div className='save-gif-panel__row'>
-                <div>
+                <div className='save-gif-panel__size'>
+                    <div className='save-gif-panel__item'>
                     <span>Сохранять пропорции</span>
                     <input type='checkbox'
                            checked={saveProportion}
@@ -97,37 +99,40 @@ function SaveGifPanel(props) {
                                 console.log(e.currentTarget.checked);
                                 setSaveProportion(e.currentTarget.checked)
                             }}/>
-
+                    </div>
+                    <div className='save-gif-panel__item'>
+                        <InputsBlock
+                            title='Ширина картинки'
+                            max='2000'
+                            min = '0'
+                            step='1'
+                            value = {width}
+                            onChange={widthChangeHandler}
+                        />
+                    </div>
+                    <div className='save-gif-panel__item'>
+                        <InputsBlock
+                            title='Высота'
+                            max='2000'
+                            min = '0'
+                            step='1'
+                            value = {height}
+                            onChange={heightChangeHandler}
+                        />
+                    </div>
                 </div>
-                <div className='save-gif-panel__item'>
-                    <InputsBlock
-                        title='Ширина картинки'
-                        max='2000'
-                        min = '0'
-                        step='1'
-                        value = {width}
-                        onChange={widthChangeHandler}
-                    />
-                </div>
-                <div className='save-gif-panel__item'>
-                    <InputsBlock
-                        title='Высота'
-                        max='2000'
-                        min = '0'
-                        step='1'
-                        value = {height}
-                        onChange={heightChangeHandler}
-                    />
+                <div className='save-gif-panel__color'>
+                    <h4>Цвет фона</h4>
+                    <input className='save-gif-panel__color-input'
+                            type='color'
+                           value={background}
+                           onChange={(e)=>{setBackground(e.currentTarget.value)}}/>
                 </div>
             </div>
             <div className='save-gif-panel__row'>
-                <input type='color'
-                        value={background}
-                onChange={(e)=>{setBackground(e.currentTarget.value)}}/>
-            </div>
-            <div className='save-gif-panel__row'>
-                {loading ? <h1>Загрузка...</h1> : <button onClick={saveGifHandler}>Сохранить !</button>}
-                {/*<button onClick={saveGifHandler}>Сохранить !</button>*/}
+                <div className='save-gif-panel__save-btn-wrapper'>
+                {loading ? <Preloader/> : <button className='save-gif-panel__save-btn' onClick={saveGifHandler}>Сохранить !</button>}
+                </div>
             </div>
         </div>
     );
@@ -138,8 +143,6 @@ function mapStateToProps(state){
         frameList: state.frames.frameList,
         width: parseInt(state.canvas.size.width),
         height: parseInt(state.canvas.size.height),
-
     }
-
 }
 export default connect(mapStateToProps)(SaveGifPanel);

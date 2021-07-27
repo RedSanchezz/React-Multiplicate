@@ -59,22 +59,44 @@ function FrameItem(props) {
         e.stopPropagation();
     }
 
-    function setcurrentFrameIndex(e) {
-        FrameManager.setcurrentFrameIndex(index);
+    function frameClickHandler(e) {
+        if(e.ctrlKey){
+            if(props.isSelected)  value.unSelect();
+            else value.select();
+            FrameManager.changeFrame();
+            e.stopPropagation();
+            return;
+        }
+        FrameManager.setСurrentFrameIndex(index);
     }
 
     function clickOpenHandler(e) {
         FrameManager.openCloseFrame(value);
         e.stopPropagation();
     }
+    function onContextMenuHandler(e){
+        if(props.isSelected){
+            let x = e.pageY - 10;
+            let y = e.pageX - 20;
+            //если меню выезжает за правый край
+            if (y + 200 >= window.innerWidth) {
+                y = window.innerWidth - 200;
+            }
+            props.setMenuPosition({x, y});
+            props.setMenuActive(true);
+        }
+        e.preventDefault();
+        e.stopPropagation();
+    }
 
     let className = props.isOpen ? 'frame-block opened' : 'frame-block';
-
+    className = props.isSelected ? className + ' selected' : className;
     return (
         <div ref={refFrameBlock}
              className={className}
              style={props.currentFrameIndex === index ? {background: 'darkred'} : {}}
-             onClick={setcurrentFrameIndex}>
+             onClick={frameClickHandler}
+            onContextMenu={onContextMenuHandler}>
             <span className='frame-block__index'>{props.index + 1}</span>
 
             <div className='frame-block__open-close-btn'

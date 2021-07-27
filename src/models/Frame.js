@@ -5,6 +5,7 @@ export default class Frame {
         this._id = id;
         this._type = 'Frame';
         this._open = false;
+        this._isSelect = false;
     }
 
     getCanvas() {
@@ -27,10 +28,6 @@ export default class Frame {
         return this._id;
     }
 
-    getType() {
-        return this._type;
-    }
-
     isOpen() {
         return this._open;
     }
@@ -41,5 +38,16 @@ export default class Frame {
 
     close() {
         this._open = false;
+    }
+
+    select(){
+        this._isSelect = true;
+    }
+
+    unSelect(){
+        this._isSelect = false;
+    }
+    isSelected(){
+        return this._isSelect;
     }
 }

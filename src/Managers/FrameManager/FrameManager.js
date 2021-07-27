@@ -1,7 +1,7 @@
 import {
     canPlay,
     changeFrameList,
-    setcurrentFrameIndex,
+    setСurrentFrameIndex,
     setMultiplicateCanvas,
     stopPlay
 } from '../../redux/actionCreators/multiplicateActionCreators';
@@ -41,13 +41,46 @@ export default class FrameManager {
         frameList.push(frame);
         store.dispatch(changeFrameList(frameList));
 
-        if (currentFrameIndex === -1) store.dispatch(setcurrentFrameIndex(0));
+        if (currentFrameIndex === -1) store.dispatch(setСurrentFrameIndex(0));
     }
 
+    static setDelaySelectedFrames(delay){
+
+        let state = store.getState();
+        let frameList = state.frames.frameList;
+
+        frameList.forEach((frame, index)=>{
+            if(frame.isSelected()){
+                frame.setDelay(delay);
+            }
+        });
+        store.dispatch(changeFrameList(frameList));
+    }
+    static deleteSelectedFrame(){
+        let state = store.getState();
+        let frameList = state.frames.frameList;
+        let newFrameList = frameList.filter((frame, index)=>!frame.isSelected());
+        console.log(newFrameList);
+        store.dispatch(changeFrameList(newFrameList));
+        store.dispatch(setСurrentFrameIndex(newFrameList.length-1));
+
+    }
+
+    static unSelectAllFrame(){
+        let state = store.getState();
+        let frameList = state.frames.frameList;
+        frameList.forEach((frame, index)=>{
+            if(frame.isSelected()){
+                frame.unSelect();
+            }
+        });
+        store.dispatch(changeFrameList(frameList));
+    }
     static changeFrame() {
+        console.log('ok wce good');
         let state = store.getState();
         let stopPlay = state.frames.stopPlay;
-        if(!stopPlay) return;
+
         let frameList = state.frames.frameList;
         store.dispatch(changeFrameList(frameList));
     }
@@ -61,7 +94,7 @@ export default class FrameManager {
 
         frameList.splice(index, 1);
 
-        if (frameList.length - 1 < currentFrameIndex) store.dispatch(setcurrentFrameIndex(frameList.length - 1));
+        if (frameList.length - 1 < currentFrameIndex) store.dispatch(setСurrentFrameIndex(frameList.length - 1));
 
         store.dispatch(changeFrameList(frameList));
     }
@@ -125,19 +158,20 @@ export default class FrameManager {
         let currentFrame = frameList[currentFrameIndex];
 
         currentFrame.getDelay();
+
         setTimeout(() => {
             let state = store.getState();
             let stopPlay = state.frames.stopPlay;
-
             currentFrameIndex = state.frames.currentFrameIndex;
             if (stopPlay) {
                 return;
             }
 
             if (frameList.length - 1 != currentFrameIndex) {
-                store.dispatch(setcurrentFrameIndex(++currentFrameIndex));
+                store.dispatch(setСurrentFrameIndex(++currentFrameIndex));
                 this.playFilm();
             } else {
+                this.pause();
                 return;
             }
         }, currentFrame.getDelay());
@@ -149,11 +183,11 @@ export default class FrameManager {
 
     static stop() {
         store.dispatch(stopPlay());
-        setcurrentFrameIndex(0);
+        setСurrentFrameIndex(0);
     }
 
-    static setcurrentFrameIndex(index) {
-        store.dispatch(setcurrentFrameIndex(index));
+    static setСurrentFrameIndex(index) {
+        store.dispatch(setСurrentFrameIndex(index));
     }
 
     static setMultiplicateCanvas(canvas) {

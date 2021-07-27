@@ -1,17 +1,53 @@
 .save-gif-panel {
   padding: 30px;
   background-color: lightgrey;
+  h4 {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+}
+
+.save-gif-panel__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 25px;
 }
 
 .save-gif-panel__item {
   max-width: 230px;
   margin-left: 40px;
 }
-.save-gif-panel__row {
+
+.save-gif-panel__color {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .save-gif-panel__color-input {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
+}
+
+.save-gif-panel__save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  color: white;
+  background-color: darkred;
+  width: 200px;
+  height: 80px;
+  border-radius: 40px;
+  margin: 0 auto;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.save-gif-panel__save-btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }

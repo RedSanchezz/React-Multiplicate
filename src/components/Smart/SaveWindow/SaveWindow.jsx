@@ -29,7 +29,7 @@ function SaveWindow(props) {
                     <div>PNG</div>
                 </Route>
                 <Route exact path='/save'>
-                    <div><h1>Выберите тип файла</h1></div>
+                    <div className='save-window__file-type-title'><h1>Выберите тип файла</h1></div>
                 </Route>
             </CenterSpace>
 
