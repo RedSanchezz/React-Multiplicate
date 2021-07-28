@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.497ba4eb.chunk.css",
+    "main.js": "/static/js/main.c65bb871.chunk.js",
+    "main.js.map": "/static/js/main.c65bb871.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.55291740.js",
+    "runtime-main.js.map": "/static/js/runtime-main.55291740.js.map",
+    "static/js/2.e1de5f6d.chunk.js": "/static/js/2.e1de5f6d.chunk.js",
+    "static/js/2.e1de5f6d.chunk.js.map": "/static/js/2.e1de5f6d.chunk.js.map",
+    "static/js/3.66e343bf.chunk.js": "/static/js/3.66e343bf.chunk.js",
+    "static/js/3.66e343bf.chunk.js.map": "/static/js/3.66e343bf.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.497ba4eb.chunk.css.map": "/static/css/main.497ba4eb.chunk.css.map",
+    "static/js/2.e1de5f6d.chunk.js.LICENSE.txt": "/static/js/2.e1de5f6d.chunk.js.LICENSE.txt",
+    "static/media/FrameItem.scss": "/static/media/expand.e89c5f71.svg",
+    "static/media/FrameButtons.scss": "/static/media/stop.6f65b3f9.svg",
+    "static/media/preloader.279ed7ee.gif": "/static/media/preloader.279ed7ee.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.55291740.js",
+    "static/js/2.e1de5f6d.chunk.js",
+    "static/css/main.497ba4eb.chunk.css",
+    "static/js/main.c65bb871.chunk.js"
+  ]
+}
