@@ -27,7 +27,7 @@ function Frames(props) {
 
     function deleteSelectedFrame(){
         setMenuActive(false);
-        FrameManager.deleteSelectedFrame();
+        if(window.confirm('Удалить выбранные кадры ?')) FrameManager.deleteSelectedFrame();
     }
     let FrameMenu = <ContextMenu active={menuActive}
                                  setMenuActive={setMenuActive}
