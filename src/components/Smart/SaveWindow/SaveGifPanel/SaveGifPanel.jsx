@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import InputsBlock from '../../../Dump/InputsBlock/InputsBlock';
 import './SaveGifPanel.scss';
-import GIF from 'gif.js'
+import GIF from 'gif.js';
 import {connect} from 'react-redux';
 import Preloader from '../../../Dump/Preloader/Preloader';
 

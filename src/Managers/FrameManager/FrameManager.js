@@ -8,7 +8,6 @@ import {
 
 import store from '../../redux/store';
 import Frame from '../../models/Frame';
-import GIF from 'gif.js';
 //Прослойка для работы с фреймами
 
 export default class FrameManager {
@@ -123,23 +122,7 @@ export default class FrameManager {
         store.dispatch(changeFrameList(frameList));
     }
 
-    static save() {
-        console.log('if playing ');
-        let state = store.getState();
-        let gif = new GIF({
-            workers: 2,
-            quality: 10
-        });
-        state.frames.frameList.map((frame) => {
-            gif.addFrame(frame.getCanvas(), {delay: frame.getDelay()});
-        });
 
-        gif.on('finished', function (blob) {
-            console.log('check !');
-            window.open(URL.createObjectURL(blob));
-        });
-        gif.render();
-    }
 
     static playFilm() {
         console.log('playFilm');
