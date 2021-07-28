@@ -5,7 +5,7 @@ export default function TopPanel(props) {
     return (
         <div className='top-panel'>
             <div className="top-panel__logo">
-                {/* <img src="/img/test-logo.jpg" alt=""/> */}
+                {/* <img src="./img/test-logo.jpg" alt=""/> */}
             </div>
             {props.children}
         </div>

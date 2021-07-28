@@ -104,13 +104,13 @@ function FrameItem(props) {
 
             <div className='frame-block__menu frame-menu'>
                 <div onClickCapture={upPositionHandler} className="frame-menu__item">
-                    <img src="img/up.svg" alt=""/>
+                    <img src="./img/up.svg" alt=""/>
                 </div>
                 <div className="frame-menu__item">
                     <button onClickCapture={addToLayoutListHandler}>В слои</button>
                 </div>
                 <div onClickCapture={downPositionHandler} className="frame-menu__item down-arrow">
-                    <img src="img/up.svg" alt=""/>
+                    <img src="./img/up.svg" alt=""/>
                 </div>
             </div>
 
@@ -122,7 +122,7 @@ function FrameItem(props) {
                        min='0' type="number"/>
             </div>
             <div className='frame-block__delete-btn'>
-                <img onClickCapture={deleteFrameHandler} src="img/delete.svg" alt=""/>
+                <img onClickCapture={deleteFrameHandler} src="./img/delete.svg" alt=""/>
             </div>
         </div>
     );
