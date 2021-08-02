@@ -101,26 +101,26 @@ function Layout(props) {
 
             <div className='layout-block__left-menu'>
                 <div onClick={upHandler} className="layout-block__left-menu-item">
-                    <img src="./img/up.svg" alt=""/>
+                    <img src={process.env.PUBLIC_URL + "/img/up.svg"} alt=""/>
                 </div>
                 <div onClick={hideLayoutHandler} className="layout-block__left-menu-item">
-                    {!props.isHidden ? <img src="./img/show.svg" alt=""/> : <img src="./img/hide.svg" alt=""/>}
+                    {!props.isHidden ? <img src={process.env.PUBLIC_URL + "/img/show.svg"} alt=""/> : <img src="./img/hide.svg" alt=""/>}
                 </div>
                 <div onClick={deleteLayoutHandler} className="layout-block__left-menu-item">
-                    <img src="./img/delete.svg" alt=""/>
+                    <img src={process.env.PUBLIC_URL + "/img/delete.svg"} alt=""/>
                 </div>
                 <div onClick={downHandler} className="layout-block__left-menu-item">
-                    <img src="./img/up.svg" alt="" style={{transform: 'rotateX(180deg)'}}/>
+                    <img src={process.env.PUBLIC_URL + "/img/up.svg"} alt="" style={{transform: 'rotateX(180deg)'}}/>
                 </div>
             </div>
             <div className='layout-block__bottom-menu'>
                 <div className="layout-block__bottom-menu-item history">History</div>
                 <div onClick={historyBackHandler} className="layout-block__bottom-menu-item back">
-                    <img src="./img/up.svg" alt="" style={{transform: 'rotateZ(-90deg)'}}/>
+                    <img src={process.env.PUBLIC_URL + "/img/up.svg"} alt="" style={{transform: 'rotateZ(-90deg)'}}/>
                 </div>
                 <div onClick={addToMultiplicate} className="layout-block__bottom-menu-item favorites">Для мульта</div>
                 <div onClick={historyNextHandler} className="layout-block__bottom-menu-item next">
-                    <img src="./img/up.svg" alt="" style={{transform: 'rotateZ(90deg)'}}/>
+                    <img src={process.env.PUBLIC_URL + "/img/up.svg"} alt="" style={{transform: 'rotateZ(90deg)'}}/>
                 </div>
             </div>
         </div>

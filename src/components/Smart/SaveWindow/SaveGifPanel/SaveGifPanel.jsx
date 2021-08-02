@@ -31,26 +31,26 @@ function SaveGifPanel(props) {
             workers: 2,
             quality,
             repeat,
-            // background: background,
-            // transparent: background,
         });
+        setTimeout(() => {
+            frameList.forEach((frame, index)=>{
+                let canvas = document.createElement('canvas');
+                canvas.width=width;
+                canvas.height=height;
+                let ctx = canvas.getContext('2d');
+                ctx.fillStyle = background;
+                ctx.fillRect(0,0, width, height);
+                ctx.drawImage(frame.getCanvas(), 0, 0, width, height);
+    
+                gif.addFrame(canvas, {delay: frame.getDelay(), copy: true})
+            });
+            gif.on('finished', function(blob) {
+                setLoading(false);
+                window.open(URL.createObjectURL(blob));
+            });
+            gif.render();
+        }, 0);
 
-        frameList.forEach((frame, index)=>{
-            let canvas = document.createElement('canvas');
-            canvas.width=width;
-            canvas.height=height;
-            let ctx = canvas.getContext('2d');
-            ctx.fillStyle = background;
-            ctx.fillRect(0,0, width, height);
-            ctx.drawImage(frame.getCanvas(), 0, 0, width, height);
-
-            gif.addFrame(canvas, {delay: frame.getDelay(), copy: true})
-        });
-        gif.on('finished', function(blob) {
-            setLoading(false);
-            window.open(URL.createObjectURL(blob));
-        });
-        gif.render();
     }
 
 
