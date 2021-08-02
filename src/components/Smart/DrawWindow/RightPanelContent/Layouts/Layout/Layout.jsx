@@ -15,9 +15,31 @@ function Layout(props) {
     let index = props.index;
 
 
+    function keyDownHandler(e){
+        if (e.ctrlKey && e.code==='KeyZ' && e.shiftKey) {
+            layout.historyNext();
+            return;
+        }
+
+        if (e.ctrlKey && e.code==='KeyZ'){
+            layout.historyBack();
+        }
+    }
+
+    useEffect(()=>{
+        if(props.isCurrent) {
+            window.addEventListener('keyup', keyDownHandler);
+            console.log('added' + layout.getId());
+        }
+
+        return ()=>{
+            window.removeEventListener('keyup', keyDownHandler);
+            console.log('removed' + layout.getId());
+        }
+    }, [props.isCurrent])
+
     //когда компонент отрендерился, вставляем канвас из модели
     useEffect(() => {
-        console.log('render layout');
         layoutBlock.current.append(canvas);
         canvas.style.backgroundColor = props.defaultBackgorund;
         canvas.style.outline = props.isCurrent ? '10px solid red' : 'none';

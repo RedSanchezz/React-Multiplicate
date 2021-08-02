@@ -17,6 +17,9 @@ function ToolList(props) {
     function setHandToolHandler() {
         ToolManager.setTool('HAND');
     }
+    function setDragToolHandler() {
+        ToolManager.setTool('DRAG');
+    }
 
     return (
         <>
@@ -31,6 +34,10 @@ function ToolList(props) {
             </div>
             <div onClick={setHandToolHandler}
                  className={props.currentToolName === 'HAND' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
+                <img src={process.env.PUBLIC_URL + "/img/hand.svg"} alt=""/>
+            </div>
+            <div onClick={setDragToolHandler}
+                 className={props.currentToolName === 'DRAG' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src={process.env.PUBLIC_URL + "/img/hand.svg"} alt=""/>
             </div>
         </>

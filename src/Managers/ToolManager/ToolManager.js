@@ -4,6 +4,7 @@ import Hand from '../../models/Tool/Hand/Hand';
 import {changeSavedBrushes, saveBrush} from '../../redux/actionCreators/brushActionCreators';
 import {setCurrentTool} from '../../redux/actionCreators/canvasActionCreator';
 import store from '../../redux/store';
+import Drag from '../../models/Tool/Drag/Drag';
 
 
 //класс для выбора инструмента рисования
@@ -32,6 +33,12 @@ export default class ToolManager {
                 let brush = new Hand();
                 brush.create();
                 store.dispatch(setCurrentTool(brush, 'HAND'));
+                break;
+            }
+            case 'DRAG': {
+                let brush = new Drag();
+                brush.create();
+                store.dispatch(setCurrentTool(brush, 'DRAG'));
                 break;
             }
             default: {
