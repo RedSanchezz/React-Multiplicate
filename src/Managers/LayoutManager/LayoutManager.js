@@ -68,6 +68,36 @@ export default class LayoutManager {
         store.dispatch(changeLayoutList(layoutList));
     }
 
+    static copyLayouts(){
+        let state = store.getState();
+        const layoutList = state.layouts.layoutList;
+
+        let selectedLayouts= layoutList.map((layout, index)=>{
+            if(layout.isSelected()){
+                return [layout, index];
+            }
+        })
+        selectedLayouts=selectedLayouts.filter((layout)=> layout!==undefined);
+
+        let newLayoutList = Array.from(layoutList);
+        let addedCount=0;
+         layoutList.forEach((layout, index)=>{
+            if(layout.isSelected()){
+                let canvas = document.createElement('canvas');
+                canvas.width = state.canvas.size.width;
+                canvas.height = state.canvas.size.height;
+                let context = canvas.getContext('2d');
+                context.drawImage(state.layouts.layoutList[index].getCanvas(), 0, 0);
+                let layout = new Layout(canvas, context, true, ++LayoutManager.id);
+                newLayoutList.splice(index+addedCount, 0, layout);
+                addedCount++;
+            }
+        });
+        console.log(newLayoutList);
+        store.dispatch(changeLayoutList(newLayoutList));
+
+    }
+
     static copyLayout(index) {
         let state = store.getState();
         let layoutList = state.layouts.layoutList;

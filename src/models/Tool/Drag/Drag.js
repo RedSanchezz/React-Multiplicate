@@ -25,6 +25,7 @@ export default class Drag extends Tool{
 
         let tmpCanvas = document.createElement('canvas');
         let tmpCtx = tmpCanvas.getContext('2d');
+
         workSpace.append(tmpCanvas);
         this._tmpCanvas = tmpCanvas;
         this._getCanvasStyle(tmpCanvas);
@@ -34,6 +35,15 @@ export default class Drag extends Tool{
         this._listenerManager.addListener(tmpCanvas, 'mousedown', (e)=> {
             startX = e.offsetX;
             startY= e.offsetY;
+
+            let state = store.getState();
+            this._currentLayout = state.layouts.currentLayout
+            let canvas = this._currentLayout.getCanvas();
+            this._canvas = canvas;
+            let ctx = canvas.getContext('2d');
+            this._ctx =ctx;
+
+
             //если квадрат еще не отрисован
             if(!this._painted) this._drawRectFunction(tmpCanvas, tmpCtx, startX, startY);
             else this._moveRectFunction(tmpCanvas, tmpCtx, startX, startY);
@@ -76,12 +86,15 @@ export default class Drag extends Tool{
             let imageData = this._ctx.getImageData(this._rect[0], this._rect[1], this._rect[2]-this._rect[0], this._rect[3]-this._rect[1]);
 
             let offsetX = x-this._rect[0];
+            let offsetY = y-this._rect[1];
+
+            console.log(offsetX);
             //двигаем ее на фейковом канвасе
             this._listenerManager.addListener(tmpCanvas, 'mousemove', (e)=>{
                 console.log('move');
                 tmpCtx.clearRect(0,0, tmpCanvas.width, tmpCanvas.height);
-                tmpCtx.strokeRect(e.offsetX, e.offsetY, imageData.width, imageData.height);
-                tmpCtx.putImageData(imageData, e.offsetX, e.offsetY);
+                tmpCtx.strokeRect(e.offsetX-offsetX, e.offsetY-offsetY, imageData.width, imageData.height);
+                tmpCtx.putImageData(imageData, e.offsetX -offsetX, e.offsetY-offsetY);
             });
 
             //когда отпустили кнопку мыши - рисуем на настоящем холсте
@@ -89,7 +102,7 @@ export default class Drag extends Tool{
 
                 //убираем рамку
                 tmpCtx.clearRect(0,0, tmpCanvas.width, tmpCanvas.height);
-                tmpCtx.putImageData(imageData, e.offsetX, e.offsetY);
+                tmpCtx.putImageData(imageData,  e.offsetX -offsetX, e.offsetY-offsetY);
 
                 //очищаем область из настоящего канваса
                 this._ctx.clearRect(this._rect[0], this._rect[1], this._rect[2]-this._rect[0], this._rect[3]-this._rect[1]);
@@ -106,6 +119,7 @@ export default class Drag extends Tool{
                 LayoutManager.update();
             });
         }
+        //отпустили кнопку мыши не на выделенной части
         else {
             this._painted=false;
             tmpCtx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);

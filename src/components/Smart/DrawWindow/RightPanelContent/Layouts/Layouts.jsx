@@ -53,12 +53,15 @@ function Layouts(props) {
     function unselectAllHandler() {
         LayoutManager.unSelectAll();
     }
-
+    function copyLayout(){
+        LayoutManager.copyLayouts();
+    }
 
     let layoutMenu = <ContextMenu setMenuActive={setMenuActive}
                                   active={active}
                                   menuPosition={menuPosition}
     >
+        <div onClick={copyLayout} className="right-panel__context-menu-item">Копировать</div>
         <div onClick={deleteSelectedHandler} className="right-panel__context-menu-item">Удалить выбранные</div>
         <div onClick={combineSelectedHandler} className="right-panel__context-menu-item">Обьеденить</div>
         <div onClick={unselectAllHandler} className="right-panel__context-menu-item">Отменить выделение</div>
