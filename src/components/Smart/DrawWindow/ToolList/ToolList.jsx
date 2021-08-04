@@ -9,7 +9,6 @@ function ToolList(props) {
     function setScetchBrushHandler() {
         ToolManager.setTool('SCETCH_BRUSH');
     }
-
     function setEraserHandler() {
         ToolManager.setTool('ERASER');
     }
@@ -19,6 +18,9 @@ function ToolList(props) {
     }
     function setDragToolHandler() {
         ToolManager.setTool('DRAG');
+    }
+    function setImageToolHandler() {
+        ToolManager.setTool('IMAGE');
     }
 
     return (
@@ -39,6 +41,10 @@ function ToolList(props) {
             <div onClick={setDragToolHandler}
                  className={props.currentToolName === 'DRAG' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src={process.env.PUBLIC_URL + "/img/hand.svg"} alt=""/>
+            </div>
+            <div onClick={setImageToolHandler}
+                 className={props.currentToolName === 'IMAGE' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
+                <img src={process.env.PUBLIC_URL + "/img/brush.svg"} alt=""/>
             </div>
         </>
     );

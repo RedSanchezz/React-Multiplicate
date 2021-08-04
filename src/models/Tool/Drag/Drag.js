@@ -9,8 +9,12 @@ export default class Drag extends Tool{
         this._listenerManager = new ListenerManager([]);
         this._rect = [];
         this._painted = false;
+        this._currentLayout=null;
+        this._canvas=null;
+        this._ctx=null;
 
     }
+
     create() {
         let state = store.getState();
         this._currentLayout = state.layouts.currentLayout

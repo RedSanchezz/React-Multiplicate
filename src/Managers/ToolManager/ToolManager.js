@@ -5,6 +5,7 @@ import {changeSavedBrushes, saveBrush} from '../../redux/actionCreators/brushAct
 import {setCurrentTool} from '../../redux/actionCreators/canvasActionCreator';
 import store from '../../redux/store';
 import Drag from '../../models/Tool/Drag/Drag';
+import ImageTool from '../../models/Tool/ImageTool/ImageTool';
 
 
 //класс для выбора инструмента рисования
@@ -39,6 +40,12 @@ export default class ToolManager {
                 let brush = new Drag();
                 brush.create();
                 store.dispatch(setCurrentTool(brush, 'DRAG'));
+                break;
+            }
+            case 'IMAGE': {
+                let brush = new ImageTool();
+                brush.create();
+                store.dispatch(setCurrentTool(brush, 'IMAGE'));
                 break;
             }
             default: {
