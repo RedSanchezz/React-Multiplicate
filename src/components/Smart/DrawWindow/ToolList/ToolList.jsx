@@ -29,7 +29,6 @@ function ToolList(props) {
                  className={props.currentToolName === 'SCETCH_BRUSH' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src={process.env.PUBLIC_URL + "/img/brush.svg" } alt=""/>
             </div>
-
             <div onClick={setEraserHandler}
                  className={props.currentToolName === 'ERASER' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
                 <img src={process.env.PUBLIC_URL + "/img/eraser.svg"} alt=""/>
@@ -40,11 +39,11 @@ function ToolList(props) {
             </div>
             <div onClick={setDragToolHandler}
                  className={props.currentToolName === 'DRAG' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
-                <img src={process.env.PUBLIC_URL + "/img/hand.svg"} alt=""/>
+                <img src={process.env.PUBLIC_URL + "/img/selection.svg"} alt=""/>
             </div>
             <div onClick={setImageToolHandler}
                  className={props.currentToolName === 'IMAGE' ? 'left-panel__tool-item active' : 'left-panel__tool-item'}>
-                <img src={process.env.PUBLIC_URL + "/img/brush.svg"} alt=""/>
+                <img src={process.env.PUBLIC_URL + "/img/picture.svg"} alt=""/>
             </div>
         </>
     );

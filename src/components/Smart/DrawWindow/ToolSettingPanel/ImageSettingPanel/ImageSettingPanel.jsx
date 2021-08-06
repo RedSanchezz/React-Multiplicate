@@ -57,21 +57,28 @@ function ImageSettingPanel(props) {
                 <div className='image-tool__coords'>
                     <div className='image-tool__coords-row'>
                         <h3>X</h3>
-                        <input type='number' value={props.x} onChange={inputXCoordChange}/>
+                        <input type='number' value={props.x} onChange={inputXCoordChange} min={0} max={props.canvasWidth}/>
+                        <input type='range' value={props.x} onChange={inputXCoordChange} min={0} max={props.canvasWidth} />
                     </div>
                     <div className='image-tool__coords-row'>
                         <h3>Y</h3>
-                        <input type='number' value={props.y} onChange={inputYCoordChange}/>
+                        <input type='number' value={props.y} onChange={inputYCoordChange}  min={0} max={props.canvasHeigth} />
+                        <input type='range' value={props.y} onChange={inputYCoordChange} min={0} max={props.canvasHeigth}/>
+
                     </div>
                 </div>
                 <div className='image-tool__sizes'>
                     <div className='image-tool__coords-row'>
                         <h3>width</h3>
-                        <input type='number' value={props.width} onChange={inputWidthChange}/>
+                        <input type='number' value={props.width} onChange={inputWidthChange} min={0} max={props.canvasWidth}/>
+                        <input type='range' value={props.width} onChange={inputWidthChange} min={0} max={props.canvasWidth}/>
+
                     </div>
                     <div className='image-tool__coords-row'>
                         <h3>height</h3>
-                        <input type='number' value={props.height} onChange={inputHeightChange}/>
+                        <input type='number' value={props.height} onChange={inputHeightChange} min={0} max={props.canvasHeigth}/>
+                        <input type='range' value={props.height} onChange={inputHeightChange} min={0} max={props.canvasHeigth} />
+
                     </div>
                 </div>
             </div>}
@@ -87,6 +94,8 @@ function mapStateToProps(state) {
         y: state.imageTool.position.y,
         width: state.imageTool.position.width,
         height: state.imageTool.position.height,
+        canvasHeigth: state.canvas.size.height,
+        canvasWidth: state.canvas.size.width,
     }
 }
 export default connect(mapStateToProps,
