@@ -6,14 +6,15 @@ import {
     acceptChanges, canStart,
     disableDragBlock,
     enableDragBlock, finish,
-    imageToolSetFile, imageToolSetPosition
+    setFile, setPosition
 } from '../../../redux/actionCreators/imageToolActionCreator';
+
 
 export default class ImageTool extends Tool{
     constructor() {
         super();
         this._listenerManager = new ListenerManager([]);
-        this._tempCanvasListenerManager = new ListenerManager([]);
+        this._tmpCanvasListenerManager = new ListenerManager([]);
 
         this._rect = [];
         this._painted = false;
@@ -24,24 +25,8 @@ export default class ImageTool extends Tool{
         this._tmpCtx = null;
     }
     create() {
-        let state = store.getState();
-
-        this._currentLayout = state.layouts.currentLayout;
-        let canvas = this._currentLayout.getCanvas();
-        this._canvas = canvas;
-        let ctx = canvas.getContext('2d');
-        this._ctx =ctx;
-
-        let workSpace = state.canvas.canvasBlock;
-        this._workspace = workSpace;
-        console.log('imageTool');
-
-        let tmpCanvas = document.createElement('canvas');
-        this._tmpCanvas = tmpCanvas;
-        this._setCanvasStyle(tmpCanvas);
-        this._workspace.append(tmpCanvas);
-        this._tmpCtx = tmpCanvas.getContext('2d');
-
+        super._init();
+        //подписываемся на изменения state
         this._unsubscribe =store.subscribe(()=>{
             let state = store.getState();
             //если установлен файл, и блок для перетаскивания активен
@@ -53,38 +38,41 @@ export default class ImageTool extends Tool{
             //если файл не установлен и блок для перетаскивания не активен
             if(!state.imageTool.file && !state.imageTool.dragBlockEnabled) {
                 this._workspace.append(this._dragBlock);
-                this._tempCanvasListenerManager.removeAllListener();
-
+                this._tmpCanvasListenerManager.removeAllListener();
+                this._removeTmpCanvasLogic();
                 store.dispatch(enableDragBlock());
             }
 
             //если изменили позицию картинки
             if(state.imageTool.position.changed) {
                 let img = state.imageTool.file;
-                this._img = img;
                 let position = state.imageTool.position;
                 //перерисовываем
                 this._tmpCtx.clearRect(0,0, this._tmpCanvas.width, this._tmpCanvas.height);
-
                 this._tmpCtx.drawImage(img, position.x, position.y, position.width, position.height);
 
+                //задаем новую позицию картинке
                 this._rect= [position.x, position.y,position.x+ +position.width, position.y + +position.height];
-
+                //ставим imageTool.position.changed в неактивное положение
                 store.dispatch(acceptChanges());
             }
             // если закончили работать с изображением
             if(state.imageTool.finish){
                 let ctx = state.layouts.currentLayout.getContext();
-                //переносим на настоящий холст
+                //переносим с ложного на настоящий холст
                 ctx.drawImage(this._tmpCanvas,0,0);
+
                 this._tmpCtx.clearRect(0,0, this._tmpCanvas.width, this._tmpCanvas.height);
+
                 this._currentLayout.saveInHistory();
 
+                //finish === false
                 store.dispatch(canStart());
-                store.dispatch(imageToolSetFile(null));
+                store.dispatch(setFile(null));
                 LayoutManager.update();
             }
         })
+        //Изначально вставляем блок для перетаскивания картинки
         this._initDragBlock();
     }
 
@@ -97,7 +85,7 @@ export default class ImageTool extends Tool{
 
         dragBlock.addEventListener('drop', (e)=>{
             e.preventDefault();
-            let files = e.dataTransfer.files; // FileList object.
+            let files = e.dataTransfer.files;
 
             //если загрженный файл - картинка
             if(!files[0].type.startsWith('image')){
@@ -108,13 +96,12 @@ export default class ImageTool extends Tool{
             let reader = new FileReader();
             reader.readAsDataURL(files[0]);
             reader.onload = ()=> {
-                // console.log(reader.result);
                 let img = new Image();
                 img.src = reader.result;
                 img.onload = ()=>{
 
-                    store.dispatch(imageToolSetFile(img));
-                    store.dispatch(imageToolSetPosition({x: e.x-70, y:e.y-100,
+                    store.dispatch(setFile(img));
+                    store.dispatch(setPosition({x: e.x-70, y:e.y-100,
                         width: img.width,
                         height: img.height
                     }));
@@ -128,8 +115,6 @@ export default class ImageTool extends Tool{
 
         })
         dragBlock.addEventListener('dragover', (e)=>{
-            console.log('over !');
-            dragBlock.classList.add('dragover');
             e.preventDefault();
         })
     }
@@ -150,28 +135,13 @@ export default class ImageTool extends Tool{
         dragBlock.innerHTML = 'Перетащите картинку сюда';
     }
 
-    //стили для ложного канваса с картинкой
-    _setCanvasStyle(tmpCanvas){
-        let state = store.getState();
-        tmpCanvas.style.zIndex = 75;
-        tmpCanvas.height = state.canvas.size.height;
-        tmpCanvas.width = state.canvas.size.width;
-        tmpCanvas.style.top = state.canvas.position.top;
-        tmpCanvas.style.left = state.canvas.position.left;
-        tmpCanvas.style.position = 'absolute';
-        tmpCanvas.style.transform = `scale(${state.canvas.zoom})`;
-        //для удобства
-        tmpCanvas.classList.add('tmpCanvas');
-    }
-
     _initTmpCanvas(){
-        this._tempCanvasListenerManager.addListener(this._tmpCanvas, 'mousedown', (e)=>{
+        this._tmpCanvasListenerManager.addListener(this._tmpCanvas, 'mousedown', (e)=>{
             let x = e.clientX-70;
-            let y = e. clientY-100;
+            let y = e.clientY-100;
             let tmpCanvas = this._tmpCanvas;
             let tmpCtx = this._tmpCtx;
             let position = store.getState().imageTool.position;
-            let currentLayout = store.getState().layouts.currentLayout;
             if(this._rect.length!==null &&
                 (x>this._rect[0] && x<this._rect[2])
                 && (y>this._rect[1] && y<this._rect[3])){
@@ -183,8 +153,8 @@ export default class ImageTool extends Tool{
 
                 //при перемещении двигаем на ложном холсте вырезанный кусок
 
-                this._tempCanvasListenerManager.addListener(tmpCanvas, 'mousemove', (e)=>{
-                    store.dispatch(imageToolSetPosition({x: e.offsetX-offsetX, y:e.offsetY-offsetY,
+                this._tmpCanvasListenerManager.addListener(tmpCanvas, 'mousemove', (e)=>{
+                    store.dispatch(setPosition({x: e.offsetX-offsetX, y:e.offsetY-offsetY,
                         width: position.width,
                         height: position.height
                     }));
@@ -192,9 +162,9 @@ export default class ImageTool extends Tool{
 
                 });
 
-                this._tempCanvasListenerManager.addListener(tmpCanvas, 'mouseup', (e)=>{
-                    this._tempCanvasListenerManager.removeListenersByEvent(tmpCanvas, 'mousemove');
-                    this._tempCanvasListenerManager.removeListenersByEvent(tmpCanvas, 'mouseup')
+                this._tmpCanvasListenerManager.addListener(tmpCanvas, 'mouseup', (e)=>{
+                    this._tmpCanvasListenerManager.removeListenersByEvent(tmpCanvas, 'mousemove');
+                    this._tmpCanvasListenerManager.removeListenersByEvent(tmpCanvas, 'mouseup')
                     LayoutManager.update();
                 });
             }
@@ -207,12 +177,18 @@ export default class ImageTool extends Tool{
             }
         })
     }
+    _removeTmpCanvasLogic(){
+        this._tmpCanvasListenerManager.removeAllListener();
+    }
 
     destroy() {
         this._dragBlock.remove();
         this._unsubscribe();
         this._tmpCanvas.remove();
-        this._tempCanvasListenerManager.removeAllListener();
+        this._tmpCanvasListenerManager.removeAllListener();
+        store.dispatch(disableDragBlock());
+        store.dispatch(canStart());
+        store.dispatch(setFile(null));
     }
 
 }

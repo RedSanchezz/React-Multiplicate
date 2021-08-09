@@ -3,8 +3,8 @@ import LayoutManager from '../../../../../Managers/LayoutManager/LayoutManager';
 import {connect} from 'react-redux';
 import {
     disableDragBlock, finish,
-    imageToolSetFile,
-    imageToolSetPosition
+    setFile,
+    setPosition
 } from '../../../../../redux/actionCreators/imageToolActionCreator';
 import './ImageSettingPanel.scss';
 
@@ -15,7 +15,7 @@ function ImageSettingPanel(props) {
     }
 
     function inputXCoordChange(e) {
-        props.imageToolSetPosition({
+        props.setPosition({
             x: e.currentTarget.value,
             y: props.y,
             width: props.width,
@@ -23,7 +23,7 @@ function ImageSettingPanel(props) {
         })
     }
     function inputYCoordChange(e) {
-        props.imageToolSetPosition({
+        props.setPosition({
             x: props.x,
             y: e.currentTarget.value,
             width: props.width,
@@ -31,7 +31,7 @@ function ImageSettingPanel(props) {
         })
     }
     function inputWidthChange(e) {
-        props.imageToolSetPosition({
+        props.setPosition({
             x: props.x,
             y: props.y,
             width: e.currentTarget.value,
@@ -39,7 +39,7 @@ function ImageSettingPanel(props) {
         })
     }
     function inputHeightChange(e) {
-        props.imageToolSetPosition({
+        props.setPosition({
             x: props.x,
             y: props.y,
             width: props.width,
@@ -100,5 +100,5 @@ function mapStateToProps(state) {
     }
 }
 export default connect(mapStateToProps,
-    {disableDragBlock, imageToolSetFile, imageToolSetPosition, finish})
+    {disableDragBlock, setFile, setPosition, finish})
 (ImageSettingPanel);

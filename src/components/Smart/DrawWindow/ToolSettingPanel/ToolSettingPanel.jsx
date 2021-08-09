@@ -5,7 +5,6 @@ import HandToolPanel from './HandToolSettingPanel/HandToolSettingPanel';
 import ImageSettingPanel from './ImageSettingPanel/ImageSettingPanel';
 
 function ToolSettingPanel(props) {
-
     switch (props.currentToolName) {
         case 'HAND': {
             return <HandToolPanel></HandToolPanel>;
@@ -13,11 +12,13 @@ function ToolSettingPanel(props) {
         case 'IMAGE': {
             return <ImageSettingPanel></ImageSettingPanel>;
         }
+        case 'DRAG': {
+            return <div></div>
+        }
         default : {
             return <BrushPanel></BrushPanel>;
         }
     }
-
 }
 
 function mapStateToProps(state) {

@@ -21,7 +21,6 @@ function Main() {
                     <Redirect from='/'  to='/draw'/>
                 </Switch>
             </div>
-            
         </BrowserRouter>
     );
 }

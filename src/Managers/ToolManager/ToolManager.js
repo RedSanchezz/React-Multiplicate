@@ -8,7 +8,7 @@ import Drag from '../../models/Tool/Drag/Drag';
 import ImageTool from '../../models/Tool/ImageTool/ImageTool';
 
 
-//класс для выбора инструмента рисования
+//класс для работы с инструментами
 export default class ToolManager {
 
     static setTool(toolName) {

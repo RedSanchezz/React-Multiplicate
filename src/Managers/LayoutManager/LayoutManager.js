@@ -30,11 +30,11 @@ export default class LayoutManager {
             store.dispatch(changeLayoutList(layoutList));
             store.dispatch(changeCurrentLayout(layout, currentLayoutIndex));
         }
+
         this.update();
         store.dispatch(changeLayoutList(state.layouts.layoutList));
     }
-
-    //обновляем основной канвас, из всех слоев
+    //рисуем на основном холсте все слои
     static update() {
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
@@ -45,6 +45,7 @@ export default class LayoutManager {
             if (!layoutList[i].isHidden()) mainCanvasCtx.drawImage(layoutList[i].getCanvas(), 0, 0);
         }
     }
+
 
     static changeLayoutList(layoutList) {
         store.dispatch(changeLayoutList(layoutList));
@@ -60,6 +61,7 @@ export default class LayoutManager {
 
         canvas.width = state.canvas.size.width;
         canvas.height = state.canvas.size.height;
+
         let context = canvas.getContext('2d');
         let layout = new Layout(canvas, context, true, ++LayoutManager.id);
 
@@ -70,16 +72,11 @@ export default class LayoutManager {
 
     static copyLayouts(){
         let state = store.getState();
+
         const layoutList = state.layouts.layoutList;
 
-        let selectedLayouts= layoutList.map((layout, index)=>{
-            if(layout.isSelected()){
-                return [layout, index];
-            }
-        })
-        selectedLayouts=selectedLayouts.filter((layout)=> layout!==undefined);
-
         let newLayoutList = Array.from(layoutList);
+
         let addedCount=0;
          layoutList.forEach((layout, index)=>{
             if(layout.isSelected()){
@@ -93,60 +90,7 @@ export default class LayoutManager {
                 addedCount++;
             }
         });
-        console.log(newLayoutList);
         store.dispatch(changeLayoutList(newLayoutList));
-
-    }
-
-    static copyLayout(index) {
-        let state = store.getState();
-        let layoutList = state.layouts.layoutList;
-
-
-        let canvas = document.createElement('canvas');
-        canvas.width = state.canvas.size.width;
-        canvas.height = state.canvas.size.height;
-        let context = canvas.getContext('2d');
-
-        context.drawImage(state.layouts.layoutList[index].getCanvas(), 0, 0);
-        let layout = new Layout(canvas, context, true, ++LayoutManager.id);
-
-        layoutList.splice(index + 1, 0, layout);
-
-        if (state.layouts.currentLayoutIndex > index) {
-            this.setCurrentLayout(state.layouts.currentLayoutIndex + 1);
-        } else {
-            this.update();
-        }
-    }
-
-
-    //получаем список картинок из слоев
-    static getCanvasList() {
-        let state = store.getState();
-        let layoutList = state.layouts.layoutList;
-
-        let imageList = [];
-        for (let i = 0; i < layoutList.length; i++) {
-
-            let img = document.createElement('img');
-
-            let src = layoutList[i].getCanvas().toDataURL();
-
-            img.setAttribute('src', src);
-            img.setAttribute('data-index', i);
-
-            let objImg = {
-                src: src,
-                dataIndex: i,
-                id: i,
-                isCurrent: i === this.getCurrentLayoutIndex(),
-                isHidden: this.isHidden(i),
-                selected: layoutList[i].isSelected()
-            };
-            imageList.push(objImg);
-        }
-        return imageList;
     }
 
     //Возвращает класс с выбраным слоем 
@@ -159,7 +103,6 @@ export default class LayoutManager {
         let currentLayout = store.getState().layouts.layoutList[index];
         store.dispatch(changeCurrentLayout(currentLayout, index));
     }
-
 
     static getCurrentLayoutIndex() {
         let state = store.getState();
@@ -185,121 +128,115 @@ export default class LayoutManager {
         if (layoutList.length <= 1) {
             currentLayout.clear();
             this.update();
-            this.setCurrentLayout(currentLayoutIndex);
             return;
         }
-        layoutList.splice(index, 1);
 
+        layoutList.splice(index, 1);
         //Если элемент который надо удалить находится выше нужного
-        if (currentLayoutIndex >= index) {
-            this.setCurrentLayout(currentLayoutIndex - 1);
-        } else {
-            this.setCurrentLayout(currentLayoutIndex);
-        }
-        this.update();
+        if (currentLayoutIndex >= index) this.setCurrentLayout(currentLayoutIndex - 1);
+         else this.setCurrentLayout(currentLayoutIndex);
+
         store.dispatch(changeLayoutList(state.layouts.layoutList));
+        this.update();
     }
 
-    static deleteLayouts(indexArray) {
+
+    static deleteSelectedLayouts(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
         let currentLayout = state.layouts.currentLayout;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
 
-        if (layoutList.length <= 1) {
-            currentLayout.clear();
-            this.update();
-            store.dispatch(changeLayoutList(layoutList));
-            return;
+        let newLayoutList = layoutList.filter((layout)=>!layout.isSelected());
+        console.log(newLayoutList);
+
+        //если не осталось ни 1 слоя
+        if (newLayoutList.length == 0) {
+            let canvas = document.createElement('canvas');
+            canvas.width = state.canvas.size.width;
+            canvas.height = state.canvas.size.height;
+            let context = canvas.getContext('2d');
+            let layout = new Layout(canvas, context, true, ++LayoutManager.id);
+            newLayoutList.push(layout);
         }
+        store.dispatch(changeLayoutList(newLayoutList));
 
-        layoutList = layoutList.filter((value, index, array) => {
-            return !indexArray.includes(index);
-        });
+        //если не удалили активный слой
+        currentLayoutIndex = newLayoutList.indexOf(currentLayout);
+        if(currentLayoutIndex===-1) this.setCurrentLayout(0);
+        else this.setCurrentLayout(currentLayoutIndex);
 
-        store.dispatch(changeLayoutList(layoutList));
-
-        if (layoutList.length == 0) {
-            this.addLayout();
-            this.setCurrentLayout(0);
-            this.update();
-            return;
-        } else {
-            //если индекс больше допустимого
-            if (currentLayoutIndex >= layoutList.length - 1) {
-                this.setCurrentLayout(layoutList.length - 1);
-            } else {
-                this.setCurrentLayout(currentLayoutIndex);
-            }
-        }
         this.update();
     }
+
 
     static swap(index1, index2) {
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
-        let currentLayoutIndex = state.layouts.currentLayoutIndex;
+        let currentLayout= state.layouts.currentLayout;
 
-        if (index1 < 0 || index1 > layoutList.length - 1 || index2 < 0 || index2 > layoutList.length - 1) {
-            return;
-        }
+        //если передали не существующие индексы
+        if (!layoutList[index1] || !layoutList[index2]) return;
 
         let help = layoutList[index1];
         layoutList[index1] = layoutList[index2];
         layoutList[index2] = help;
 
-        if (index1 == currentLayoutIndex) {
-            this.setCurrentLayout(index2);
-        } else if (index2 == currentLayoutIndex) {
-            this.setCurrentLayout(index1);
-        } else {
-            this.setCurrentLayout(currentLayoutIndex);
-        }
+        let currentLayoutIndex = layoutList.indexOf(currentLayout);
+        this.setCurrentLayout(currentLayoutIndex);
+
         this.update();
         store.dispatch(changeLayoutList(state.layouts.layoutList));
     }
 
-    static combine(indexArray) {
+
+    static combineSelected(){
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
-        let currentLayoutIndex = state.layouts.currentLayoutIndex;
+
+        let selectedLayouts = layoutList.filter(layout=>layout.isSelected());
+        let indexArray =[];
+        selectedLayouts.forEach(layout=>{
+            indexArray.push(layoutList.indexOf(layout));
+        })
 
         let minIndex = Math.min(...indexArray);
-        let minElem = layoutList[minIndex];
+        let minIndexLayout = layoutList[minIndex];
 
-        for (let i = 1; i < indexArray.length; i++) {
-            const elem = layoutList[indexArray[i]];
-            minElem.getContext().drawImage(elem.getCanvas(), 0, 0);
-        }
-        minElem.saveInHistory();
+
+        selectedLayouts.forEach((layout, index)=>{
+           index!==0 && minIndexLayout.getContext().drawImage(layout.getCanvas(), 0, 0);
+        })
+
+        indexArray=indexArray.slice(1);
+        minIndexLayout.saveInHistory();
+
+        layoutList = layoutList.filter((layout, index)=>!indexArray.includes(index));
         store.dispatch(changeLayoutList(layoutList));
 
-        this.deleteLayouts(indexArray.slice(1));
+        this.setCurrentLayout(minIndex);
 
     }
-
 
     static getLayoutList() {
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
-
         return layoutList;
     }
 
     static setLayout(layout, index) {
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
-
         layoutList[index] = layout;
         this.update();
     }
 
     //Выделить слой ( ctrl + mouse1)
-    static select(id) {
+    static select(index) {
         let state = store.getState();
         let layoutList = state.layouts.layoutList;
 
-        layoutList[id].select();
+        layoutList[index].select();
         store.dispatch(changeLayoutList(layoutList));
         this.update();
     }
@@ -312,9 +249,7 @@ export default class LayoutManager {
             if (layout.isSelected()) layout.select();
         });
         store.dispatch(changeLayoutList(layoutList));
-
         this.update();
     }
-
 }
 

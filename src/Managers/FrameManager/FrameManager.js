@@ -19,23 +19,19 @@ export default class FrameManager {
     static addFrame(layout, delay) {
         let state = store.getState();
         let stopPlay = state.frames.stopPlay;
+        //если проигрывание не остановлено
         if(!stopPlay) return;
 
         let canvas = document.createElement('canvas');
         let currentFrameIndex =state.frames.currentFrameIndex;
+
         let frameList = state.frames.frameList;
 
-        // if (frameList.length > 120) {
-        //     alert('Общее количество фреймов не должно превышать 120');
-        //     return;
-        //
-        // }
         canvas.width = layout.getCanvas().width;
         canvas.height = layout.getCanvas().height;
         canvas.getContext('2d').drawImage(layout.getCanvas(), 0, 0);
 
         let frame = new Frame(canvas, delay, this.id++);
-
 
         frameList.push(frame);
         store.dispatch(changeFrameList(frameList));
@@ -59,10 +55,8 @@ export default class FrameManager {
         let state = store.getState();
         let frameList = state.frames.frameList;
         let newFrameList = frameList.filter((frame, index)=>!frame.isSelected());
-        console.log(newFrameList);
         store.dispatch(changeFrameList(newFrameList));
         store.dispatch(setСurrentFrameIndex(newFrameList.length-1));
-
     }
 
     static unSelectAllFrame(){
@@ -76,10 +70,7 @@ export default class FrameManager {
         store.dispatch(changeFrameList(frameList));
     }
     static changeFrame() {
-        console.log('ok wce good');
         let state = store.getState();
-        let stopPlay = state.frames.stopPlay;
-
         let frameList = state.frames.frameList;
         store.dispatch(changeFrameList(frameList));
     }
@@ -121,7 +112,6 @@ export default class FrameManager {
 
         store.dispatch(changeFrameList(frameList));
     }
-
 
 
     static playFilm() {

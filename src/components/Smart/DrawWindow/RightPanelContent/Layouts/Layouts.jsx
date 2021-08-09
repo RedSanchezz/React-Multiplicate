@@ -37,17 +37,18 @@ function Layouts(props) {
             if (value.isSelected()) indexArray.push(index);
             return value;
         });
-        LayoutManager.deleteLayouts(indexArray);
+        LayoutManager.deleteSelectedLayouts(indexArray);
     }
 
     function combineSelectedHandler(e) {
+        LayoutManager.combineSelected();
         setMenuActive(false);
-        let indexArray = [];
-        props.layoutList.map((value, index) => {
-            if (value.isSelected()) indexArray.push(index);
-            return value;
-        });
-        LayoutManager.combine(indexArray);
+        // let indexArray = [];
+        // props.layoutList.map((value, index) => {
+        //     if (value.isSelected()) indexArray.push(index);
+        //     return value;
+        // });
+        // LayoutManager.combine(indexArray);
     }
 
     function unselectAllHandler() {

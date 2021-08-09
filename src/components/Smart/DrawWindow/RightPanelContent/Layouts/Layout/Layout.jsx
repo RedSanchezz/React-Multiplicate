@@ -54,6 +54,7 @@ function Layout(props) {
         e.stopPropagation();
     }
 
+
     function clickToLayoutHandler(e) {
         if (e.ctrlKey) {
             LayoutManager.select(index);

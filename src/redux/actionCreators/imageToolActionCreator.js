@@ -18,13 +18,13 @@ export function disableDragBlock() {
     }
 }
 
-export function imageToolSetFile(file) {
+export function setFile(file) {
     return {
         type: IMAGE_TOOL_SET_FILE,
         payload: file
     }
 }
-export function imageToolSetPosition(position) {
+export function setPosition(position) {
     return {
         type: IMAGE_TOOL_SET_POSITION,
         payload: position
