@@ -14,7 +14,6 @@ export default class Drag extends Tool{
         this._ctx=null;
         this._savedImageData = null;
         this._savedTrueCanvas= null;
-
     }
 
     create() {
@@ -38,12 +37,30 @@ export default class Drag extends Tool{
         let startX=0;
         let startY=0;
 
+        this._currentLayout = state.layouts.currentLayout;
+
+        this._unsubscribe = store.subscribe(()=>{
+            let state = store.getState();
+            //если сменился слой - перерисовываем на настоящий холст, и все обнуляем
+            if(this._currentLayout!==state.layouts.currentLayout){
+                this._rect = [];
+                this._currentLayout=state.layouts.currentLayout;;
+                this._savedImageData = null;
+                this._savedTrueCanvas= null;
+                this._painted=false;
+                tmpCtx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
+            }
+        });
+
         this._listenerManager.addListener(tmpCanvas, 'mousedown', (e)=> {
             startX = e.offsetX;
             startY= e.offsetY;
 
             let state = store.getState();
-            this._currentLayout = state.layouts.currentLayout
+            if(this._currentLayout!==state.layouts.currentLayout){
+                this.destroy();
+                this.create();
+            }
             let canvas = this._currentLayout.getCanvas();
             this._canvas = canvas;
             let ctx = canvas.getContext('2d');
@@ -53,9 +70,6 @@ export default class Drag extends Tool{
             //если квадрат еще не отрисован
             if(!this._painted) {
                 this._drawRectFunction(tmpCanvas, tmpCtx, startX, startY);
-
-
-
             }
             else {
                 this._moveRectFunction(tmpCanvas, tmpCtx, startX, startY);
@@ -85,18 +99,19 @@ export default class Drag extends Tool{
                 this._rect[3] = startY;
             }
 
-            console.log(this._rect);
 
             let notNullSize = (this._rect[2]-this._rect[0]!=0)&&(this._rect[3]-this._rect[1]!=0) ;
             this._painted= resized && notNullSize ? true : false;
 
-
-            if( this._painted === false){
+            //когда закончили рисовать прямоугольник
+            if(this._painted === false){
                 this._listenerManager.removeListenersByEvent(tmpCanvas, 'mousemove');
                 this._listenerManager.removeListenersByEvent(tmpCanvas, 'mouseup');
                 return;
             }
+            //если ширина или длинна не равна нулю
             if(notNullSize) {
+                //создаем canvas, с вырезанной выделенной областью
                 let canvas = document.createElement('canvas');
                 canvas.width = this._canvas.width;
                 canvas.height = this._canvas.height;
@@ -105,8 +120,10 @@ export default class Drag extends Tool{
                 ctx.clearRect(this._rect[0], this._rect[1], this._rect[2] - this._rect[0], this._rect[3] - this._rect[1]);
                 this._savedTrueCanvas = canvas;
             }
+
             this._listenerManager.removeListenersByEvent(tmpCanvas, 'mousemove');
             this._listenerManager.removeListenersByEvent(tmpCanvas, 'mouseup');
+            //сохраняем перетаскиваемый кусок
             this._savedImageData = this._ctx.getImageData(this._rect[0], this._rect[1], this._rect[2] - this._rect[0], this._rect[3] - this._rect[1]);
 
         })
@@ -118,23 +135,21 @@ export default class Drag extends Tool{
             (x>this._rect[0] && x<this._rect[2])
             && (y>this._rect[1] && y<this._rect[3])){
 
-            //получаем imageData настоящего слоя
-
+            //получаем imageData перетаскиваемого куска
             let imageData=this._savedImageData;
                 // this._ctx.getImageData(this._rect[0], this._rect[1], this._rect[2]-this._rect[0], this._rect[3]-this._rect[1]);
+
+            //вычисляем смещение относительно того места куда кликнули
             let offsetX = x-this._rect[0];
             let offsetY = y-this._rect[1];
-
-            //двигаем ее на фейковом канвасе
+            //при перемещении двигаем на ложном холсте вырезанный кусок
             this._listenerManager.addListener(tmpCanvas, 'mousemove', (e)=>{
-                console.log('move');
                 tmpCtx.clearRect(0,0, tmpCanvas.width, tmpCanvas.height);
                 tmpCtx.strokeRect(e.offsetX-offsetX, e.offsetY-offsetY, imageData.width, imageData.height);
                 tmpCtx.putImageData(imageData, e.offsetX -offsetX, e.offsetY-offsetY);
             });
-            //когда отпустили кнопку мыши - рисуем на настоящем холсте
+            //когда отпустили кнопку мыши - перерисовываем на настоящий холст
             this._listenerManager.addListener(tmpCanvas, 'mouseup', (e)=>{
-
                 //убираем рамку
                 tmpCtx.clearRect(0,0, tmpCanvas.width, tmpCanvas.height);
                 tmpCtx.putImageData(imageData, e.offsetX -offsetX, e.offsetY-offsetY);
@@ -147,31 +162,36 @@ export default class Drag extends Tool{
 
                 //Рисуем картинку
                 this._ctx.drawImage(this._tmpCanvas,0,0);
-                //очищаем фейковый канвас
-                // tmpCtx.clearRect(0,0, tmpCanvas.width, tmpCanvas.height);
 
+
+                //добавляем обводку
                 tmpCtx.strokeRect(e.offsetX-offsetX, e.offsetY-offsetY, imageData.width, imageData.height);
 
+                //обновляем координаты для отлова клика
                 this._rect=[e.offsetX -offsetX, e.offsetY-offsetY, e.offsetX -offsetX+imageData.width,  e.offsetY-offsetY + imageData.height];
 
                 this._listenerManager.removeListenersByEvent(tmpCanvas,'mousemove');
                 this._listenerManager.removeListenersByEvent(tmpCanvas,'mouseup');
+
                 this._currentLayout.saveInHistory();
                 LayoutManager.update();
             });
         }
         //отпустили кнопку мыши не на выделенной части
         else {
+            //очищаем ложный холст и переходим в режим выделение области
             this._painted=false;
-
             tmpCtx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
         }
 
     }
 
     destroy() {
+
+
         this._listenerManager.removeAllListener();
         this._tmpCanvas.remove();
+        this._unsubscribe();
     }
     _getCanvasStyle(tmpCanvas){
         let state = store.getState();
@@ -183,6 +203,7 @@ export default class Drag extends Tool{
         tmpCanvas.style.position = 'absolute';
         tmpCanvas.style.transform = `scale(${state.canvas.zoom})`;
         //для удобства
+
         tmpCanvas.classList.add('tmpCanvas');
     }
 }

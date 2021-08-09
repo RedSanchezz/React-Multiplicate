@@ -13,6 +13,7 @@ function ImageSettingPanel(props) {
     function onEnabledButtonClick(){
         props.finish();
     }
+
     function inputXCoordChange(e) {
         props.imageToolSetPosition({
             x: e.currentTarget.value,

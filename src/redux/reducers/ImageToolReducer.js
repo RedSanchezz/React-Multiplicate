@@ -1,5 +1,5 @@
 import {
-    IMAGE_TOOL_ACCEPT_CHANGES,
+    IMAGE_TOOL_ACCEPT_CHANGES, IMAGE_TOOL_CAN_START,
     IMAGE_TOOL_DRAG_BLOCK_DISABLE,
     IMAGE_TOOL_DRAG_BLOCK_ENABLE, IMAGE_TOOL_FINISH,
     IMAGE_TOOL_SET_FILE,
@@ -62,6 +62,12 @@ export default function ImageToolReducer(state = initState, action) {
             return {
                 ...state,
                 finish: !state.finish
+            }
+        }
+        case IMAGE_TOOL_CAN_START: {
+            return {
+                ...state,
+                finish: false
             }
         }
         default : {
