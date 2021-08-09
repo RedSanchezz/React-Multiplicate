@@ -11,8 +11,6 @@ import ContextMenu from '../../../../Dump/ContextMenu/ContextMenu';
 
 function Layouts(props) {
 
-    let menuBlock = React.createRef();
-
     let [menuPosition, setMenuPosition] = useState({x: 0, y: 0});
     let [active, setMenuActive] = useState(false);
 
@@ -105,11 +103,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Layouts);
-
-
-// let layoutMenu = <LayoutMenu ref={menuBlock}
-//                              menuPosition={menuPosition}
-//                              active={active}
-//                              setMenuActive={setMenuActive}
-//                              layoutList={props.layoutList}
-// />;

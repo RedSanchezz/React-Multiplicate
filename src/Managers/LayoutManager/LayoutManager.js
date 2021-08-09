@@ -16,7 +16,7 @@ export default class LayoutManager {
         let layoutList = state.layouts.layoutList;
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
         //если список слоев пуст, создаем один слой
-        if (layoutList.length == 0) {
+        if (layoutList.length === 0) {
             let defLayoutCanvas = document.createElement('canvas');
             defLayoutCanvas.width = state.canvas.size.width;
             defLayoutCanvas.height = state.canvas.size.height;
@@ -151,7 +151,7 @@ export default class LayoutManager {
         console.log(newLayoutList);
 
         //если не осталось ни 1 слоя
-        if (newLayoutList.length == 0) {
+        if (newLayoutList.length === 0) {
             let canvas = document.createElement('canvas');
             canvas.width = state.canvas.size.width;
             canvas.height = state.canvas.size.height;

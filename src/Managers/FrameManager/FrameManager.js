@@ -1,5 +1,4 @@
 import {
-    canPlay,
     changeFrameList,
     setСurrentFrameIndex,
     setMultiplicateCanvas,
@@ -13,8 +12,6 @@ import Frame from '../../models/Frame';
 export default class FrameManager {
     static id = 0;
 
-    constructor() {
-    }
 
     static addFrame(layout, delay) {
         let state = store.getState();
@@ -113,7 +110,6 @@ export default class FrameManager {
         store.dispatch(changeFrameList(frameList));
     }
 
-
     static playFilm() {
         console.log('playFilm');
         let state = store.getState();
@@ -140,7 +136,7 @@ export default class FrameManager {
                 return;
             }
 
-            if (frameList.length - 1 != currentFrameIndex) {
+            if (frameList.length - 1 !== currentFrameIndex) {
                 store.dispatch(setСurrentFrameIndex(++currentFrameIndex));
                 this.playFilm();
             } else {
@@ -170,7 +166,7 @@ export default class FrameManager {
     static setDelayToAll(delay) {
         let state = store.getState();
         let frameList = state.frames.frameList;
-        frameList.map((frame, index) => {
+        frameList.forEach((frame, index) => {
             frame.setDelay(delay);
         });
         store.dispatch(changeFrameList(frameList));

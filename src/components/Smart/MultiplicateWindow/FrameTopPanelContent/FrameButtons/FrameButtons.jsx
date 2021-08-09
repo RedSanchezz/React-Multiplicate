@@ -22,9 +22,5 @@ function FrameButtons(props) {
         </div>
     );
 }
-function mapStateToProps(state) {
-    return {
-        stopedPlaying: state.frames.stopPlay
-    }
-}
+
 export default connect(null, {canPlay: canPlay})(FrameButtons);

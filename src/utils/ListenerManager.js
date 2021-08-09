@@ -44,7 +44,7 @@ export default class ListenerManager {
     }
 
     removeAllListener() {
-        while (this._listeners.length != 0) {
+        while (this._listeners.length !== 0) {
             let obj = this._listeners.pop();
             obj.element.removeEventListener(obj.event, obj.func);
         }

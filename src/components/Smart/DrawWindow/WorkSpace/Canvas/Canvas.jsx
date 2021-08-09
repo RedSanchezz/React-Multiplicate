@@ -12,17 +12,17 @@ import Layout from '../../../../../models/Layout';
 function Canvas(props) {
 
     let canvas = React.createRef();
-
-    //Когда компонент отрендерился, добавляем канвас в state
+    const setCanvas = props.setCanvas();
+    //Когда компонент отрендерился, добавляем холст в state
     useEffect(() => {
         let context = canvas.current.getContext('2d');
-        props.setCanvas(canvas.current, context);
-
+        setCanvas(canvas.current, context);
         window.addEventListener('keydown', toMultiplicate);
+
         return () => {
             window.removeEventListener('keydown', toMultiplicate);
         };
-    }, []);
+    }, [canvas, setCanvas]);
 
 
     function toMultiplicate(e) {
@@ -65,7 +65,6 @@ function mapStateToProps(state) {
         canvasZoom: state.canvas.zoom
     };
 }
-
 
 function mapDispatchToProps(dispatch) {
     return {

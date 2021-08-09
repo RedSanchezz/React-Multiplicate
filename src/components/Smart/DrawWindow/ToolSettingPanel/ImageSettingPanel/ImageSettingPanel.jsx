@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import LayoutManager from '../../../../../Managers/LayoutManager/LayoutManager';
+import React from 'react';
 import {connect} from 'react-redux';
 import {
     disableDragBlock, finish,

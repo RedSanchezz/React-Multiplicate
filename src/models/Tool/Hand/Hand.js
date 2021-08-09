@@ -6,7 +6,7 @@ import {setCanvasPosition, setCanvasZoom} from '../../../redux/actionCreators/ca
 export default class Hand extends Tool {
     constructor() {
         super();
-        this._listenerManager = new ListenerManager(new Array());
+        this._listenerManager = new ListenerManager([]);
     }
 
     create() {

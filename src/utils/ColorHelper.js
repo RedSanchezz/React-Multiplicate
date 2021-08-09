@@ -41,7 +41,7 @@ export default class ColorHelper {
     static rgbaToHex(rgba) {
         rgba = rgba.replace(/[\s()rgba;]/gi, '');
         let result = rgba.split(',').map((value, index, array) => {
-            if (index == array.length - 1) return 'del';
+            if (index === array.length - 1) return 'del';
             value = parseInt(value, 10).toString(16);
             if (value.length === 1) value = '0' + value;
             return value;

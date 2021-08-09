@@ -77,7 +77,7 @@ export default class Drag extends Tool{
             }
 
             //не равна ли длинна/ширина 0
-            let notNullSize = (this._rect[2]-this._rect[0]!=0)&&(this._rect[3]-this._rect[1]!=0);
+            let notNullSize = (this._rect[2]-this._rect[0]!==0)&&(this._rect[3]-this._rect[1]!==0);
 
             //если меняли размер и площадь не равна 0, то заканчиваем выделение
             this._painted= resized && notNullSize ? true : false;

@@ -15,16 +15,7 @@ function Layout(props) {
     let index = props.index;
 
 
-    function keyDownHandler(e){
-        if (e.ctrlKey && e.code==='KeyZ' && e.shiftKey) {
-            layout.historyNext();
-            return;
-        }
 
-        if (e.ctrlKey && e.code==='KeyZ'){
-            layout.historyBack();
-        }
-    }
 
     useEffect(()=>{
         if(props.isCurrent) {
@@ -36,7 +27,19 @@ function Layout(props) {
             window.removeEventListener('keyup', keyDownHandler);
             console.log('removed' + layout.getId());
         }
-    }, [props.isCurrent])
+
+        function keyDownHandler(e){
+            if (e.ctrlKey && e.code==='KeyZ' && e.shiftKey) {
+                layout.historyNext();
+                return;
+            }
+
+            if (e.ctrlKey && e.code==='KeyZ'){
+                layout.historyBack();
+            }
+        }
+
+    }, [props.isCurrent, layout]);
 
     //когда компонент отрендерился, вставляем канвас из модели
     useEffect(() => {

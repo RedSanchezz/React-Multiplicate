@@ -1,21 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import './Main.scss';
+import './App.scss';
 
 import DrawWindow from './Smart/DrawWindow/DrawWindow';
-import {BrowserRouter, HashRouter, Redirect, Route, StaticRouter, Switch} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import RedirectSec from './Smart/MultiplicateWindow/RedirectSec';
 import SaveWindow from './Smart/SaveWindow/SaveWindow';
 
-function Main() {
+function App() {
     return (
         <BrowserRouter>
             <div className='main'>
                 <Switch>
                     <Route path='/draw' render={() => <DrawWindow></DrawWindow>}></Route>
                     <Route path='/draw' render={() => <DrawWindow></DrawWindow>}></Route>
-
                     <Route path='/frames' render={() => <RedirectSec></RedirectSec>}></Route>
                     <Route path='/save' render={() => <SaveWindow></SaveWindow>}></Route>
                     <Redirect from='/'  to='/draw'/>
@@ -28,4 +27,4 @@ function Main() {
 
 
 
-export default connect()(Main);
+export default connect()(App);

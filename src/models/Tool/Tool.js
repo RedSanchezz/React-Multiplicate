@@ -1,8 +1,6 @@
 import store from '../../redux/store';
 
 export default class Tool {
-    constructor() {
-    }
 
     create() {
     }

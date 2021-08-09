@@ -21,7 +21,7 @@ function FrameItem(props) {
         return () => {
             value.getCanvas().remove();
         };
-    }, [id, props.defaultBackgorund, value, props.isOpen, refFrameBlock.current]);
+    }, [id, props.defaultBackgorund, value, props.isOpen,  refFrameBlock]);
 
 
     function deleteFrameHandler(e) {

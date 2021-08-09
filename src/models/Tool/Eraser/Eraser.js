@@ -3,9 +3,6 @@ import LayoutManager from '../../../Managers/LayoutManager/LayoutManager';
 import Brush from '../Brush/Brush';
 
 export default class Eraser extends Brush {
-    constructor() {
-        super();
-    }
 
     create() {
         var ppts = [];

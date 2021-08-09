@@ -11,22 +11,25 @@ import {changeCanvasSize, setCanvasBlock} from '../../../../redux/actionCreators
 
 function WorkSpace(props) {
 
+    const canvas = props.canvas;
     const workSpace = useRef();
+    const changeCanvasSize =  props.changeCanvasSize;
+    const currentToolName = props.currentToolName;
 
     //когда меняется канвас, инициализируем на работу с ним инструменты и слои
     useEffect(() => {
         console.log('first load canvas');
         let style = getComputedStyle(workSpace.current);
-        props.changeCanvasSize(parseInt(style.width) - 2, parseInt(style.height) - 2);
+        changeCanvasSize(parseInt(style.width) - 2, parseInt(style.height) - 2);
 
-        if (props.canvas !== null) {
+        if (canvas !== null) {
             //canvasBlock Нужен для корректной работы кисти. Это блок в котором находится canvas
-            props.setCanvasBlock(workSpace.current);
+            setCanvasBlock(workSpace.current);
             //устанавливаем кисть по умолчанию
-            ToolManager.setTool(props.currentToolName);
+            ToolManager.setTool(currentToolName);
             LayoutManager.init();
         }
-    }, [props.canvas]);
+    }, [canvas, changeCanvasSize, currentToolName]);
 
     return (
         <div ref={workSpace} className='work-space' style={{backgroundColor: props.defaultBackgorund}}>
