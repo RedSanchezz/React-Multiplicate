@@ -12,7 +12,7 @@ import Layout from '../../../../../models/Layout';
 function Canvas(props) {
 
     let canvas = React.createRef();
-    const setCanvas = props.setCanvas();
+    const setCanvas = props.setCanvas;
     //Когда компонент отрендерился, добавляем холст в state
     useEffect(() => {
         let context = canvas.current.getContext('2d');

@@ -18,25 +18,14 @@ function Layout(props) {
 
 
     useEffect(()=>{
-        if(props.isCurrent) {
-            window.addEventListener('keyup', keyDownHandler);
-            console.log('added' + layout.getId());
-        }
+        if(props.isCurrent) window.addEventListener('keyup', keyDownHandler);
 
-        return ()=>{
-            window.removeEventListener('keyup', keyDownHandler);
-            console.log('removed' + layout.getId());
-        }
+        return ()=> window.removeEventListener('keyup', keyDownHandler);
 
-        function keyDownHandler(e){
-            if (e.ctrlKey && e.code==='KeyZ' && e.shiftKey) {
-                layout.historyNext();
-                return;
-            }
 
-            if (e.ctrlKey && e.code==='KeyZ'){
-                layout.historyBack();
-            }
+        function keyDownHandler(e) {
+            if (e.ctrlKey && e.code === 'KeyZ') layout.historyBack();
+            else if (e.ctrlKey && e.code === 'KeyZ' && e.shiftKey) layout.historyNext();
         }
 
     }, [props.isCurrent, layout]);
@@ -47,9 +36,7 @@ function Layout(props) {
         canvas.style.backgroundColor = props.defaultBackgorund;
         canvas.style.outline = props.isCurrent ? '10px solid red' : 'none';
         //когда компонент демонтируется, удаляем канвас
-        return () => {
-            canvas.remove();
-        };
+        return () => canvas.remove();
     });
 
     function hideLayoutHandler(e) {

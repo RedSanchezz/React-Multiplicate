@@ -8,7 +8,6 @@ import './HandToolSettingPanel.scss'
 function HandToolSettingPanel(props) {
 
     function zoomChangeHandler(e) {
-        console.log(e.currentTarget);
         props.setCanvasZoom(e.currentTarget.value);
     }
 

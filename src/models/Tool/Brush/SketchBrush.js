@@ -52,8 +52,6 @@ export default class SketchBrush extends Brush {
             tmp_ctx.lineWidth = this._ctx.lineWidth;
             tmp_ctx.lineCap = this._ctx.lineCap;
 
-            console.log(state.canvas.size.height);
-
             tmpCanvas.style.transform = `scale(${state.canvas.zoom})`;
             tmpCanvas.style.top = state.canvas.position.top + 'px';
             tmpCanvas.style.left = state.canvas.position.left + 'px';

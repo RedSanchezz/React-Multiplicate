@@ -10,11 +10,9 @@ export default class Hand extends Tool {
     }
 
     create() {
-        console.log('create');
         let state = store.getState();
         let canvas = state.canvas.canvas;
         let canvasBlock = state.canvas.canvasBlock;
-        console.log(canvasBlock);
 
         let startYCoord = 0;
         let startXCoord = 0;
@@ -53,10 +51,6 @@ export default class Hand extends Tool {
 
             let offsetY = -(startYCoord - e.clientY);
             let offsetX = -(startXCoord - e.clientX);
-
-
-            console.log(offsetX);
-            // e.clientY - 100 -yCoord + 'px',
 
             store.dispatch(setCanvasPosition({
                 top: parseInt(state.canvas.position.top) + offsetY + 'px',

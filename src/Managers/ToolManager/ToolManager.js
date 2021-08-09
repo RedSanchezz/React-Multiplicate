@@ -12,7 +12,6 @@ import ImageTool from '../../models/Tool/ImageTool/ImageTool';
 export default class ToolManager {
 
     static setTool(toolName) {
-        console.log('wtf SET TOOL' + toolName);
         let state = store.getState();
         let currentTool = state.canvas.currentTool;
         if (currentTool) currentTool.destroy();

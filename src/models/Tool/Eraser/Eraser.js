@@ -21,7 +21,6 @@ export default class Eraser extends Brush {
         tmpCanvas.style.transform = `scale(${state.canvas.zoom})`;
         tmpCanvas.style.top = state.canvas.position.top;
         tmpCanvas.style.left = state.canvas.position.left;
-        console.log(state.canvas.position.top);
         tmpCanvas.style.position = 'absolute';
         //для удобства
         tmpCanvas.classList.add('tmpCanvas');

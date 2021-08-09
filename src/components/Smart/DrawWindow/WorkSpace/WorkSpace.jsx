@@ -13,12 +13,12 @@ function WorkSpace(props) {
 
     const canvas = props.canvas;
     const workSpace = useRef();
+
     const changeCanvasSize =  props.changeCanvasSize;
     const currentToolName = props.currentToolName;
-
+    const setCanvasBlock = props.setCanvasBlock;
     //когда меняется канвас, инициализируем на работу с ним инструменты и слои
     useEffect(() => {
-        console.log('first load canvas');
         let style = getComputedStyle(workSpace.current);
         changeCanvasSize(parseInt(style.width) - 2, parseInt(style.height) - 2);
 
@@ -29,7 +29,7 @@ function WorkSpace(props) {
             ToolManager.setTool(currentToolName);
             LayoutManager.init();
         }
-    }, [canvas, changeCanvasSize, currentToolName]);
+    }, [canvas, changeCanvasSize, currentToolName, setCanvasBlock]);
 
     return (
         <div ref={workSpace} className='work-space' style={{backgroundColor: props.defaultBackgorund}}>

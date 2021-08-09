@@ -101,13 +101,11 @@ export default class ImageTool extends Tool{
                 img.onload = ()=>{
 
                     store.dispatch(setFile(img));
-                    store.dispatch(setPosition({x: e.x-70, y:e.y-100,
+                    store.dispatch(setPosition({x: e.offsetX, y:e.offsetY,
                         width: img.width,
                         height: img.height
                     }));
-                    console.log(this._rect);
-                    this._rect= [e.x-70, e.y-100, e.x-70+img.width, e.y-100 + img.height];
-                    console.log(this._rect);
+                    this._rect= [e.offsetX, e.offsetY, e.offsetX+img.width, e.offsetX + img.height];
 
                     LayoutManager.update();
                 }
@@ -132,13 +130,13 @@ export default class ImageTool extends Tool{
         dragBlock.style.transform = `scale(${state.canvas.zoom})`;
         dragBlock.classList.add('drag-block');
 
-        dragBlock.innerHTML = 'Перетащите картинку сюда';
+        dragBlock.innerHTML = 'Перетащите изображение сюда';
     }
 
     _initTmpCanvas(){
         this._tmpCanvasListenerManager.addListener(this._tmpCanvas, 'mousedown', (e)=>{
-            let x = e.clientX-70;
-            let y = e.clientY-100;
+            let x = e.offsetX;
+            let y = e.offsetY;
             let tmpCanvas = this._tmpCanvas;
             let tmpCtx = this._tmpCtx;
             let position = store.getState().imageTool.position;
@@ -158,8 +156,6 @@ export default class ImageTool extends Tool{
                         width: position.width,
                         height: position.height
                     }));
-                    console.log(this._rect);
-
                 });
 
                 this._tmpCanvasListenerManager.addListener(tmpCanvas, 'mouseup', (e)=>{
@@ -170,8 +166,7 @@ export default class ImageTool extends Tool{
             }
             //отпустили кнопку мыши не на выделенной части
             else {
-                //очищаем ложный холст и переходим в режим выделение области
-                console.log(this._rect);
+                //очищаем ложный холст и переходим в режим выделения области
                 store.dispatch(finish());
                 tmpCtx.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
             }

@@ -111,7 +111,6 @@ export default class FrameManager {
     }
 
     static playFilm() {
-        console.log('playFilm');
         let state = store.getState();
         let frameList = state.frames.frameList;
         if(frameList.length===0) {

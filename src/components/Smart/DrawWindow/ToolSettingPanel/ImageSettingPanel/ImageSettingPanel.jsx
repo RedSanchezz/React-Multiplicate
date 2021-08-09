@@ -48,12 +48,11 @@ function ImageSettingPanel(props) {
 
     return (
         <div>
-            {props.dragBlockEnabled && <div>Enabled !</div>}
+            {props.dragBlockEnabled && <div></div>}
             {!props.dragBlockEnabled &&
             <div className='top-panel__image-tool image-tool'>
-                <div>Disabled !</div>
+                <div></div>
 
-                <button onClick={onEnabledButtonClick}>Set enabled !</button>
                 <div className='image-tool__coords'>
                     <div className='image-tool__coords-row'>
                         <h3>X</h3>
@@ -81,6 +80,9 @@ function ImageSettingPanel(props) {
 
                     </div>
                 </div>
+
+                <button onClick={onEnabledButtonClick}>Вставить изображение</button>
+
             </div>}
         </div>
     );

@@ -96,7 +96,6 @@ function SaveGifPanel(props) {
                     <input type='checkbox'
                            checked={saveProportion}
                             onChange={(e)=>{
-                                console.log(e.currentTarget.checked);
                                 setSaveProportion(e.currentTarget.checked)
                             }}/>
                     </div>

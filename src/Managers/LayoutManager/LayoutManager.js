@@ -148,7 +148,6 @@ export default class LayoutManager {
         let currentLayoutIndex = state.layouts.currentLayoutIndex;
 
         let newLayoutList = layoutList.filter((layout)=>!layout.isSelected());
-        console.log(newLayoutList);
 
         //если не осталось ни 1 слоя
         if (newLayoutList.length === 0) {

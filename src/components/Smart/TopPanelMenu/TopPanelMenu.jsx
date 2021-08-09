@@ -10,8 +10,6 @@ export default function TopPanelMenu(props) {
 
 
     let forSwitch = location.pathname.match(/\/\w+/)[0];
-    // console.log('top panel');
-    // console.log(forSwitch);
     switch (forSwitch) {
         case '/draw':  {
             content =
