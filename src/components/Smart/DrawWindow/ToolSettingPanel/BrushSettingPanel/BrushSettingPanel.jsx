@@ -51,7 +51,7 @@ function BrushSettingPanel(props) {
             </div>
             <div className="brush-panel__block">
                 <button onClick={saveBrushHandler} className='panel__block-button add-brush-btn'>
-                    <img src={process.env.PUBLIC_URL + "/img/plus-icon.svg"}/>
+                    <img src={process.env.PUBLIC_URL + "/img/plus-icon.svg"} alt=''/>
                 </button>
             </div>
             <SavedBrushes></SavedBrushes>
@@ -62,10 +62,10 @@ function BrushSettingPanel(props) {
 
 function mapStateToProps(state) {
     return {
-        brushSize: state.brush.size,
-        brushColor: state.brush.color,
-        brushAlpha: state.brush.alpha,
-        savedBrushes: state.brush.savedBrushes
+        brushSize: state.tool.brush.size,
+        brushColor: state.tool.brush.color,
+        brushAlpha: state.tool.brush.alpha,
+        savedBrushes: state.tool.brush.savedBrushes
     };
 }
 

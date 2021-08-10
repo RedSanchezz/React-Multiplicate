@@ -30,13 +30,13 @@ export default class ImageTool extends Tool{
         this._unsubscribe =store.subscribe(()=>{
             let state = store.getState();
             //если установлен файл, и блок для перетаскивания активен
-            if(!!state.imageTool.file && state.imageTool.dragBlockEnabled) {
+            if(!!state.tool.image.file && state.tool.image.dragBlockEnabled) {
                 this._dragBlock.remove();
                 store.dispatch(disableDragBlock());
                 this._initTmpCanvas();
             }
             //если файл не установлен и блок для перетаскивания не активен
-            if(!state.imageTool.file && !state.imageTool.dragBlockEnabled) {
+            if(!state.tool.image.file && !state.tool.image.dragBlockEnabled) {
                 this._workspace.append(this._dragBlock);
                 this._tmpCanvasListenerManager.removeAllListener();
                 this._removeTmpCanvasLogic();
@@ -44,20 +44,19 @@ export default class ImageTool extends Tool{
             }
 
             //если изменили позицию картинки
-            if(state.imageTool.position.changed) {
-                let img = state.imageTool.file;
-                let position = state.imageTool.position;
+            if(state.tool.image.position.changed) {
+                let img = state.tool.image.file;
+                let position = state.tool.image.position;
                 //перерисовываем
                 this._tmpCtx.clearRect(0,0, this._tmpCanvas.width, this._tmpCanvas.height);
                 this._tmpCtx.drawImage(img, position.x, position.y, position.width, position.height);
 
                 //задаем новую позицию картинке
                 this._rect= [position.x, position.y,position.x+ +position.width, position.y + +position.height];
-                //ставим imageTool.position.changed в неактивное положение
                 store.dispatch(acceptChanges());
             }
             // если закончили работать с изображением
-            if(state.imageTool.finish){
+            if(state.tool.image.finish){
                 let ctx = state.layouts.currentLayout.getContext();
                 //переносим с ложного на настоящий холст
                 ctx.drawImage(this._tmpCanvas,0,0);
@@ -139,7 +138,7 @@ export default class ImageTool extends Tool{
             let y = e.offsetY;
             let tmpCanvas = this._tmpCanvas;
             let tmpCtx = this._tmpCtx;
-            let position = store.getState().imageTool.position;
+            let position = store.getState().tool.image.position;
             if(this._rect.length!==null &&
                 (x>this._rect[0] && x<this._rect[2])
                 && (y>this._rect[1] && y<this._rect[3])){

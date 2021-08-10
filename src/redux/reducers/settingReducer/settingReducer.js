@@ -1,4 +1,4 @@
-import {CHANGE_CANVAS_DEFAULT_BACKGROUND} from './../actionTypes';
+import {CHANGE_CANVAS_DEFAULT_BACKGROUND} from '../../actionTypes';
 
 
 let initState = {

@@ -14,13 +14,13 @@ export default class Brush extends Tool {
 
     setColor(color) {
         let state = store.getState();
-        if (isFinite(state.brush.alpha)) color = ColorHelper.toRgba(color, state.brush.alpha);
+        if (isFinite(state.tool.brush.alpha)) color = ColorHelper.toRgba(color, state.tool.brush.alpha);
         store.dispatch(changeBrushSetting({color}));
     }
 
     getColor() {
         let state = store.getState();
-        return ColorHelper.toHex(state.brush.color);
+        return ColorHelper.toHex(state.tool.brush.color);
     }
 
     //Задаем прозрачность кисти
@@ -30,13 +30,13 @@ export default class Brush extends Tool {
         store.dispatch(changeBrushSetting({alpha}));
 
         let state = store.getState();
-        this.setColor(state.brush.color);
+        this.setColor(state.tool.brush.color);
         // store.dispatch(changeBrushOpacity(alpha));
     }
 
     getAlpha() {
         let state = store.getState();
-        return state.brush.alpha;
+        return state.tool.brush.alpha;
     }
 
     //ширина линии

@@ -34,9 +34,12 @@ export default class Drag extends Tool{
         this._unsubscribe = store.subscribe(()=>{
             let state = store.getState();
             //если изменился активный слой -  все обнуляем
+            console.log('change layout');
             if(this._currentLayout!==state.layouts.currentLayout){
                 this._rect = [];
                 this._currentLayout=state.layouts.currentLayout;
+                this._canvas = this._currentLayout.getCanvas();
+                this._ctx = this._currentLayout.getContext();
                 this._selectedAreaImageData = null;
                 this._canvasWithoutSelectedArea= null;
                 this._painted=false;

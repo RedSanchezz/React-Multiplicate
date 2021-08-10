@@ -102,10 +102,10 @@ function SavedColors(props) {
 
 function mapStateToProps(state) {
     return {
-        brushSize: state.brush.size,
-        brushColor: state.brush.color,
-        brushAlpha: state.brush.alpha,
-        savedBrushes: state.brush.savedBrushes
+        brushSize: state.tool.brush.size,
+        brushColor: state.tool.brush.color,
+        brushAlpha: state.tool.brush.alpha,
+        savedBrushes: state.tool.brush.savedBrushes
     };
 }
 

@@ -1,4 +1,24 @@
 .top-panel__setting-hand-tool {
   display: flex;
+}
+.top-panel__center-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  button {
+    padding: 15px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    background-color: darkred;
+    cursor: pointer;
+    font-size: 18px;
+    color: black;
+    font-weight: 600;
+    transition: background-color 0.5s;
+    &:hover {
+      background-color: red;
+    }
+  }
 
 }

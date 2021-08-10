@@ -1,14 +1,10 @@
 .right-panel__layout-block {
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 30px 50px 25px;
   width: 350px;
   display: flex;
   justify-content: flex-end;
-  padding-left: 25px;
-  padding-right: 30px;
-  padding-bottom: 50px;
   position: relative;
-
   canvas {
     width: 250px;
     height: auto;
@@ -19,15 +15,27 @@
 .right-panel__layout-list {
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 700px;
+  max-height: calc(100vh - 210px);
   position: relative;
+  &::-webkit-scrollbar {
+    width: 15px; /* ширина для вертикального скролла */
+    background-color: black;
+    border-radius: 10px;
+
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 3px;
+    border-radius: 10px;
+    background-color:gray;
+  }
+
 }
 
 .right-panel__layout-buttons {
   display: flex;
   justify-content: space-around;
   padding: 10px 0;
-
+  height: 55px;
   button {
     width: 40%;
     padding: 5px;

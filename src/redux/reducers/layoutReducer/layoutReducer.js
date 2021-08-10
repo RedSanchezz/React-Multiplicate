@@ -1,5 +1,5 @@
-import {CHANGE_LAYOUT_LIST} from '../actionTypes';
-import {CHANGE_CURRENT_LAYOUT} from './../actionTypes';
+import {CHANGE_LAYOUT_LIST} from '../../actionTypes';
+import {CHANGE_CURRENT_LAYOUT} from '../../actionTypes';
 
 
 

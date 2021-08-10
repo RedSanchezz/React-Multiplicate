@@ -99,9 +99,13 @@ export default class LayoutManager {
     }
 
     static setCurrentLayout(index) {
-        if (index < 0) index = 0;
-        let currentLayout = store.getState().layouts.layoutList[index];
-        store.dispatch(changeCurrentLayout(currentLayout, index));
+        let state = store.getState();
+
+        if(state.layouts.layoutList[index]){
+            let currentLayout = store.getState().layouts.layoutList[index];
+            store.dispatch(changeCurrentLayout(currentLayout, index));
+        }
+
     }
 
     static getCurrentLayoutIndex() {

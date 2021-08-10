@@ -5,8 +5,7 @@ import {
     SET_CANVAS_POSITION,
     SET_CANVAS_ZOOM,
     SET_CURRENT_TOOL
-} from './../actionTypes';
-
+} from '../../actionTypes';
 
 let initState = {
     canvas: null,
@@ -54,6 +53,7 @@ export default function canvasReducer(state = initState, action) {
 
             };
         }
+
         case SET_CANVAS_BLOCK: {
             return {
                 ...state,
@@ -67,6 +67,7 @@ export default function canvasReducer(state = initState, action) {
                 position: action.payload
             };
         }
+
         case SET_CANVAS_ZOOM: {
             return {
                 ...state,

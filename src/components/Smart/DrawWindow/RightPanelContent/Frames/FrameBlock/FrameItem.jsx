@@ -82,6 +82,9 @@ function FrameItem(props) {
             if (y + 200 >= window.innerWidth) {
                 y = window.innerWidth - 200;
             }
+            if (x + 200 >= window.innerHeight) {
+                x = window.innerHeight - 200;
+            }
             props.setMenuPosition({x, y});
             props.setMenuActive(true);
         }

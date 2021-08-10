@@ -53,7 +53,7 @@ function HandToolSettingPanel(props) {
                              value={parseInt(props.top)}
                 />
             </div>
-            <div>
+            <div className='top-panel__center-btn'>
                 <button onClick={clickBackToCenterBtn}>Вернуть по центру</button>
             </div>
         </div>

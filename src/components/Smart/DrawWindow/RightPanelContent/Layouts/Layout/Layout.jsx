@@ -78,6 +78,9 @@ function Layout(props) {
             if (y + 200 >= window.innerWidth) {
                 y = window.innerWidth - 200;
             }
+            if (x + 200 >= window.innerHeight) {
+                x = window.innerHeight - 200;
+            }
             props.setMenuPosition({x, y});
         }
 
@@ -112,11 +115,10 @@ function Layout(props) {
                 </div>
             </div>
             <div className='layout-block__bottom-menu'>
-                <div className="layout-block__bottom-menu-item history">History</div>
+                <div className="layout-block__bottom-menu-item history">История</div>
                 <div onClick={historyBackHandler} className="layout-block__bottom-menu-item back">
                     <img src={process.env.PUBLIC_URL + "/img/up.svg"} alt="" style={{transform: 'rotateZ(-90deg)'}}/>
                 </div>
-                <div onClick={addToMultiplicate} className="layout-block__bottom-menu-item favorites">Для мульта</div>
                 <div onClick={historyNextHandler} className="layout-block__bottom-menu-item next">
                     <img src={process.env.PUBLIC_URL + "/img/up.svg"} alt="" style={{transform: 'rotateZ(90deg)'}}/>
                 </div>

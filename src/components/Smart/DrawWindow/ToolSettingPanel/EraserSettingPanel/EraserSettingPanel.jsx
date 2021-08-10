@@ -1,15 +1,14 @@
 import React from 'react';
 import InputsBlock from '../../../../Dump/InputsBlock/InputsBlock';
-import ToolManager from '../../../../../Managers/ToolManager/ToolManager';
 import {connect} from 'react-redux';
+import {changeEraserSetting} from '../../../../../redux/actionCreators/eraserActionCreator';
 
 
 
 function EraserSettingPanel(props) {
 
     function changeSizeInputsHandler(e) {
-        let tool = ToolManager.getTool();
-        tool.setSize(e.target.value);
+        props.changeEraserSetting(e.target.value);
     }
 
     return (
@@ -25,8 +24,8 @@ function EraserSettingPanel(props) {
 
 function mapStateToProps(state) {
     return {
-        brushSize: state.brush.size,
+        brushSize: state.tool.eraser.size,
     }
 }
 
-export default connect(mapStateToProps)(EraserSettingPanel);
+export default connect(mapStateToProps, {changeEraserSetting})(EraserSettingPanel);

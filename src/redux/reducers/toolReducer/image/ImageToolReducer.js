@@ -4,7 +4,7 @@ import {
     IMAGE_TOOL_DRAG_BLOCK_ENABLE, IMAGE_TOOL_FINISH,
     IMAGE_TOOL_SET_FILE,
     IMAGE_TOOL_SET_POSITION
-} from '../actionTypes';
+} from '../../../actionTypes';
 
 
 let initState = {
@@ -20,7 +20,7 @@ let initState = {
     finish: false,
 };
 
-export default function ImageToolReducer(state = initState, action) {
+export default function imageToolReducer(state = initState, action) {
     switch (action.type) {
         case IMAGE_TOOL_SET_FILE: {
             return {

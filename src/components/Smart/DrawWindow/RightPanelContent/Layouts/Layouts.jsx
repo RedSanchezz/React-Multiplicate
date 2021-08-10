@@ -14,7 +14,6 @@ function Layouts(props) {
     let [menuPosition, setMenuPosition] = useState({x: 0, y: 0});
     let [active, setMenuActive] = useState(false);
 
-
     function addLayoutHandler() {
         //Обычный слой из модели
         let layout = new LayoutModel(props.canvas, props.context, true, ++LayoutManager.id);
@@ -41,12 +40,6 @@ function Layouts(props) {
     function combineSelectedHandler(e) {
         LayoutManager.combineSelected();
         setMenuActive(false);
-        // let indexArray = [];
-        // props.layoutList.map((value, index) => {
-        //     if (value.isSelected()) indexArray.push(index);
-        //     return value;
-        // });
-        // LayoutManager.combine(indexArray);
     }
 
     function unselectAllHandler() {
@@ -60,10 +53,10 @@ function Layouts(props) {
                                   active={active}
                                   menuPosition={menuPosition}
     >
-        <div onClick={copyLayout} className="right-panel__context-menu-item">Копировать</div>
-        <div onClick={deleteSelectedHandler} className="right-panel__context-menu-item">Удалить выбранные</div>
-        <div onClick={combineSelectedHandler} className="right-panel__context-menu-item">Обьеденить</div>
-        <div onClick={unselectAllHandler} className="right-panel__context-menu-item">Отменить выделение</div>
+        <div onClick={copyLayout} className="context-menu-item">Копировать</div>
+        <div onClick={deleteSelectedHandler} className="context-menu-item">Удалить выбранные</div>
+        <div onClick={combineSelectedHandler} className="context-menu-item">Обьеденить</div>
+        <div onClick={unselectAllHandler} className="context-menu-item">Отменить выделение</div>
     </ContextMenu>
 
 

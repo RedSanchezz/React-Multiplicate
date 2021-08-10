@@ -1,4 +1,15 @@
 .right-panel__frames {
   overflow: auto;
   height: calc(100vh - 160px);
+  &::-webkit-scrollbar {
+    width: 15px; /* ширина для вертикального скролла */
+    background-color: black;
+    border-radius: 10px;
+
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 3px;
+    border-radius: 10px;
+    background-color:darkred;
+  }
 }

@@ -8,7 +8,6 @@
   border: 5px solid red;
   top: 0px;
   left: 50%;
-  // transform: translateX(-50%);
   font-size: 30px;
   font-weight: 900;
   border-radius: 100px;
@@ -80,7 +79,7 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    left: 80px;
+    left: 100px;
   }
 
   &.next {
@@ -89,7 +88,6 @@
     height: 40px;
     left: 240px;
   }
-
   &.favorites {
     position: absolute;
     left: 137px;

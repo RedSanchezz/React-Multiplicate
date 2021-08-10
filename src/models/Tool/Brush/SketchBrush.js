@@ -44,8 +44,8 @@ export default class SketchBrush extends Brush {
             this._ctx = state.layouts.currentLayout.getContext();
             this._canvas = state.layouts.currentLayout.getCanvas();
 
-            this._ctx.strokeStyle = state.brush.color;
-            this._ctx.lineWidth = state.brush.size;
+            this._ctx.strokeStyle = state.tool.brush.color;
+            this._ctx.lineWidth = state.tool.brush.size;
             this._ctx.lineCap = 'round';
 
             tmp_ctx.strokeStyle = this._ctx.strokeStyle;

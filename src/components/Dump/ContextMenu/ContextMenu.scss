@@ -1,20 +1,32 @@
 .context-menu {
   position: absolute;
-  display: none;
-  background-color: red;
+  border: 3px solid black;
+  background-color: darkred;
   z-index: 999;
   width: 200px;
   border-radius: 10px;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s;
 
   &.active {
+    height: auto;
+    opacity: 1;
     display: block;
   }
+  &.disabled {
+    display: none;
+  }
 }
+
+
 
 .context-menu-item {
   cursor: pointer;
   padding: 10px 20px;
   border-radius: 10px;
+  border-bottom: 1px solid black;
+  transition: all 0.3s;
   &:hover {
     background-color: gray;
   }

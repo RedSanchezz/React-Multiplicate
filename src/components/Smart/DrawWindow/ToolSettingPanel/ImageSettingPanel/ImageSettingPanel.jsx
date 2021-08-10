@@ -91,11 +91,11 @@ function ImageSettingPanel(props) {
 function mapStateToProps(state) {
     return {
         currentLayout: state.layouts.currentLayout,
-        dragBlockEnabled: state.imageTool.dragBlockEnabled,
-        x: state.imageTool.position.x,
-        y: state.imageTool.position.y,
-        width: state.imageTool.position.width,
-        height: state.imageTool.position.height,
+        dragBlockEnabled: state.tool.image.dragBlockEnabled,
+        x: state.tool.image.position.x,
+        y: state.tool.image.position.y,
+        width: state.tool.image.position.width,
+        height: state.tool.image.position.height,
         canvasHeigth: state.canvas.size.height,
         canvasWidth: state.canvas.size.width,
     }

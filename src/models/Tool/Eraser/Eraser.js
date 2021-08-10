@@ -12,21 +12,9 @@ export default class Eraser extends Brush {
 
         let state = store.getState();
 
-        tmpCanvas.style.zIndex = 100;
-
-        tmpCanvas.height = state.canvas.size.height;
-        tmpCanvas.width = state.canvas.size.width;
-
-
-        tmpCanvas.style.transform = `scale(${state.canvas.zoom})`;
-        tmpCanvas.style.top = state.canvas.position.top;
-        tmpCanvas.style.left = state.canvas.position.left;
-        tmpCanvas.style.position = 'absolute';
-        //для удобства
-        tmpCanvas.classList.add('tmpCanvas');
+        super._setCanvasStyle(tmpCanvas);
 
         tmpCanvas.style.cursor = 'crosshair';
-
 
         const tmpCtx = tmpCanvas.getContext('2d');
         state.canvas.canvasBlock.prepend(tmpCanvas);
@@ -38,7 +26,7 @@ export default class Eraser extends Brush {
             this._ctx = state.layouts.currentLayout.getContext();
             this._canvas = state.layouts.currentLayout.getCanvas();
 
-            this._ctx.lineWidth = state.brush.size;
+            this._ctx.lineWidth = state.tool.eraser.size;
             this._ctx.lineCap = 'round';
 
             tmpCtx.lineWidth = this._ctx.lineWidth;

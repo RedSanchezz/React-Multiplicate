@@ -6,9 +6,7 @@ import Tabs from './Tabs/Tabs';
 
 
 function RightPanelContent() {
-
     const [content, setContent] = useState(<Layouts></Layouts>);
-
     return (<>
                 <Tabs setContent={setContent}></Tabs>
                 {content}

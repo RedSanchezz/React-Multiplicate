@@ -21,7 +21,6 @@ function Frames(props) {
     }
 
     function unSelectAllFrame(){
-        setMenuActive(false);
         FrameManager.unSelectAllFrame();
     }
 

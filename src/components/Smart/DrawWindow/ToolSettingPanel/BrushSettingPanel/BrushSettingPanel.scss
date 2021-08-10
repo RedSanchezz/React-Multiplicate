@@ -52,11 +52,12 @@
   padding: 3px;
   border: 0px;
   border-radius: 50%;
-  width:  40px;
-  height: 40px;
+  width:  30px;
+  height: 30px;
   &.add-brush-btn {
     position: absolute;
-    bottom: 4px;
+    bottom: 17px;
+    left: -17px;
     display: flex;
     align-items: center;
     justify-content: center;
