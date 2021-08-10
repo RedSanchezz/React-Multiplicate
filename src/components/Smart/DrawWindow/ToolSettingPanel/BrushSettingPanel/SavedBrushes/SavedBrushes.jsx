@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {connect} from 'react-redux';
 import ToolManager from '../../../../../../Managers/ToolManager/ToolManager';
-
+import './SavedBrushes.scss';
 
 function SavedColors(props) {
 
@@ -13,10 +13,6 @@ function SavedColors(props) {
         ToolManager.changeSavedBrushes(props.savedBrushes);
         brushMenu.current.classList.add('fastRemove');
         brushMenu.current.classList.remove('active');
-        //без таймаута браузер может добавлять и убирать класы за "1 круг" и анимации не будет
-        setTimeout(() => {
-            brushMenu.current.classList.remove('fastRemove');
-        }, 0);
     }
 
     function changeButtonHandler() {
@@ -75,30 +71,32 @@ function SavedColors(props) {
     }
 
     return (
-        <div className="brush-panel__block">
-            <div className="brush-panel__panel-titile">Сохраненные кисти</div>
-            <div className='brush-panel__saved-brush'>
-                <div ref={brushMenu} className="brush-panel__saved-brush-menu ">
-                    <div onClick={changeButtonHandler} className="brush-panel__saved-brush-menu-item">Изменить</div>
-                    <div onClick={deleteButtonHandler} className="brush-panel__saved-brush-menu-item">Удалить</div>
+        <>
+            {props.savedBrushes.length!==0 &&
+            <div className="brush-panel__block saved-brush">
+                <div className="brush-panel__panel-title">Сохраненные кисти</div>
+                <div className='brush-panel__saved-brush'>
+                    <div ref={brushMenu} className="brush-panel__saved-brush-menu ">
+                        <div onClick={changeButtonHandler} className="brush-panel__saved-brush-menu-item">Изменить</div>
+                        <div onClick={deleteButtonHandler} className="brush-panel__saved-brush-menu-item">Удалить</div>
+                    </div>
+                    {props.savedBrushes.map((value, index) => {
+                        return <div
+                            onClick={() => {
+                                changeBrushHandler(index);
+                            }}
+                            onContextMenu={(e) => {
+                                colorRightClickHandler(e, index);
+                            }}
+                            key={index}
+                            style={{backgroundColor: value.color}}
+                            className="brush-panel__saved-brush-item">
+                            s:{value.size} o:{value.alpha}
+                        </div>;
+                    })}
                 </div>
-                {props.savedBrushes.map((value, index) => {
-                    return <div
-                        onClick={() => {
-                            changeBrushHandler(index);
-                        }}
-                        onContextMenu={(e) => {
-                            colorRightClickHandler(e, index);
-                        }}
-                        key={index}
-                        style={{backgroundColor: value.color}}
-                        className="brush-panel__saved-brush-item">
-                        s:{value.size} o:{value.alpha}
-                    </div>;
-                })}
-
-            </div>
-        </div>
+            </div>}
+        </>
     );
 }
 

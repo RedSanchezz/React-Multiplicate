@@ -7,8 +7,11 @@ import TopPanelMenu from '../TopPanelMenu/TopPanelMenu';
 import RightPanel from '../../Dump/RightPanel/RightPanel';
 import CenterSpace from '../../Dump/CenterSpace/CenterSpace';
 import LeftPanel from '../../Dump/LeftPanel/LeftPanel';
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
-export default function FrameWindow() {
+function FrameWindow(props) {
+    if(!props.canvas) return <Redirect to='/draw'></Redirect>;
     return (
         <div>
             <TopPanel>
@@ -29,3 +32,10 @@ export default function FrameWindow() {
     );
 }
 
+function mapStateToProps(state) {
+    return {
+        canvas: state.canvas.canvas
+    }
+}
+
+export default connect(mapStateToProps)(FrameWindow);

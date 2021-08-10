@@ -1,15 +1,14 @@
 import React from 'react';
-import MultiplicateFrameButtons from './FrameButtons/FrameButtons';
-import MultiplicateFramesInputs from './FramesInputs/FramesInputs';
+import FrameButtons from './FrameButtons/FrameButtons';
+import FramesInputs from './FramesInputs/FramesInputs';
 import './FrameTopPanelContent.scss';
 
 export default function FrameTopPanelContent() {
-
     return (
         <>
             <div className="top-panel-content">
-                <MultiplicateFrameButtons></MultiplicateFrameButtons>
-                <MultiplicateFramesInputs></MultiplicateFramesInputs>
+                <FrameButtons></FrameButtons>
+                <FramesInputs></FramesInputs>
             </div>
         </>
     );

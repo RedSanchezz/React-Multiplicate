@@ -15,21 +15,6 @@ function Layout(props) {
     let index = props.index;
 
 
-
-
-    useEffect(()=>{
-        if(props.isCurrent) window.addEventListener('keyup', keyDownHandler);
-
-        return ()=> window.removeEventListener('keyup', keyDownHandler);
-
-
-        function keyDownHandler(e) {
-            if (e.ctrlKey && e.code === 'KeyZ') layout.historyBack();
-            else if (e.ctrlKey && e.code === 'KeyZ' && e.shiftKey) layout.historyNext();
-        }
-
-    }, [props.isCurrent, layout]);
-
     //когда компонент отрендерился, вставляем канвас из модели
     useEffect(() => {
         layoutBlock.current.append(canvas);

@@ -1,0 +1,52 @@
+.saved-brush {
+  position: static;
+}
+
+.brush-panel__saved-brush {
+  display: grid;
+  overflow: hidden;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  background-color: #3c3c3c;
+  padding: 10px;
+  box-sizing: border-box;
+  &:hover {
+    overflow: visible;
+    z-index: 9999;
+  }
+}
+
+.brush-panel__saved-brush-item {
+  min-width: 30px;
+  width: 100px;
+  height: 30px;
+  background-color: white;
+  cursor: pointer;
+  border: 1px solid darkred;
+}
+
+.brush-panel__saved-brush-menu {
+  position: absolute;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.4s;
+  width: 100px;
+
+  &.active {
+    height: 100px;
+  }
+  &.fastRemove {
+    transition: height 0s !important;
+  }
+}
+
+.brush-panel__saved-brush-menu-item {
+  background-color: black;
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darkred;
+  }
+}

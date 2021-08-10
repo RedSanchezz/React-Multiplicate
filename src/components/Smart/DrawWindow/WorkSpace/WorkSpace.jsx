@@ -17,7 +17,8 @@ function WorkSpace(props) {
     const changeCanvasSize =  props.changeCanvasSize;
     const currentToolName = props.currentToolName;
     const setCanvasBlock = props.setCanvasBlock;
-    //когда меняется канвас, инициализируем на работу с ним инструменты и слои
+
+    //когда меняется холст, инициализируем на работу с ним инструменты и слои
     useEffect(() => {
         let style = getComputedStyle(workSpace.current);
         changeCanvasSize(parseInt(style.width) - 2, parseInt(style.height) - 2);

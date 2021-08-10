@@ -8,8 +8,6 @@ import ColorHelper from '../../../../../utils/ColorHelper';
 import InputsBlock from '../../../../Dump/InputsBlock/InputsBlock';
 import SavedBrushes from './SavedBrushes/SavedBrushes';
 
-
-
 function BrushSettingPanel(props) {
 
     function changeSizeInputsHandler(e) {
@@ -43,15 +41,18 @@ function BrushSettingPanel(props) {
                          onChange={setBrushAlphaHandler}
                          max='1' min='0' step={'0.01'}
             />
-
-            <div className="brush-panel__block">
-                <div className="brush-panel__panel-titile">Цвет кисти</div>
+            <div className="brush-panel__block brush-color">
+                <div className="brush-panel__panel-title">Цвет кисти</div>
                 <div className="brush-panel__inputs-block">
                     <input onChange={changeColorInputsHandler} value={ColorHelper.toHex(props.brushColor)}
                            type="color"/>
                     <input value={ColorHelper.toHex(props.brushColor)} type="text"/>
                 </div>
-                <button onClick={saveBrushHandler} className='panel__block-button'>Сохранить</button>
+            </div>
+            <div className="brush-panel__block">
+                <button onClick={saveBrushHandler} className='panel__block-button add-brush-btn'>
+                    <img src={process.env.PUBLIC_URL + "/img/plus-icon.svg"}/>
+                </button>
             </div>
             <SavedBrushes></SavedBrushes>
         </div>
