@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.aba3ef5b.chunk.css",
-    "main.js": "/static/js/main.451440b8.chunk.js",
-    "main.js.map": "/static/js/main.451440b8.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.dbd40bdc.js",
-    "runtime-main.js.map": "/static/js/runtime-main.dbd40bdc.js.map",
-    "static/js/2.44ec8875.chunk.js": "/static/js/2.44ec8875.chunk.js",
-    "static/js/2.44ec8875.chunk.js.map": "/static/js/2.44ec8875.chunk.js.map",
-    "static/js/3.a5ec97f1.chunk.js": "/static/js/3.a5ec97f1.chunk.js",
-    "static/js/3.a5ec97f1.chunk.js.map": "/static/js/3.a5ec97f1.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.aba3ef5b.chunk.css.map": "/static/css/main.aba3ef5b.chunk.css.map",
-    "static/js/2.44ec8875.chunk.js.LICENSE.txt": "/static/js/2.44ec8875.chunk.js.LICENSE.txt",
-    "static/media/FrameItem.scss": "/static/media/expand.e89c5f71.svg",
-    "static/media/FrameButtons.scss": "/static/media/stop.6f65b3f9.svg",
-    "static/media/preloader.279ed7ee.gif": "/static/media/preloader.279ed7ee.gif"
+    "main.css": "/React-Multiplicate/static/css/main.8cb6d868.chunk.css",
+    "main.js": "/React-Multiplicate/static/js/main.41a957ee.chunk.js",
+    "main.js.map": "/React-Multiplicate/static/js/main.41a957ee.chunk.js.map",
+    "runtime-main.js": "/React-Multiplicate/static/js/runtime-main.9ab1a3b6.js",
+    "runtime-main.js.map": "/React-Multiplicate/static/js/runtime-main.9ab1a3b6.js.map",
+    "static/js/2.44ec8875.chunk.js": "/React-Multiplicate/static/js/2.44ec8875.chunk.js",
+    "static/js/2.44ec8875.chunk.js.map": "/React-Multiplicate/static/js/2.44ec8875.chunk.js.map",
+    "static/js/3.a5ec97f1.chunk.js": "/React-Multiplicate/static/js/3.a5ec97f1.chunk.js",
+    "static/js/3.a5ec97f1.chunk.js.map": "/React-Multiplicate/static/js/3.a5ec97f1.chunk.js.map",
+    "index.html": "/React-Multiplicate/index.html",
+    "static/css/main.8cb6d868.chunk.css.map": "/React-Multiplicate/static/css/main.8cb6d868.chunk.css.map",
+    "static/js/2.44ec8875.chunk.js.LICENSE.txt": "/React-Multiplicate/static/js/2.44ec8875.chunk.js.LICENSE.txt",
+    "static/media/FrameItem.scss": "/React-Multiplicate/static/media/expand.e89c5f71.svg",
+    "static/media/FrameButtons.scss": "/React-Multiplicate/static/media/stop.6f65b3f9.svg",
+    "static/media/preloader.279ed7ee.gif": "/React-Multiplicate/static/media/preloader.279ed7ee.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.dbd40bdc.js",
+    "static/js/runtime-main.9ab1a3b6.js",
     "static/js/2.44ec8875.chunk.js",
-    "static/css/main.aba3ef5b.chunk.css",
-    "static/js/main.451440b8.chunk.js"
+    "static/css/main.8cb6d868.chunk.css",
+    "static/js/main.41a957ee.chunk.js"
   ]
 }
