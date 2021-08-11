@@ -1,14 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Frames from '../../DrawWindow/RightPanelContent/Frames/Frames';
-import FrameManager from '../../../../Managers/FrameManager/FrameManager';
 import './FrameRightPanel.scss';
 export default function FrameRightPanel() {
-
-    let [delay, setDelay] = useState(100);
-
-    function setDelayToAllHandler() {
-        FrameManager.setDelayToAll(delay);
-    }
 
     return (
         <>

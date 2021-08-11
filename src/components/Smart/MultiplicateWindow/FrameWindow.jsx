@@ -7,7 +7,6 @@ import TopPanelMenu from '../TopPanelMenu/TopPanelMenu';
 import RightPanel from '../../Dump/RightPanel/RightPanel';
 import CenterSpace from '../../Dump/CenterSpace/CenterSpace';
 import LeftPanel from '../../Dump/LeftPanel/LeftPanel';
-import {connect} from 'react-redux';
 import {compose} from 'redux';
 import withRedirect from '../../../hoc/withRedirect';
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ContextMenu.scss';
 
 let timeoutId;
@@ -8,13 +8,11 @@ function ContextMenu(props) {
     let [menuClass, setMenuClass] = useState('context-menu disabled');
 
     function contextMenuMouseLeaveHandler() {
-        setMenuClass('context-menu');
-        timeoutId=setTimeout(()=>{
-            console.log('timeout end');
-            props.setMenuActive(false);
-        },300);
+        props.setMenuActive(false);
+
     }
     function contextMenuOnMouseMove() {
+        console.log('enter');
         clearTimeout(timeoutId);
         setMenuClass('context-menu active');
     }
@@ -26,7 +24,11 @@ function ContextMenu(props) {
                 setMenuClass('context-menu active');
             }, 300);
         }else {
-            setMenuClass('context-menu disabled');
+            setMenuClass('context-menu');
+            setTimeout(()=>{
+                setMenuClass('context-menu disabled');
+
+            }, 300);
         }
     }, [props.active]);
 

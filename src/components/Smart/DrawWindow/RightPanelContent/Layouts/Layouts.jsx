@@ -38,14 +38,17 @@ function Layouts(props) {
     }
 
     function combineSelectedHandler(e) {
-        LayoutManager.combineSelected();
         setMenuActive(false);
+        LayoutManager.combineSelected();
     }
 
     function unselectAllHandler() {
+        setMenuActive(false);
         LayoutManager.unSelectAll();
+
     }
     function copyLayout(){
+        setMenuActive(false);
         LayoutManager.copyLayouts();
     }
 
@@ -55,10 +58,9 @@ function Layouts(props) {
     >
         <div onClick={copyLayout} className="context-menu-item">Копировать</div>
         <div onClick={deleteSelectedHandler} className="context-menu-item">Удалить выбранные</div>
-        <div onClick={combineSelectedHandler} className="context-menu-item">Обьеденить</div>
+        <div onClick={combineSelectedHandler} className="context-menu-item">Обьединить</div>
         <div onClick={unselectAllHandler} className="context-menu-item">Отменить выделение</div>
     </ContextMenu>
-
 
     return (
         <>

@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import './Layout.scss';
 import LayoutManager from '../../../../../../Managers/LayoutManager/LayoutManager';
-import FrameManager from '../../../../../../Managers/FrameManager/FrameManager';
 
 
 function Layout(props) {
@@ -88,9 +87,6 @@ function Layout(props) {
         e.preventDefault();
     }
 
-    function addToMultiplicate() {
-        FrameManager.addFrame(layout, 100);
-    }
 
     return (
         <div onContextMenu={contextMenuHandler}
