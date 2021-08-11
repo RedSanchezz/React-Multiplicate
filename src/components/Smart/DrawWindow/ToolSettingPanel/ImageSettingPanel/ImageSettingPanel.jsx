@@ -51,38 +51,39 @@ function ImageSettingPanel(props) {
             {props.dragBlockEnabled && <div></div>}
             {!props.dragBlockEnabled &&
             <div className='top-panel__image-tool image-tool'>
-                <div></div>
-
-                <div className='image-tool__coords'>
-                    <div className='image-tool__coords-row'>
+                <div className='image-tool__ block coords'>
+                    <div className='image-tool__block-row'>
                         <h3>X</h3>
-                        <input type='number' value={props.x} onChange={inputXCoordChange} min={0} max={props.canvasWidth}/>
-                        <input type='range' value={props.x} onChange={inputXCoordChange} min={0} max={props.canvasWidth} />
+                        <div className='image-tool__inputs'>
+                            <input type='number' value={props.x} onChange={inputXCoordChange} min={0} max={props.canvasWidth}/>
+                            <input type='range' value={props.x} onChange={inputXCoordChange} min={0} max={props.canvasWidth} />
+                        </div>
                     </div>
-                    <div className='image-tool__coords-row'>
+                    <div className='image-tool__block-row'>
                         <h3>Y</h3>
-                        <input type='number' value={props.y} onChange={inputYCoordChange}  min={0} max={props.canvasHeigth} />
-                        <input type='range' value={props.y} onChange={inputYCoordChange} min={0} max={props.canvasHeigth}/>
-
+                        <div className='image-tool__inputs'>
+                            <input type='number' value={props.y} onChange={inputYCoordChange}  min={0} max={props.canvasHeigth} />
+                            <input type='range' value={props.y} onChange={inputYCoordChange} min={0} max={props.canvasHeigth}/>
+                        </div>
                     </div>
                 </div>
-                <div className='image-tool__sizes'>
-                    <div className='image-tool__coords-row'>
-                        <h3>width</h3>
-                        <input type='number' value={props.width} onChange={inputWidthChange} min={0} max={props.canvasWidth}/>
-                        <input type='range' value={props.width} onChange={inputWidthChange} min={0} max={props.canvasWidth}/>
-
+                <div className='image-tool__ block sizes'>
+                    <div className='image-tool__block-row'>
+                        <h3>ширина</h3>
+                        <div className='image-tool__inputs'>
+                            <input type='number' value={props.width} onChange={inputWidthChange} min={0} max={props.canvasWidth}/>
+                            <input type='range' value={props.width} onChange={inputWidthChange} min={0} max={props.canvasWidth}/>
+                        </div>
                     </div>
-                    <div className='image-tool__coords-row'>
-                        <h3>height</h3>
-                        <input type='number' value={props.height} onChange={inputHeightChange} min={0} max={props.canvasHeigth}/>
-                        <input type='range' value={props.height} onChange={inputHeightChange} min={0} max={props.canvasHeigth} />
-
+                    <div className='image-tool__block-row'>
+                        <h3>высота</h3>
+                        <div className='image-tool__inputs'>
+                            <input type='number' value={props.height} onChange={inputHeightChange} min={0} max={props.canvasHeigth}/>
+                            <input type='range' value={props.height} onChange={inputHeightChange} min={0} max={props.canvasHeigth} />
+                        </div>
                     </div>
                 </div>
-
                 <button onClick={onEnabledButtonClick}>Вставить изображение</button>
-
             </div>}
         </div>
     );

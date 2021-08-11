@@ -6,14 +6,14 @@ import InputsBlock from '../../../../Dump/InputsBlock/InputsBlock';
 
 function FramesInputs(props) {
     function changecurrentFrameIndex(e) {
-        FrameManager.setСurrentFrameIndex(+e.target.value);
+        FrameManager.setСurrentFrameIndex(+e.target.value-1);
     }
     return (
         <div className='top-panel-inputs-block'>
             <InputsBlock title={'Фрэймы'}
                          onChange={changecurrentFrameIndex}
-                         value={props.currentFrameIndex}
-                         min='0'  max={props.frameList.length - 1}
+                         value={props.currentFrameIndex+1}
+                         min='1'  max={props.frameList.length}
                          step='1'
             />
         </div>

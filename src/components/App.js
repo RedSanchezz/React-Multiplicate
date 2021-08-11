@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import './App.scss';
 
 import DrawWindow from './Smart/DrawWindow/DrawWindow';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, HashRouter, Redirect, Route, Switch} from 'react-router-dom';
 import SaveWindow from './Smart/SaveWindow/SaveWindow';
 import FrameWindow from './Smart/MultiplicateWindow/FrameWindow';
 
 function App() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className='main'>
                 <Switch>
                     <Route path='/draw' render={() => <DrawWindow/>}/>
@@ -19,7 +19,7 @@ function App() {
                     <Redirect from='/'  to='/draw'/>
                 </Switch>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

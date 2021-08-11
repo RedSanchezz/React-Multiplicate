@@ -4,12 +4,17 @@
   align-items: center;
 }
 
-.image-tool__coords-row {
+.image-tool__inputs {
   display: flex;
-
+  justify-content: space-around;
+}
+.image-tool__block-row {
+  display: flex;
+  justify-content: space-around;
   max-height: 30px;
+  margin-right: 20px;
   h3 {
-    margin: 0;
+    margin: 0 15px 0 0;
     padding: 0;
   }
   input {

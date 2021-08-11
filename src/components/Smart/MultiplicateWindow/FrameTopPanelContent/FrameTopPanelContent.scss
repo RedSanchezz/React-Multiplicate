@@ -1,6 +1,13 @@
 .top-panel-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  //justify-content: center;
   width: 100%;
+}
+
+.top-panel-content__delay-all-block {
+  display: grid;
+  h3 {
+      margin: 0;
+  }
 }

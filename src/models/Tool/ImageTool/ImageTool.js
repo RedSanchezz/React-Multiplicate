@@ -27,6 +27,8 @@ export default class ImageTool extends Tool{
     create() {
         super._init();
         //подписываемся на изменения state
+
+        let canvasZoom = store.getState().canvas.zoom;
         this._unsubscribe =store.subscribe(()=>{
             let state = store.getState();
             //если установлен файл, и блок для перетаскивания активен
@@ -70,6 +72,23 @@ export default class ImageTool extends Tool{
                 store.dispatch(setFile(null));
                 LayoutManager.update();
             }
+
+            if(state.canvas.zoom!==canvasZoom) {
+                canvasZoom=state.canvas.zoom;
+                this._removeTmpCanvasLogic('wtf');
+                this._getDragBlockStyle(this._dragBlock);
+                super._setCanvasStyle(this._tmpCanvas);
+
+                let img = state.tool.image.file;
+                if(!!img) {
+                    let position = state.tool.image.position;
+                    //перерисовываем
+                    this._tmpCtx.clearRect(0,0, this._tmpCanvas.width, this._tmpCanvas.height);
+                    this._tmpCtx.drawImage(img, position.x, position.y, position.width, position.height);
+                    this._initTmpCanvas();
+                }
+
+            }
         })
         //Изначально вставляем блок для перетаскивания картинки
         this._initDragBlock();
@@ -95,12 +114,16 @@ export default class ImageTool extends Tool{
             let reader = new FileReader();
             reader.readAsDataURL(files[0]);
             reader.onload = ()=> {
+
+                let offsetX =  e.offsetX;
+                let offsetY =  e.offsetY;
+
                 let img = new Image();
                 img.src = reader.result;
                 img.onload = ()=>{
 
                     store.dispatch(setFile(img));
-                    store.dispatch(setPosition({x: e.offsetX, y:e.offsetY,
+                    store.dispatch(setPosition({x: offsetX, y: offsetY,
                         width: img.width,
                         height: img.height
                     }));
@@ -133,12 +156,16 @@ export default class ImageTool extends Tool{
     }
 
     _initTmpCanvas(){
+
         this._tmpCanvasListenerManager.addListener(this._tmpCanvas, 'mousedown', (e)=>{
             let x = e.offsetX;
             let y = e.offsetY;
             let tmpCanvas = this._tmpCanvas;
             let tmpCtx = this._tmpCtx;
             let position = store.getState().tool.image.position;
+            console.log(x);
+            console.log(y);
+            console.log('LOL MOUSE DOWN !');
             if(this._rect.length!==null &&
                 (x>this._rect[0] && x<this._rect[2])
                 && (y>this._rect[1] && y<this._rect[3])){

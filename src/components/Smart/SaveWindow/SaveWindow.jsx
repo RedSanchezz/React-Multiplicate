@@ -8,33 +8,31 @@ import LeftPanel from '../../Dump/LeftPanel/LeftPanel';
 import RightPanel from '../../Dump/RightPanel/RightPanel';
 import SaveGifPanel from './SaveGifPanel/SaveGifPanel';
 import CenterSpace from '../../Dump/CenterSpace/CenterSpace';
+import withRedirect from '../../../hoc/withRedirect';
+import SaveJpgPanel from './SaveImagePanel/SaveImagePanel';
 
 function SaveWindow(props) {
     return (
         <div className='save-window'>
             <TopPanel>
-                <TopPanelMenu></TopPanelMenu>
-                <SaveFormatTabs></SaveFormatTabs>
+                <TopPanelMenu/>
+                <SaveFormatTabs/>
             </TopPanel>
-            <LeftPanel></LeftPanel>
-            <RightPanel></RightPanel>
+            <LeftPanel/>
+            <RightPanel/>
             <CenterSpace>
                 <Route path='/save/gif'>
-                    <SaveGifPanel></SaveGifPanel>
+                    <SaveGifPanel/>
                 </Route>
-                <Route path='/save/jpg'>
-                    <div>JPG</div>
-                </Route>
-                <Route path='/save/png'>
-                    <div>PNG</div>
+                <Route path='/save/image'>
+                    <SaveJpgPanel/>
                 </Route>
                 <Route exact path='/save'>
                     <div className='save-window__file-type-title'><h1>Выберите тип файла</h1></div>
                 </Route>
             </CenterSpace>
-
         </div>
     );
 }
 
-export default SaveWindow;
+export default withRedirect(SaveWindow);

@@ -1,9 +1,27 @@
-.save-gif-panel {
-  padding: 30px;
+.save-gif-panel-wrapper {
+  padding-top: 30px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  height: calc(100vh - 100px);
   background-color: lightgrey;
-  h4 {
+}
+
+.save-gif-panel {
+  padding: 15px;
+  background-color: lightgrey;
+  width: 70%;
+  h5 {
     margin-bottom: 5px;
     margin-top: 5px;
+  }
+  .size-block {
+    height: auto;
+  }
+  input[type='checkbox']{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
   }
 }
 
@@ -11,14 +29,21 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 25px;
+  padding: 10px;
+  margin-bottom: 20px;
 }
-
+.save-gif-panel__column {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
 .save-gif-panel__item {
   max-width: 230px;
-  margin-left: 40px;
 }
 
+.save-gif-panel__size {
+}
 .save-gif-panel__color {
   display: flex;
   flex-direction: column;
@@ -26,8 +51,8 @@
   justify-content: center;
 }
 .save-gif-panel__color-input {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
 }
 
 .save-gif-panel__save-btn {
@@ -37,11 +62,11 @@
   border: 1px solid black;
   color: white;
   background-color: darkred;
-  width: 200px;
-  height: 80px;
+  width: 150px;
+  height: 50px;
   border-radius: 40px;
   margin: 0 auto;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 900;
   cursor: pointer;
 }
@@ -50,4 +75,33 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.save-gif-panel__size {
+  .size-block {
+    margin-bottom: 0;
+    height: auto;
+  }
+  h3 {
+    padding: 0;
+    margin: 0 0 10px 0;
+  }
+
+}
+.save-gif-panel__color {
+  width: 50%;
+  h3 {
+    padding: 0;
+    margin: 0 0 10px 0;
+  }
+}
+
+
+.save-gif-panel__warning {
+  background-color: darkred;
+  width: 50%;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  font-size: 24px;
 }

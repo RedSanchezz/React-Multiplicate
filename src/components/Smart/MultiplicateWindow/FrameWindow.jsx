@@ -8,10 +8,10 @@ import RightPanel from '../../Dump/RightPanel/RightPanel';
 import CenterSpace from '../../Dump/CenterSpace/CenterSpace';
 import LeftPanel from '../../Dump/LeftPanel/LeftPanel';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import {compose} from 'redux';
+import withRedirect from '../../../hoc/withRedirect';
 
 function FrameWindow(props) {
-    if(!props.canvas) return <Redirect to='/draw'></Redirect>;
     return (
         <div>
             <TopPanel>
@@ -26,16 +26,11 @@ function FrameWindow(props) {
             <CenterSpace>
                 <FrameCanvasPanel></FrameCanvasPanel>
             </CenterSpace>
-
             <LeftPanel></LeftPanel>
         </div>
     );
 }
+export default compose(
+    withRedirect
+)(FrameWindow);
 
-function mapStateToProps(state) {
-    return {
-        canvas: state.canvas.canvas
-    }
-}
-
-export default connect(mapStateToProps)(FrameWindow);
