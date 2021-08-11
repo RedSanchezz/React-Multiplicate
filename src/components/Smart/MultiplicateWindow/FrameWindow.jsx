@@ -10,7 +10,7 @@ import LeftPanel from '../../Dump/LeftPanel/LeftPanel';
 import {compose} from 'redux';
 import withRedirect from '../../../hoc/withRedirect';
 
-function FrameWindow(props) {
+function FrameWindow() {
     return (
         <div>
             <TopPanel>

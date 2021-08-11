@@ -17,15 +17,17 @@ export default function FrameTopPanelContent() {
                 <FrameButtons></FrameButtons>
                 <FramesInputs></FramesInputs>
                 <div className='top-panel-content__delay-all-block'>
-                    <h3>Установить задержку для все слоев</h3>
-                    <input type='number'
-                           value={delay}
-                           onChange={(e) => {
-                               setDelay(e.currentTarget.value);
-                           }}></input>
-                    <button onClick={setDelayToAllHandler}>
-                        OK
-                    </button>
+                    <h3>Установить задержку для всех кадров</h3>
+                    <div>
+                        <input type='number'
+                               value={delay}
+                               onChange={(e) => {
+                                   setDelay(e.currentTarget.value);
+                               }}></input>
+                        <button onClick={setDelayToAllHandler}>
+                            OK
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

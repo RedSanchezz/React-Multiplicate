@@ -6,7 +6,7 @@ export default function FrameRightPanel() {
     return (
         <>
             <div className='right-panel__top-block'>
-                <h2 >Список слоев</h2>
+                <h2>Список кадров</h2>
             </div>
             <Frames></Frames>
         </>
